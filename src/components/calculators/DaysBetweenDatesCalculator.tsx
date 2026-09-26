@@ -163,6 +163,7 @@ export function DaysBetweenDatesCalculator() {
   const [endDate, setEndDate] = useState<string | null>(null);
   const [includeEndDate, setIncludeEndDate] = useState(true);
   const [businessDaysOnly, setBusinessDaysOnly] = useState(false);
+  const [saturdayAsBusinessDay, setSaturdayAsBusinessDay] = useState(false);
   const [copyState, setCopyState] = useState<"idle" | "copied">("idle");
   const [shareState, setShareState] = useState<"idle" | "copied">("idle");
   const [showAltUnits, setShowAltUnits] = useState(false);
@@ -177,8 +178,12 @@ export function DaysBetweenDatesCalculator() {
   );
 
   const result = useMemo(
-    () => calculateDateSpan(effectiveStart, effectiveEnd, includeEndDate),
-    [effectiveStart, effectiveEnd, includeEndDate],
+    () =>
+      calculateDateSpan(effectiveStart, effectiveEnd, {
+        includeEndDate,
+        saturdayAsBusinessDay,
+      }),
+    [effectiveStart, effectiveEnd, includeEndDate, saturdayAsBusinessDay],
   );
 
   const startBadge = dayOfWeekLabel(effectiveStart);
@@ -217,6 +222,7 @@ export function DaysBetweenDatesCalculator() {
     setEndDate(defaultEnd(fresh));
     setIncludeEndDate(true);
     setBusinessDaysOnly(false);
+    setSaturdayAsBusinessDay(false);
   }
 
   function handlePreset(preset: Preset) {
@@ -417,7 +423,19 @@ export function DaysBetweenDatesCalculator() {
                 checked={businessDaysOnly}
                 onChange={setBusinessDaysOnly}
                 title="Count Business Days Only"
-                description="Automatically exclude Saturdays and Sundays"
+                description={
+                  saturdayAsBusinessDay
+                    ? "Count Mon–Sat; exclude Sundays only"
+                    : "Count Mon–Fri; exclude Saturdays and Sundays"
+                }
+              />
+              <div className="h-px bg-border/70" />
+              <ToggleSwitch
+                id="toggle-saturday-working"
+                checked={saturdayAsBusinessDay}
+                onChange={setSaturdayAsBusinessDay}
+                title="Count Saturday as a Working Day"
+                description="Treat Saturday as a business day (6-day work week)"
               />
             </div>
 
@@ -509,7 +527,11 @@ export function DaysBetweenDatesCalculator() {
                   </div>
                   <div
                     className={`flex w-full flex-col items-center justify-center rounded-full border px-4 py-2.5 text-center ${dateTheme.borderSoft} ${dateTheme.soft}`}
-                    title="Monday through Friday"
+                    title={
+                      saturdayAsBusinessDay
+                        ? "Monday through Saturday"
+                        : "Monday through Friday"
+                    }
                   >
                     <span
                       className={`text-sm font-semibold tabular-nums ${dateTheme.text}`}
@@ -522,13 +544,17 @@ export function DaysBetweenDatesCalculator() {
                   </div>
                   <div
                     className="flex w-full flex-col items-center justify-center rounded-full border border-border/70 bg-background px-4 py-2.5 text-center"
-                    title="Saturdays and Sundays"
+                    title={
+                      saturdayAsBusinessDay
+                        ? "Sundays only"
+                        : "Saturdays and Sundays"
+                    }
                   >
                     <span className="text-sm font-semibold tabular-nums text-foreground">
                       {result.weekendDays.toLocaleString()} weekend days
                     </span>
                     <span className="ui-label mt-0.5 text-[11px] text-muted">
-                      Weekend days
+                      {saturdayAsBusinessDay ? "Sundays" : "Weekend days"}
                     </span>
                   </div>
                 </div>
