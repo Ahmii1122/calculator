@@ -3,10 +3,10 @@ import {
   differenceInCalendarDays,
   eachDayOfInterval,
   format,
+  getDay,
   intervalToDuration,
   isBefore,
   isValid,
-  isWeekend,
   parseISO,
 } from "date-fns";
 
@@ -26,6 +26,12 @@ export type DateSpanResult = {
   orderedStart: Date;
   orderedEnd: Date;
   wasSwapped: boolean;
+};
+
+export type DateSpanOptions = {
+  includeEndDate?: boolean;
+  /** When true, Saturday counts as a business day (Sun-only weekend). Default: false (Sat+Sun weekend). */
+  saturdayAsBusinessDay?: boolean;
 };
 
 export function toDateInputValue(date: Date): string {
@@ -54,6 +60,13 @@ export function formatNaturalBreakdown(
   return parts.join(", ");
 }
 
+/** True when the day is treated as non-working for the chosen week pattern. */
+function isNonWorkingDay(date: Date, saturdayAsBusinessDay: boolean): boolean {
+  const day = getDay(date); // 0 Sun … 6 Sat
+  if (saturdayAsBusinessDay) return day === 0; // Sunday only
+  return day === 0 || day === 6; // Sat + Sun
+}
+
 /**
  * Compute calendar / business day stats between two dates using date-fns.
  * When end < start, dates are ordered for calculation (inputs are not mutated).
@@ -61,8 +74,16 @@ export function formatNaturalBreakdown(
 export function calculateDateSpan(
   startValue: string,
   endValue: string,
-  includeEndDate: boolean,
+  includeEndDateOrOptions: boolean | DateSpanOptions = true,
 ): DateSpanResult | null {
+  const options: DateSpanOptions =
+    typeof includeEndDateOrOptions === "boolean"
+      ? { includeEndDate: includeEndDateOrOptions }
+      : includeEndDateOrOptions;
+
+  const includeEndDate = options.includeEndDate ?? true;
+  const saturdayAsBusinessDay = options.saturdayAsBusinessDay ?? false;
+
   const start = parseDateInput(startValue);
   const end = parseDateInput(endValue);
   if (!start || !end) return null;
@@ -82,7 +103,7 @@ export function calculateDateSpan(
     if (!isBefore(rangeEnd, orderedStart)) {
       const days = eachDayOfInterval({ start: orderedStart, end: rangeEnd });
       for (const day of days) {
-        if (isWeekend(day)) weekendDays += 1;
+        if (isNonWorkingDay(day, saturdayAsBusinessDay)) weekendDays += 1;
         else businessDays += 1;
       }
     }
