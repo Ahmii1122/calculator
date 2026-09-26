@@ -1,26 +1,96 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Base */
+  --background: #f7f4ee;
+  --foreground: #1e2a32;
+  --muted: #5b6570;
+  --border: #e4ddd2;
+  --panel: #ffffff;
+
+  /* Brand amber — ONLY: nav active, Hub wordmark, primary CTAs, Try it badge, search focus */
+  --accent: #b45309;
+  --accent-soft: #fdf1e3;
+  --accent-text: #b45309;
+  --accent-strong: #b45309;
+
+  /* Category: Date & Time — muted teal */
+  --cat-date: #0f5c5c;
+  --cat-date-soft: #e6f0ef;
+
+  /* Category: Finance */
+  --cat-finance: #15803d;
+  --cat-finance-soft: #eff9f1;
+
+  /* Category: Health */
+  --cat-health: #be185d;
+  --cat-health-soft: #fdf0f5;
+
+  /* Category: Math & Education */
+  --cat-math: #7c3aed;
+  --cat-math-soft: #f5f0fe;
+
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --card-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-panel: var(--panel);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-text: var(--accent-text);
+  --color-accent-strong: var(--accent-strong);
+
+  --color-cat-date: var(--cat-date);
+  --color-cat-date-soft: var(--cat-date-soft);
+  --color-cat-finance: var(--cat-finance);
+  --color-cat-finance-soft: var(--cat-finance-soft);
+  --color-cat-health: var(--cat-health);
+  --color-cat-health-soft: var(--cat-health-soft);
+  --color-cat-math: var(--cat-math);
+  --color-cat-math-soft: var(--cat-math-soft);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --shadow-card: var(--card-shadow);
+  --shadow-card-hover: var(--card-shadow-hover);
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
+  /* Warm wash only — no amber glow at the top (was rendering as a clipped bar on mobile) */
+  background-image: linear-gradient(180deg, #f7f4ee 0%, #f0ebe2 100%);
+  background-attachment: fixed;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/*
+ * Shared label style: sentence case, never all-caps.
+ * Use for eyebrows, status pills, and small section labels site-wide.
+ */
+@layer components {
+  .ui-label {
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-weight: 600;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 180ms ease-out;
 }

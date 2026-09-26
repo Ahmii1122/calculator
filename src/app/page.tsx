@@ -1,69 +1,171 @@
-import Image from "next/image";
+import type { Metadata } from "next";
+import {
+  MonitorSmartphone,
+  Sparkles,
+  UserRoundX,
+  Zap,
+} from "lucide-react";
+import { CalculatorCard } from "@/components/home/CalculatorCard";
+import { CategorySection } from "@/components/home/CategorySection";
+import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
+import {
+  CALCULATOR_CATEGORIES,
+  LIVE_CALCULATORS,
+} from "@/lib/calculators";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 
-export default function Home() {
+const PAGE_TITLE = "Calculator Hub — Free Online Calculators";
+const PAGE_DESCRIPTION =
+  "Free online calculators for dates, finance, health, and math. Instant results, no signup — start with Days Between Two Dates and more tools coming soon.";
+
+export const metadata: Metadata = {
+  title: {
+    absolute: PAGE_TITLE,
+  },
+  description: PAGE_DESCRIPTION,
+  alternates: {
+    canonical: SITE_URL,
+  },
+  openGraph: {
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    type: "website",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+  },
+};
+
+const webSiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  description: PAGE_DESCRIPTION,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${SITE_URL}/?q={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
+  },
+};
+
+const itemListJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: `${SITE_NAME} Calculators`,
+  itemListElement: LIVE_CALCULATORS.map((item, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: item.name,
+    url: `${SITE_URL}${item.href}`,
+    description: item.description,
+  })),
+};
+
+const TRUST_ITEMS = [
+  {
+    icon: UserRoundX,
+    label: "No signup required",
+  },
+  {
+    icon: Zap,
+    label: "Instant results",
+  },
+  {
+    icon: MonitorSmartphone,
+    label: "Works on any device",
+  },
+] as const;
+
+export default function HomePage() {
+  const liveCount = LIVE_CALCULATORS.length;
+  const plannedCount = CALCULATOR_CATEGORIES.reduce(
+    (sum, category) => sum + category.calculators.length,
+    0,
+  );
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
+
+      <Header />
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
+        {/* Compact hero */}
+        <header className="mb-10 max-w-2xl">
+          <p className="ui-label mb-3 inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1 text-[12px] text-accent-text">
+            <Sparkles className="size-3.5" aria-hidden="true" />
+            {liveCount} live · {plannedCount} tools in the library
           </p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            Calculator <span className="text-accent">Hub</span>
+          </h1>
+          <p className="mt-2 text-base text-muted sm:text-lg">
+            Free, fast calculators for dates, money, health, and everyday math.
+          </p>
+        </header>
+
+        {/* Category directory */}
+        <div className="space-y-12">
+          {CALCULATOR_CATEGORIES.map((category) => (
+            <CategorySection
+              key={category.id}
+              id={category.id}
+              title={category.title}
+              description={category.description}
+              icon={category.icon}
+              theme={category.theme}
+            >
+              {category.calculators.map((calculator) => (
+                <CalculatorCard
+                  key={calculator.id}
+                  calculator={calculator}
+                  theme={category.theme}
+                />
+              ))}
+            </CategorySection>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+
+        {/* Trust strip */}
+        <section
+          aria-label="Why Calculator Hub"
+          className="mt-14 rounded-xl border border-border/80 bg-panel px-4 py-5 shadow-card sm:px-6"
+        >
+          <h2 className="sr-only">Why Calculator Hub</h2>
+          <ul className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+            {TRUST_ITEMS.map((item) => {
+              const Icon = item.icon;
+              return (
+                <li
+                  key={item.label}
+                  className="flex items-center gap-2.5 text-sm font-medium text-foreground"
+                >
+                  <span className="flex size-8 items-center justify-center rounded-lg bg-accent-soft text-accent-text">
+                    <Icon className="size-4" aria-hidden="true" />
+                  </span>
+                  {item.label}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
       </main>
-    </div>
+      <Footer />
+    </>
   );
 }
