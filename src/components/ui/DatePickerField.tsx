@@ -1,9 +1,22 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type ReactNode,
+} from "react";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react";
-import { DayPicker } from "react-day-picker";
+import {
+  Calendar as CalendarIcon,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import { DayPicker, type DropdownProps } from "react-day-picker";
 import { parseDateInput, toDateInputValue } from "@/lib/date-span";
 
 type DatePickerFieldProps = {
@@ -17,7 +30,114 @@ type DatePickerFieldProps = {
 };
 
 /**
- * Modern popover date picker styled for Calculator Hub (Date & Time blue).
+ * Styled month/year menu for DayPicker — replaces the native OS `<select>`.
+ */
+function ModernCaptionDropdown({
+  options,
+  value,
+  onChange,
+  disabled,
+  "aria-label": ariaLabel,
+}: DropdownProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+  const selected = options?.find((option) => option.value === Number(value));
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    function handlePointer(event: MouseEvent) {
+      if (!rootRef.current?.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+
+    function handleKey(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setMenuOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handlePointer);
+    document.addEventListener("keydown", handleKey, true);
+    return () => {
+      document.removeEventListener("mousedown", handlePointer);
+      document.removeEventListener("keydown", handleKey, true);
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (!menuOpen || !listRef.current) return;
+    const active = listRef.current.querySelector<HTMLElement>(
+      '[aria-selected="true"]',
+    );
+    active?.scrollIntoView({ block: "nearest" });
+  }, [menuOpen, value]);
+
+  function pick(nextValue: number) {
+    onChange?.({
+      target: { value: String(nextValue) },
+    } as ChangeEvent<HTMLSelectElement>);
+    setMenuOpen(false);
+  }
+
+  return (
+    <div ref={rootRef} className="relative">
+      <button
+        type="button"
+        disabled={disabled}
+        aria-label={ariaLabel}
+        aria-haspopup="listbox"
+        aria-expanded={menuOpen}
+        data-caption-menu={menuOpen ? "open" : "closed"}
+        onClick={() => setMenuOpen((open) => !open)}
+        className="inline-flex h-8 items-center gap-1 rounded-lg border border-border/70 bg-background px-2.5 text-[13px] font-semibold text-foreground transition hover:border-cat-date/40 hover:bg-cat-date-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cat-date/25 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        <span className="tabular-nums">{selected?.label ?? "—"}</span>
+        <ChevronDown
+          className={`size-3.5 text-muted transition ${menuOpen ? "rotate-180" : ""}`}
+          aria-hidden="true"
+        />
+      </button>
+
+      {menuOpen && (
+        <ul
+          ref={listRef}
+          role="listbox"
+          aria-label={ariaLabel}
+          className="absolute top-full left-1/2 z-50 mt-1.5 max-h-52 w-max min-w-full -translate-x-1/2 overflow-y-auto rounded-xl border border-border/80 bg-panel py-1.5 shadow-card"
+        >
+          {options?.map((option) => {
+            const isSelected = option.value === Number(value);
+            return (
+              <li key={option.value} role="presentation">
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={isSelected}
+                  disabled={option.disabled}
+                  onClick={() => pick(option.value)}
+                  className={`flex w-full items-center px-3 py-1.5 text-left text-[13px] tabular-nums transition disabled:cursor-not-allowed disabled:opacity-40 ${
+                    isSelected
+                      ? "bg-cat-date font-semibold text-white"
+                      : "text-foreground hover:bg-cat-date-soft hover:text-cat-date"
+                  }`}
+                >
+                  {option.label}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Popover date picker for Calculator Hub.
  * Value stays as yyyy-MM-dd for compatibility with existing calculator logic.
  */
 export function DatePickerField({
@@ -33,6 +153,15 @@ export function DatePickerField({
   const listboxId = useId();
   const selected = parseDateInput(value) ?? undefined;
 
+  const startMonth = useMemo(() => {
+    const year = new Date().getFullYear();
+    return new Date(year - 100, 0);
+  }, []);
+  const endMonth = useMemo(() => {
+    const year = new Date().getFullYear();
+    return new Date(year + 50, 11);
+  }, []);
+
   useEffect(() => {
     if (!open) return;
 
@@ -43,7 +172,10 @@ export function DatePickerField({
     }
 
     function handleKey(event: KeyboardEvent) {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key !== "Escape") return;
+      // Let an open caption menu close first without dismissing the calendar.
+      if (wrapRef.current?.querySelector('[data-caption-menu="open"]')) return;
+      setOpen(false);
     }
 
     document.addEventListener("mousedown", handlePointer);
@@ -93,7 +225,7 @@ export function DatePickerField({
         </span>
       </button>
 
-      {/* Keep a native-ish value for forms / SEO tooling without showing the OS picker */}
+      {/* Keep a native-ish value for forms without showing the OS picker */}
       <input type="hidden" name={id} value={value} required={required} readOnly />
 
       {open && (
@@ -108,21 +240,26 @@ export function DatePickerField({
             selected={selected}
             onSelect={selectDate}
             defaultMonth={selected}
+            startMonth={startMonth}
+            endMonth={endMonth}
+            captionLayout="dropdown"
+            navLayout="around"
             showOutsideDays
             weekStartsOn={0}
             classNames={{
               root: "w-full",
               months: "relative",
-              month: "w-full space-y-3",
+              month: "relative w-full space-y-3",
               month_caption:
                 "relative flex h-9 items-center justify-center px-10",
-              caption_label: "text-sm font-semibold text-foreground",
-              nav: "absolute inset-x-0 top-0 flex items-center justify-between px-0",
+              dropdowns: "relative flex items-center justify-center gap-1.5",
+              dropdown_root: "relative",
+              nav: "hidden",
               button_previous:
-                "inline-flex size-8 items-center justify-center rounded-lg text-muted transition hover:bg-cat-date-soft hover:text-cat-date",
+                "absolute top-0 left-0 z-10 inline-flex size-8 items-center justify-center rounded-lg text-muted transition hover:bg-cat-date-soft hover:text-cat-date",
               button_next:
-                "inline-flex size-8 items-center justify-center rounded-lg text-muted transition hover:bg-cat-date-soft hover:text-cat-date",
-              chevron: "hidden",
+                "absolute top-0 right-0 z-10 inline-flex size-8 items-center justify-center rounded-lg text-muted transition hover:bg-cat-date-soft hover:text-cat-date",
+              chevron: "size-4 text-muted",
               month_grid: "w-full border-collapse",
               weekdays: "grid grid-cols-7",
               weekday:
@@ -140,12 +277,26 @@ export function DatePickerField({
               hidden: "invisible",
             }}
             components={{
-              Chevron: ({ orientation }) =>
-                orientation === "left" ? (
-                  <ChevronLeft className="size-4" aria-hidden="true" />
-                ) : (
-                  <ChevronRight className="size-4" aria-hidden="true" />
-                ),
+              Dropdown: ModernCaptionDropdown,
+              Chevron: ({ orientation, className }) => {
+                const iconClass = className ?? "size-4";
+                if (orientation === "left") {
+                  return (
+                    <ChevronLeft className={iconClass} aria-hidden="true" />
+                  );
+                }
+                if (orientation === "right") {
+                  return (
+                    <ChevronRight className={iconClass} aria-hidden="true" />
+                  );
+                }
+                return (
+                  <ChevronDown
+                    className={iconClass ?? "size-3.5"}
+                    aria-hidden="true"
+                  />
+                );
+              },
             }}
           />
 
