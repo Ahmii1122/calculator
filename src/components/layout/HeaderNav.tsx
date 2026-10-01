@@ -105,7 +105,9 @@ export function HeaderNav({
               const href =
                 category.id === "date-time"
                   ? "/date-time"
-                  : `/#${category.id}`;
+                  : category.id === "math"
+                    ? "/math"
+                    : `/#${category.id}`;
 
               return (
                 <li key={category.id} role="none">
