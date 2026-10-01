@@ -136,7 +136,7 @@ function ToggleSwitch({
         <span className="block text-[13px] font-semibold text-foreground">{title}</span>
         <span className="mt-0.5 block text-xs text-muted">{description}</span>
       </span>
-      <span className="relative inline-flex shrink-0 items-center">
+      <span className="relative inline-block h-6 w-11 shrink-0">
         <input
           id={id}
           type="checkbox"
@@ -146,18 +146,32 @@ function ToggleSwitch({
         />
         <span
           aria-hidden="true"
-          className={`h-6 w-11 rounded-full bg-border transition peer-focus-visible:ring-2 after:absolute after:top-0.5 after:left-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow-sm after:transition-transform peer-checked:after:translate-x-5 ${dateTheme.toggle}`}
+          className={`pointer-events-none absolute inset-0 rounded-full bg-border transition peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 ${dateTheme.toggle}`}
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute top-0.5 left-0.5 size-5 rounded-full bg-white shadow-sm transition-transform duration-200 ease-out peer-checked:translate-x-5"
         />
       </span>
     </label>
   );
 }
 
+export type DateSpanCalculatorVariant = "days-between" | "business-days";
+
+type DateSpanCalculatorProps = {
+  /** `business-days` makes workdays the hero metric; calendar/weekend become secondary. */
+  variant?: DateSpanCalculatorVariant;
+};
+
 /**
- * Feature-rich days-between-dates tool.
- * Live-recalculates on input and option changes.
+ * Shared date-span calculator UI.
+ * Both Days Between Dates and Business Days pages use `calculateDateSpan`.
  */
-export function DaysBetweenDatesCalculator() {
+export function DaysBetweenDatesCalculator({
+  variant = "days-between",
+}: DateSpanCalculatorProps = {}) {
+  const isBusinessPrimary = variant === "business-days";
   const clientNow = useClientNow();
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
@@ -190,12 +204,19 @@ export function DaysBetweenDatesCalculator() {
   const endBadge = dayOfWeekLabel(effectiveEnd);
 
   const primaryCount = result
-    ? businessDaysOnly
+    ? isBusinessPrimary || businessDaysOnly
       ? result.businessDays
       : result.totalDays
     : null;
 
-  const primaryLabel = businessDaysOnly ? "business workdays" : "total elapsed";
+  const primaryLabel = isBusinessPrimary
+    ? "business workdays"
+    : businessDaysOnly
+      ? "business workdays"
+      : "total elapsed";
+
+  const primaryUnitSingular = isBusinessPrimary ? "Workday" : "Day";
+  const primaryUnitPlural = isBusinessPrimary ? "Workdays" : "Days";
 
   function ensureStartDate(): string {
     if (effectiveStart) return effectiveStart;
@@ -233,7 +254,9 @@ export function DaysBetweenDatesCalculator() {
 
   async function handleCopySummary() {
     if (!result || primaryCount === null) return;
-    const text = `${SITE_NAME} Calculation: ${effectiveStart} to ${effectiveEnd} = ${primaryCount.toLocaleString()} ${businessDaysOnly ? "business days" : "days"} (${result.businessDays} workdays, ${result.weekendDays} weekend days).`;
+    const text = isBusinessPrimary
+      ? `${SITE_NAME} Calculation: ${effectiveStart} to ${effectiveEnd} = ${primaryCount.toLocaleString()} business days (${result.totalDays} calendar days, ${result.weekendDays} weekend days).`
+      : `${SITE_NAME} Calculation: ${effectiveStart} to ${effectiveEnd} = ${primaryCount.toLocaleString()} ${businessDaysOnly ? "business days" : "days"} (${result.businessDays} workdays, ${result.weekendDays} weekend days).`;
     try {
       await navigator.clipboard.writeText(text);
       setCopyState("copied");
@@ -245,8 +268,12 @@ export function DaysBetweenDatesCalculator() {
 
   async function handleShare() {
     const shareData = {
-      title: "Days Between Two Dates Calculator",
-      text: `Date duration: ${effectiveStart} to ${effectiveEnd}`,
+      title: isBusinessPrimary
+        ? "Business Days Calculator"
+        : "Days Between Two Dates Calculator",
+      text: isBusinessPrimary
+        ? `Business days: ${effectiveStart} to ${effectiveEnd}`
+        : `Date duration: ${effectiveStart} to ${effectiveEnd}`,
       url: window.location.href,
     };
     try {
@@ -417,18 +444,22 @@ export function DaysBetweenDatesCalculator() {
                 title="Include End Date in Count"
                 description="Count both start and finish dates (+1 day)"
               />
-              <div className="h-px bg-border/70" />
-              <ToggleSwitch
-                id="toggle-business-only"
-                checked={businessDaysOnly}
-                onChange={setBusinessDaysOnly}
-                title="Count Business Days Only"
-                description={
-                  saturdayAsBusinessDay
-                    ? "Count Mon–Sat; exclude Sundays only"
-                    : "Count Mon–Fri; exclude Saturdays and Sundays"
-                }
-              />
+              {!isBusinessPrimary && (
+                <>
+                  <div className="h-px bg-border/70" />
+                  <ToggleSwitch
+                    id="toggle-business-only"
+                    checked={businessDaysOnly}
+                    onChange={setBusinessDaysOnly}
+                    title="Count Business Days Only"
+                    description={
+                      saturdayAsBusinessDay
+                        ? "Count Mon–Sat; exclude Sundays only"
+                        : "Count Mon–Fri; exclude Saturdays and Sundays"
+                    }
+                  />
+                </>
+              )}
               <div className="h-px bg-border/70" />
               <ToggleSwitch
                 id="toggle-saturday-working"
@@ -449,7 +480,7 @@ export function DaysBetweenDatesCalculator() {
               }}
             >
               <Zap className="size-5" aria-hidden="true" />
-              Calculate Difference
+              {isBusinessPrimary ? "Calculate Business Days" : "Calculate Difference"}
             </button>
           </div>
         </section>
@@ -489,7 +520,9 @@ export function DaysBetweenDatesCalculator() {
                     <span className="text-5xl font-extrabold tracking-tight text-foreground tabular-nums sm:text-6xl">
                       {primaryCount.toLocaleString()}{" "}
                       <span className="text-[0.55em] font-bold">
-                        {primaryCount === 1 ? "Day" : "Days"}
+                        {primaryCount === 1
+                          ? primaryUnitSingular
+                          : primaryUnitPlural}
                       </span>
                     </span>
                     <span className="text-lg font-medium text-muted">
@@ -497,14 +530,26 @@ export function DaysBetweenDatesCalculator() {
                     </span>
                   </div>
                   <div className="mt-2 flex flex-wrap items-center gap-2 text-[15px] text-muted">
-                    <span>Equivalent to</span>
-                    <span className="font-semibold text-foreground">
-                      {formatNaturalBreakdown(
-                        result.years,
-                        result.months,
-                        result.days,
-                      )}
-                    </span>
+                    {isBusinessPrimary ? (
+                      <>
+                        <span>Across</span>
+                        <span className="font-semibold text-foreground">
+                          {result.totalDays.toLocaleString()} calendar{" "}
+                          {result.totalDays === 1 ? "day" : "days"}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Equivalent to</span>
+                        <span className="font-semibold text-foreground">
+                          {formatNaturalBreakdown(
+                            result.years,
+                            result.months,
+                            result.days,
+                          )}
+                        </span>
+                      </>
+                    )}
                     <span className="text-[12px] tabular-nums text-muted">
                       {includeEndDate
                         ? "(Terminal day included)"
@@ -514,49 +559,95 @@ export function DaysBetweenDatesCalculator() {
                 </div>
 
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-                  <div
-                    className="flex w-full flex-col items-center justify-center rounded-full border border-border/70 bg-background px-4 py-2.5 text-center"
-                    title={`${result.totalDays.toLocaleString()} continuous 24h days`}
-                  >
-                    <span className="text-sm font-semibold tabular-nums text-foreground">
-                      {result.weeks}w + {result.weekRemainderDays}d
-                    </span>
-                    <span className="ui-label mt-0.5 text-[11px] text-muted">
-                      Weeks &amp; days
-                    </span>
-                  </div>
-                  <div
-                    className={`flex w-full flex-col items-center justify-center rounded-full border px-4 py-2.5 text-center ${dateTheme.borderSoft} ${dateTheme.soft}`}
-                    title={
-                      saturdayAsBusinessDay
-                        ? "Monday through Saturday"
-                        : "Monday through Friday"
-                    }
-                  >
-                    <span
-                      className={`text-sm font-semibold tabular-nums ${dateTheme.text}`}
-                    >
-                      {result.businessDays.toLocaleString()} workdays
-                    </span>
-                    <span className={`ui-label mt-0.5 text-[11px] ${dateTheme.text}`}>
-                      Business days
-                    </span>
-                  </div>
-                  <div
-                    className="flex w-full flex-col items-center justify-center rounded-full border border-border/70 bg-background px-4 py-2.5 text-center"
-                    title={
-                      saturdayAsBusinessDay
-                        ? "Sundays only"
-                        : "Saturdays and Sundays"
-                    }
-                  >
-                    <span className="text-sm font-semibold tabular-nums text-foreground">
-                      {result.weekendDays.toLocaleString()} weekend days
-                    </span>
-                    <span className="ui-label mt-0.5 text-[11px] text-muted">
-                      {saturdayAsBusinessDay ? "Sundays" : "Weekend days"}
-                    </span>
-                  </div>
+                  {isBusinessPrimary ? (
+                    <>
+                      <div
+                        className="flex w-full flex-col items-center justify-center rounded-full border border-border/70 bg-background px-4 py-2.5 text-center"
+                        title={`${result.totalDays.toLocaleString()} continuous calendar days`}
+                      >
+                        <span className="text-sm font-semibold tabular-nums text-foreground">
+                          {result.totalDays.toLocaleString()} calendar days
+                        </span>
+                        <span className="ui-label mt-0.5 text-[11px] text-muted">
+                          Total days
+                        </span>
+                      </div>
+                      <div
+                        className="flex w-full flex-col items-center justify-center rounded-full border border-border/70 bg-background px-4 py-2.5 text-center"
+                        title={`${result.totalDays.toLocaleString()} continuous 24h days`}
+                      >
+                        <span className="text-sm font-semibold tabular-nums text-foreground">
+                          {result.weeks}w + {result.weekRemainderDays}d
+                        </span>
+                        <span className="ui-label mt-0.5 text-[11px] text-muted">
+                          Weeks &amp; days
+                        </span>
+                      </div>
+                      <div
+                        className="flex w-full flex-col items-center justify-center rounded-full border border-border/70 bg-background px-4 py-2.5 text-center"
+                        title={
+                          saturdayAsBusinessDay
+                            ? "Sundays only"
+                            : "Saturdays and Sundays"
+                        }
+                      >
+                        <span className="text-sm font-semibold tabular-nums text-foreground">
+                          {result.weekendDays.toLocaleString()} weekend days
+                        </span>
+                        <span className="ui-label mt-0.5 text-[11px] text-muted">
+                          {saturdayAsBusinessDay ? "Sundays" : "Weekend days"}
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div
+                        className="flex w-full flex-col items-center justify-center rounded-full border border-border/70 bg-background px-4 py-2.5 text-center"
+                        title={`${result.totalDays.toLocaleString()} continuous 24h days`}
+                      >
+                        <span className="text-sm font-semibold tabular-nums text-foreground">
+                          {result.weeks}w + {result.weekRemainderDays}d
+                        </span>
+                        <span className="ui-label mt-0.5 text-[11px] text-muted">
+                          Weeks &amp; days
+                        </span>
+                      </div>
+                      <div
+                        className={`flex w-full flex-col items-center justify-center rounded-full border px-4 py-2.5 text-center ${dateTheme.borderSoft} ${dateTheme.soft}`}
+                        title={
+                          saturdayAsBusinessDay
+                            ? "Monday through Saturday"
+                            : "Monday through Friday"
+                        }
+                      >
+                        <span
+                          className={`text-sm font-semibold tabular-nums ${dateTheme.text}`}
+                        >
+                          {result.businessDays.toLocaleString()} workdays
+                        </span>
+                        <span
+                          className={`ui-label mt-0.5 text-[11px] ${dateTheme.text}`}
+                        >
+                          Business days
+                        </span>
+                      </div>
+                      <div
+                        className="flex w-full flex-col items-center justify-center rounded-full border border-border/70 bg-background px-4 py-2.5 text-center"
+                        title={
+                          saturdayAsBusinessDay
+                            ? "Sundays only"
+                            : "Saturdays and Sundays"
+                        }
+                      >
+                        <span className="text-sm font-semibold tabular-nums text-foreground">
+                          {result.weekendDays.toLocaleString()} weekend days
+                        </span>
+                        <span className="ui-label mt-0.5 text-[11px] text-muted">
+                          {saturdayAsBusinessDay ? "Sundays" : "Weekend days"}
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </div>
 
                 <div>
@@ -608,8 +699,9 @@ export function DaysBetweenDatesCalculator() {
               </div>
             ) : (
               <p className="text-[15px] text-muted">
-                Pick a start date and an end date to see total days, business
-                days, and weekend breakdown.
+                {isBusinessPrimary
+                  ? "Pick a start date and an end date to see business workdays, plus calendar and weekend breakdown."
+                  : "Pick a start date and an end date to see total days, business days, and weekend breakdown."}
               </p>
             )}
           </div>
@@ -622,10 +714,14 @@ export function DaysBetweenDatesCalculator() {
             id="presets-heading"
             className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl"
           >
-            Popular Date Calculation Presets &amp; Examples
+            {isBusinessPrimary
+              ? "Common Working-Day Presets & Examples"
+              : "Popular Date Calculation Presets & Examples"}
           </h2>
           <p className="mt-1 text-sm text-muted">
-            Click any common benchmark to populate the calculator instantly.
+            {isBusinessPrimary
+              ? "Load a typical project or SLA window to count business days instantly."
+              : "Click any common benchmark to populate the calculator instantly."}
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
