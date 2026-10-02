@@ -1,0 +1,98 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { CalculatorCard } from "@/components/home/CalculatorCard";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
+import {
+  CALCULATOR_CATEGORIES,
+  getCategoryTheme,
+} from "@/lib/calculators";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
+
+const category = CALCULATOR_CATEGORIES.find((item) => item.id === "math")!;
+const theme = getCategoryTheme("math");
+
+const PAGE_TITLE = "Math & Education Calculators — Calculator Hub";
+const PAGE_DESCRIPTION =
+  "Free math and education calculators — percentage calculator, averages, unit conversion, and more. Instant results, no signup.";
+
+export const metadata: Metadata = {
+  title: {
+    absolute: PAGE_TITLE,
+  },
+  description: PAGE_DESCRIPTION,
+  alternates: {
+    canonical: `${SITE_URL}/math`,
+  },
+  openGraph: {
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    type: "website",
+    url: `${SITE_URL}/math`,
+    siteName: SITE_NAME,
+  },
+  twitter: {
+    card: "summary",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+  },
+};
+
+export default function MathCategoryPage() {
+  const Icon = category.icon;
+
+  return (
+    <>
+      <Header />
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
+        <Breadcrumbs
+          theme={theme}
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Math & Education" },
+          ]}
+        />
+
+        <header className="mb-8 max-w-2xl">
+          <div className="mb-3 flex items-center gap-3">
+            <span className="flex size-10 items-center justify-center rounded-xl bg-cat-math-soft text-cat-math">
+              <Icon className="size-5" aria-hidden="true" />
+            </span>
+            <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              {category.title} Calculators
+            </h1>
+          </div>
+          <p className="text-base text-muted sm:text-lg">{category.description}</p>
+        </header>
+
+        <section aria-labelledby="math-tools-heading">
+          <h2 id="math-tools-heading" className="sr-only">
+            Available math and education calculators
+          </h2>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {category.calculators.map((calculator) => (
+              <CalculatorCard
+                key={calculator.id}
+                calculator={calculator}
+                theme={theme}
+              />
+            ))}
+          </div>
+        </section>
+
+        <div className="mt-12 border-t border-border/80 pt-6">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-lg border border-border/80 bg-panel px-3.5 py-2 text-[13px] font-medium text-foreground shadow-card transition hover:border-cat-math/35 hover:bg-cat-math-soft"
+          >
+            <ArrowLeft className="size-4 text-muted" aria-hidden="true" />
+            Back to all calculators
+          </Link>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+}
