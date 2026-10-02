@@ -61,7 +61,10 @@ export function formatNaturalBreakdown(
 }
 
 /** True when the day is treated as non-working for the chosen week pattern. */
-function isNonWorkingDay(date: Date, saturdayAsBusinessDay: boolean): boolean {
+export function isNonWorkingDay(
+  date: Date,
+  saturdayAsBusinessDay = false,
+): boolean {
   const day = getDay(date); // 0 Sun … 6 Sat
   if (saturdayAsBusinessDay) return day === 0; // Sunday only
   return day === 0 || day === 6; // Sat + Sun
