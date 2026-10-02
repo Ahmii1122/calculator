@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CalendarDays, ChevronDown } from "lucide-react";
 import { DaysBetweenDatesCalculator } from "@/components/calculators/DaysBetweenDatesCalculator";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -222,6 +223,56 @@ export default function DaysBetweenDatesPage() {
                   </p>
                 </details>
               ))}
+            </div>
+          </section>
+
+          <section aria-labelledby="related-heading">
+            <div className="mb-4 max-w-3xl">
+              <h2
+                id="related-heading"
+                className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl"
+              >
+                Related Calculators
+              </h2>
+              <p className="mt-2 text-[15px] leading-relaxed text-muted">
+                Focused on working days or exact age instead?
+              </p>
+            </div>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <Link
+                href="/date-time/business-days-calculator"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-date/45 hover:bg-cat-date-soft"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Business Days Calculator
+                </span>
+                <span className="text-sm text-muted">
+                  Count weekdays between two dates for deadlines, deliveries, and
+                  SLAs
+                </span>
+              </Link>
+              <Link
+                href="/date-time/age-calculator"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-date/45 hover:bg-cat-date-soft"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Age Calculator
+                </span>
+                <span className="text-sm text-muted">
+                  How old am I — exact years, months, days, and next birthday
+                </span>
+              </Link>
+              <Link
+                href="/date-time/add-subtract-days"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-date/45 hover:bg-cat-date-soft"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Add or Subtract Days
+                </span>
+                <span className="text-sm text-muted">
+                  Date plus or minus days, weeks, months, or years
+                </span>
+              </Link>
             </div>
           </section>
         </article>
