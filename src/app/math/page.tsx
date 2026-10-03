@@ -57,10 +57,10 @@ export default function MathCategoryPage() {
 
         <header className="mb-8 max-w-2xl">
           <div className="mb-3 flex items-center gap-3">
-            <span className="flex size-10 items-center justify-center rounded-xl bg-cat-math-soft text-cat-math">
+            <span className="flex size-10 items-center justify-center rounded-xl bg-zinc-950 text-stone-200 shadow-xs">
               <Icon className="size-5" aria-hidden="true" />
             </span>
-            <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <h1 className="text-3xl font-bold tracking-tight text-zinc-950 sm:text-4xl">
               {category.title} Calculators
             </h1>
           </div>
@@ -85,7 +85,7 @@ export default function MathCategoryPage() {
         <div className="mt-12 border-t border-border/80 pt-6">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-lg border border-border/80 bg-panel px-3.5 py-2 text-[13px] font-medium text-foreground shadow-card transition hover:border-cat-math/35 hover:bg-cat-math-soft"
+            className="inline-flex items-center gap-2 rounded-lg border border-stone-200 bg-white px-3.5 py-2 text-[13px] font-medium text-zinc-900 shadow-card transition hover:border-zinc-400 hover:bg-stone-50"
           >
             <ArrowLeft className="size-4 text-muted" aria-hidden="true" />
             Back to all calculators
