@@ -1,48 +1,43 @@
 import Link from "next/link";
 import type { CalculatorListing, CategoryTheme } from "@/lib/calculators";
-import { CATEGORY_THEME } from "@/lib/calculators";
 
 type CalculatorCardProps = {
   calculator: CalculatorListing;
-  theme: CategoryTheme;
+  /** Kept for call-site compatibility; theme is monochrome site-wide. */
+  theme?: CategoryTheme;
 };
 
-/** Reusable calculator listing card for the homepage directory. */
-export function CalculatorCard({ calculator, theme }: CalculatorCardProps) {
+/** Editorial calculator card — monochrome chrome, emerald live badge. */
+export function CalculatorCard({ calculator }: CalculatorCardProps) {
   const Icon = calculator.icon;
-  const colors = CATEGORY_THEME[theme];
   const isComingSoon = calculator.badge === "coming-soon" || !calculator.href;
-  const isPopular = calculator.badge === "popular";
+  const isLive = !isComingSoon;
 
   const content = (
     <>
       <div className="mb-3 flex items-start justify-between gap-2">
-        <span
-          className={`flex size-10 items-center justify-center rounded-lg ${colors.icon}`}
-        >
+        <span className="flex size-10 items-center justify-center rounded-lg border border-stone-200 bg-stone-50 text-zinc-800">
           <Icon className="size-5" aria-hidden="true" />
         </span>
-        {isPopular && (
-          <span className="ui-label rounded-full bg-accent-strong px-2 py-0.5 text-[10px] text-white">
-            Try it
+        {isLive ? (
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-800">
+            <span className="size-1.5 rounded-full bg-emerald-600" />
+            Live Tool
           </span>
-        )}
-        {isComingSoon && (
-          <span
-            className={`ui-label rounded-full px-2 py-0.5 text-[10px] ${colors.badge}`}
-          >
+        ) : (
+          <span className="rounded border border-stone-200 bg-stone-100 px-2 py-0.5 text-[10px] font-semibold text-zinc-600">
             Coming soon
           </span>
         )}
       </div>
       <span
         className={`block text-[15px] font-semibold ${
-          isComingSoon ? "text-foreground/70" : "text-foreground"
+          isComingSoon ? "text-zinc-700" : "text-zinc-900"
         }`}
       >
         {calculator.name}
       </span>
-      <span className="mt-1 block text-sm text-muted">
+      <span className="mt-1 block text-sm text-zinc-600">
         {calculator.description}
       </span>
     </>
@@ -52,7 +47,7 @@ export function CalculatorCard({ calculator, theme }: CalculatorCardProps) {
     return (
       <div
         aria-disabled="true"
-        className="rounded-xl border border-border/80 bg-panel p-4 opacity-90 shadow-card"
+        className="rounded-xl border border-stone-200 bg-white p-5 shadow-card"
       >
         {content}
       </div>
@@ -62,7 +57,7 @@ export function CalculatorCard({ calculator, theme }: CalculatorCardProps) {
   return (
     <Link
       href={calculator.href!}
-      className={`block rounded-xl border border-border/80 bg-panel p-4 shadow-card transition duration-150 ease-out hover:-translate-y-0.5 hover:shadow-card-hover ${colors.hoverBorder}`}
+      className="card-transition block rounded-xl border border-stone-200 bg-white p-5 shadow-card hover:border-zinc-400 hover:shadow-card-hover"
     >
       {content}
     </Link>
