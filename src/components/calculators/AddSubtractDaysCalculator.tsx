@@ -112,7 +112,7 @@ export function AddSubtractDaysCalculator() {
             type="button"
             disabled={!ready}
             onClick={() => applyPreset(preset.days)}
-            className="rounded-full border border-border/80 bg-panel px-3.5 py-1.5 text-[12px] font-semibold text-foreground shadow-card transition hover:border-cat-date/45 hover:bg-cat-date-soft hover:text-cat-date disabled:cursor-not-allowed disabled:opacity-50"
+            className="cursor-pointer rounded-full border border-border/80 bg-panel px-3.5 py-1.5 text-[12px] font-semibold text-foreground shadow-card transition hover:border-cat-date/45 hover:bg-cat-date-soft hover:text-cat-date disabled:cursor-not-allowed disabled:opacity-50"
           >
             {preset.label}
           </button>
@@ -139,7 +139,7 @@ export function AddSubtractDaysCalculator() {
               <button
                 type="button"
                 onClick={handleReset}
-                className="ui-label inline-flex items-center gap-1 rounded px-2 py-1 text-[11px] text-muted transition hover:bg-background hover:text-foreground"
+                className="ui-label inline-flex cursor-pointer items-center gap-1 rounded px-2 py-1 text-[11px] text-muted transition hover:bg-background hover:text-foreground"
               >
                 <RefreshCw className="size-3.5" aria-hidden="true" />
                 Reset
@@ -165,7 +165,7 @@ export function AddSubtractDaysCalculator() {
                     onClick={() =>
                       setStartDate(toDateInputValue(new Date()))
                     }
-                    className={`text-[12px] font-semibold hover:underline disabled:opacity-50 ${dateTheme.text}`}
+                    className={`cursor-pointer text-[12px] font-semibold hover:underline disabled:cursor-not-allowed disabled:opacity-50 ${dateTheme.text}`}
                   >
                     Today
                   </button>
@@ -244,7 +244,7 @@ export function AddSubtractDaysCalculator() {
                     setUnit(next);
                     if (next !== "days") setBusinessDaysOnly(false);
                   }}
-                  className={`w-full rounded-lg border border-border/80 bg-background px-3 py-2.5 text-[15px] text-foreground outline-none transition hover:border-cat-date/40 focus:border-cat-date focus:bg-panel focus:ring-2 focus:ring-cat-date/20`}
+                  className="w-full cursor-pointer rounded-lg border border-border/80 bg-background px-3 py-2.5 text-[15px] text-foreground outline-none transition hover:border-cat-date/40 focus:border-cat-date focus:bg-panel focus:ring-2 focus:ring-cat-date/20"
                 >
                   {UNITS.map((item) => (
                     <option key={item.id} value={item.id}>
