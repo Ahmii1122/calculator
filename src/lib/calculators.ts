@@ -163,7 +163,8 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
       {
         id: "days-between-dates",
         name: "Days Between Two Dates",
-        description: "Exact days, weeks, and business days.",
+        description:
+          "Calculate elapsed days, weeks, and months between two calendar dates.",
         href: "/date-time/days-between-dates",
         icon: CalendarRange,
         badge: "popular",
@@ -171,7 +172,7 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
       {
         id: "age-calculator",
         name: "Age Calculator",
-        description: "Years, months, and days old.",
+        description: "Exact years, months, and days — plus days old.",
         href: "/date-time/age-calculator",
         icon: CalendarDays,
         badge: "popular",
@@ -179,7 +180,8 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
       {
         id: "business-days",
         name: "Business Days Calculator",
-        description: "Weekdays between two dates.",
+        description:
+          "Count working days between two dates, automatically excluding Saturdays and Sundays.",
         href: "/date-time/business-days-calculator",
         icon: Briefcase,
         badge: "popular",
@@ -187,7 +189,7 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
       {
         id: "add-subtract-days",
         name: "Add or Subtract Days",
-        description: "Shift any date by N days.",
+        description: "Add or subtract days, weeks, months, or years from a date.",
         href: "/date-time/add-subtract-days",
         icon: CalendarPlus,
         badge: "popular",
