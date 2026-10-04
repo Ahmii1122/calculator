@@ -1,29 +1,45 @@
 import Link from "next/link";
+import { Calculator } from "lucide-react";
 import { HeaderMobileMenu } from "@/components/layout/HeaderMobileMenu";
 import { HeaderNav } from "@/components/layout/HeaderNav";
 import { HeaderSearch } from "@/components/layout/HeaderSearch";
 import { SITE_NAME } from "@/lib/site";
 
 /**
- * Shared site header.
- * Left: wordmark · Right: minimal nav + search (hamburger on small screens).
+ * Shared editorial header — matches homepage chrome site-wide.
  */
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-border/80 bg-background/90 backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-6xl items-center gap-2.5 px-4 sm:gap-4 sm:px-6 lg:px-8">
+    <header className="glass-nav sticky top-0 z-50 border-b border-stone-200/90 bg-background/90 shadow-[0_1px_2px_rgba(24,24,27,0.02)]">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          aria-label={SITE_NAME}
-          className="shrink-0 text-[15px] font-semibold tracking-tight whitespace-nowrap text-foreground transition-colors hover:text-accent"
+          aria-label={`${SITE_NAME} Home`}
+          className="group flex shrink-0 cursor-pointer items-center gap-2.5 rounded-lg p-1 outline-none focus-visible:ring-2 focus-visible:ring-zinc-900"
         >
-          <span className="max-[400px]:hidden">Calculator </span>
-          Hub
+          <div className="flex size-9 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-950 text-white shadow-xs transition-colors group-hover:bg-zinc-800">
+            <Calculator className="size-5 text-zinc-100" aria-hidden="true" />
+          </div>
+          <div className="flex items-baseline">
+            <span className="text-lg font-bold tracking-tight text-zinc-950">
+              Calculator
+            </span>
+            <span className="ml-1 text-lg font-medium tracking-tight text-stone-500">
+              Hub
+            </span>
+          </div>
         </Link>
 
-        <div className="ml-auto flex min-w-0 flex-1 items-center justify-end gap-2 sm:gap-4 md:gap-8">
-          <HeaderNav className="hidden md:flex" />
+        <HeaderNav className="hidden md:flex" />
+
+        <div className="flex shrink-0 items-center gap-3">
           <HeaderSearch />
+          <Link
+            href="/#request-tool"
+            className="hidden cursor-pointer rounded-lg bg-zinc-900 px-3 py-1.5 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-zinc-800 sm:inline-flex"
+          >
+            Suggest Tool
+          </Link>
           <HeaderMobileMenu />
         </div>
       </div>
