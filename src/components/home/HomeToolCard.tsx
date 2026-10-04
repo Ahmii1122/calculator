@@ -71,10 +71,10 @@ export function HomeToolCard({ calculator, detail, meta }: HomeToolCardProps) {
           </>
         ) : (
           <>
-            <span className="text-xs font-medium text-zinc-400">
+            <span className="text-xs font-medium text-zinc-500">
               {meta ?? "In production"}
             </span>
-            <span className="text-xs font-medium text-zinc-400">
+            <span className="text-xs font-medium text-zinc-500">
               Not live yet
             </span>
           </>

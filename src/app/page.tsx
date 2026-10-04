@@ -293,7 +293,7 @@ export default function HomePage() {
             <HomeSearch variant="hero" />
 
             <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
-              <span className="mr-1 text-xs font-semibold text-zinc-400">
+              <span className="mr-1 text-xs font-semibold text-zinc-500">
                 Frequent:
               </span>
               {FREQUENT_LINKS.map((link) => (
@@ -321,7 +321,7 @@ export default function HomePage() {
                 >
                   Popular Right Now
                 </h2>
-                <span className="text-xs font-normal text-stone-400">
+                <span className="text-xs font-normal text-stone-500">
                   | High-demand daily utilities
                 </span>
               </div>
@@ -398,7 +398,7 @@ export default function HomePage() {
                       </p>
                     </div>
                   </div>
-                  <span className="text-xs font-semibold text-zinc-400">
+                  <span className="text-xs font-semibold text-zinc-500">
                     {categoryStatusLabel(
                       liveInCategory,
                       category.calculators.length,
@@ -428,7 +428,7 @@ export default function HomePage() {
             id="faq"
           >
             <div className="max-w-3xl">
-              <span className="text-[11px] font-bold tracking-wider text-stone-400 uppercase">
+              <span className="text-[11px] font-bold tracking-wider text-stone-500 uppercase">
                 Knowledge Base &amp; Methodology
               </span>
               <h2
