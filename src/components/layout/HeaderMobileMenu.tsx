@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { HeaderNav } from "@/components/layout/HeaderNav";
 
-/** Hamburger + slide-down panel for small screens. */
+/** Hamburger + panel for small screens — same links as desktop nav. */
 export function HeaderMobileMenu() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -26,10 +27,10 @@ export function HeaderMobileMenu() {
   }, [open]);
 
   return (
-    <div className="md:hidden">
+    <div className="relative md:hidden">
       <button
         type="button"
-        className="inline-flex size-9 items-center justify-center rounded-lg border border-border/80 bg-panel text-foreground shadow-card transition hover:bg-accent-soft"
+        className="inline-flex size-9 cursor-pointer items-center justify-center rounded-lg border border-stone-200 bg-white text-zinc-900 shadow-xs transition hover:bg-stone-100"
         aria-expanded={open}
         aria-controls="mobile-nav-panel"
         aria-label={open ? "Close menu" : "Open menu"}
@@ -45,13 +46,20 @@ export function HeaderMobileMenu() {
       {open && (
         <div
           id="mobile-nav-panel"
-          className="absolute inset-x-0 top-full z-50 border-b border-border/80 bg-background/95 px-5 py-3 shadow-card backdrop-blur-md"
+          className="absolute top-full right-0 z-50 mt-2 w-[min(18rem,calc(100vw-2rem))] rounded-xl border border-stone-200 bg-white px-3 py-3 shadow-card"
         >
           <HeaderNav
             variant="stack"
-            className="w-full flex-col items-stretch gap-1"
+            className="w-full"
             onNavigate={() => setOpen(false)}
           />
+          <Link
+            href="/#request-tool"
+            className="mt-3 block cursor-pointer rounded-lg bg-zinc-900 px-3 py-2 text-center text-xs font-semibold text-white transition-colors hover:bg-zinc-800"
+            onClick={() => setOpen(false)}
+          >
+            Suggest Tool
+          </Link>
         </div>
       )}
     </div>
