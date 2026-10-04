@@ -34,7 +34,10 @@ export function Breadcrumbs({ items, theme }: BreadcrumbsProps) {
                 />
               )}
               {item.href && !isLast ? (
-                <Link href={item.href} className="hover:text-accent">
+                <Link
+                  href={item.href}
+                  className="transition-colors hover:text-zinc-950"
+                >
                   {item.label}
                 </Link>
               ) : (
