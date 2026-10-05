@@ -1,0 +1,31 @@
+# Calculator Hub
+
+> Free, privacy-first online calculators. All arithmetic and date math runs in the browser — no accounts, no stored inputs.
+
+Calculator Hub (AllCalcs) provides accurate utility calculators for dates, education, and everyday planning. Formulas stay transparent; coming-soon tools are listed on the homepage but are not available yet.
+
+## Live pages
+
+- [Home](/): Catalog of live and planned calculators, search, FAQ, and methodology.
+- [Date & Time Calculators](/date-time): Hub for calendar and working-day tools.
+- [Days Between Two Dates](/date-time/days-between-dates): Exact days, weeks, months, and optional business-day counts between two dates.
+- [Age Calculator](/date-time/age-calculator): Exact age in years, months, and days from a date of birth.
+- [Business Days Calculator](/date-time/business-days-calculator): Working days between two dates (weekends excluded).
+- [Add or Subtract Days](/date-time/add-subtract-days): Add or subtract days, weeks, months, or years from a date.
+- [Math & Education Calculators](/math): Hub for percentage and GPA tools.
+- [Percentage Calculator](/math/percentage-calculator): Percent of a number, percent change, and related modes.
+- [GPA & CGPA Calculator](/math/gpa-calculator): SGPA, CGPA, weighted GPA, and common grading scales.
+
+## Site pages
+
+- [About](/about): What Calculator Hub is and how tools stay private.
+- [Privacy](/privacy): Privacy policy for calculator inputs and analytics.
+- [Contact](/contact): Request a new calculator or ask a question.
+
+## Planned (not live)
+
+Finance (loan payment, compound interest, savings goal) and Health (BMI, calorie needs, pregnancy due date) calculators are listed as coming soon and do not have public routes yet.
+
+## Contact
+
+Use the on-site request form (/contact or /#request-tool) to suggest a new calculator.
