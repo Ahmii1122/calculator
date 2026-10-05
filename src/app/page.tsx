@@ -24,8 +24,7 @@ import {
 } from "@/lib/calculators";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 
-const PAGE_TITLE =
-  "Free Online Calculators — Fast, Accurate & Zero-Friction Utility Tools | Calculator Hub";
+const PAGE_TITLE = "Free Online Calculators for Dates, GPA & Math";
 const PAGE_DESCRIPTION =
   "Free, instant online calculators for date differences, age, business days, GPA/CGPA, and percentages. Client-side and private — no signup, no data stored.";
 
