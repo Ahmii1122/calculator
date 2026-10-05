@@ -2,11 +2,16 @@ import type { MetadataRoute } from "next";
 import { CALCULATOR_CATEGORIES, LIVE_CALCULATORS } from "@/lib/calculators";
 import { SITE_URL } from "@/lib/site";
 
-/** Sitemap for Calculator Hub — home, category hubs, and live calculator routes. */
+/**
+ * Sitemap for Calculator Hub — home, live category hubs, live calculators,
+ * and static trust pages. Coming-soon tools (no href) are excluded.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
-  const categoryRoutes = CALCULATOR_CATEGORIES.map((category) => ({
+  const categoryRoutes = CALCULATOR_CATEGORIES.filter((category) =>
+    category.calculators.some((calculator) => Boolean(calculator.href)),
+  ).map((category) => ({
     url: `${SITE_URL}/${category.id}`,
     lastModified,
     changeFrequency: "weekly" as const,
@@ -17,7 +22,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${SITE_URL}${calculator.href}`,
     lastModified,
     changeFrequency: "weekly" as const,
-    priority: 0.9,
+    priority: 0.7,
+  }));
+
+  const staticRoutes = ["/about", "/privacy", "/contact"].map((path) => ({
+    url: `${SITE_URL}${path}`,
+    lastModified,
+    changeFrequency: "monthly" as const,
+    priority: 0.4,
   }));
 
   return [
@@ -29,5 +41,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...categoryRoutes,
     ...calculatorRoutes,
+    ...staticRoutes,
   ];
 }
