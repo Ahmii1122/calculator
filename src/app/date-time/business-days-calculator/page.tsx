@@ -13,7 +13,7 @@ const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
 const PAGE_TITLE =
   "Business Days Calculator — Working Days Between Two Dates";
 const PAGE_DESCRIPTION =
-  "Free business days calculator to count working days between two dates. Excludes weekends (Mon–Fri by default). Ideal for deadlines, delivery estimates, contracts, and SLA timelines.";
+  "Free business days calculator to count working days between two dates. Excludes weekends (Mon–Fri by default). For deadlines, contracts, and SLA timelines.";
 
 export const FAQ_ITEMS = [
   {
@@ -90,6 +90,31 @@ const faqPageJsonLd = {
   })),
 };
 
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: SITE_URL,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Date & Time",
+      item: `${SITE_URL}/date-time`,
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "Business Days Calculator",
+      item: CANONICAL_URL,
+    },
+  ],
+};
+
 export default function BusinessDaysCalculatorPage() {
   return (
     <>
@@ -103,6 +128,12 @@ export default function BusinessDaysCalculatorPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(faqPageJsonLd),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd),
         }}
       />
 

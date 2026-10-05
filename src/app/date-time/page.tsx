@@ -16,7 +16,7 @@ const theme = getCategoryTheme("date-time");
 
 const PAGE_TITLE = "Date & Time Calculators — Calculator Hub";
 const PAGE_DESCRIPTION =
-  "Free date and time calculators — days between dates, age, business days, and more. Instant results, no signup.";
+  "Free date and time calculators for days between dates, exact age, business days, and date math. Instant results in your browser — no signup or data stored.";
 
 export const metadata: Metadata = {
   title: {
@@ -40,11 +40,36 @@ export const metadata: Metadata = {
   },
 };
 
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: SITE_URL,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Date & Time",
+      item: `${SITE_URL}/date-time`,
+    },
+  ],
+};
+
 export default function DateTimeCategoryPage() {
   const Icon = category.icon;
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd),
+        }}
+      />
       <Header />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
         <Breadcrumbs
