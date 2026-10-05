@@ -470,17 +470,41 @@ export default function GpaCalculatorPage() {
                 More math tools on Calculator Hub.
               </p>
             </div>
-            <Link
-              href="/math/percentage-calculator"
-              className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
-            >
-              <span className="text-[15px] font-semibold text-foreground">
-                Percentage Calculator
-              </span>
-              <span className="text-sm text-muted">
-                Percent of a number, percent change, and increase or decrease
-              </span>
-            </Link>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <Link
+                href="/math/percentage-calculator"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Percentage Calculator
+                </span>
+                <span className="text-sm text-muted">
+                  Percent of a number, percent change, and increase or decrease
+                </span>
+              </Link>
+              <Link
+                href="/date-time/days-between-dates"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Days Between Two Dates
+                </span>
+                <span className="text-sm text-muted">
+                  Exact calendar days between any two dates
+                </span>
+              </Link>
+              <Link
+                href="/date-time/age-calculator"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Age Calculator
+                </span>
+                <span className="text-sm text-muted">
+                  Exact years, months, and days from a date of birth
+                </span>
+              </Link>
+            </div>
           </section>
         </article>
       </main>

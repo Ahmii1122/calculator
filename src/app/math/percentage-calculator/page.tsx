@@ -401,7 +401,7 @@ export default function PercentageCalculatorPage() {
                 Other live tools on Calculator Hub.
               </p>
             </div>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
               <Link
                 href="/math/gpa-calculator"
                 className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
@@ -422,6 +422,17 @@ export default function PercentageCalculatorPage() {
                 </span>
                 <span className="text-sm text-muted">
                   Exact calendar days between any two dates
+                </span>
+              </Link>
+              <Link
+                href="/date-time/age-calculator"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Age Calculator
+                </span>
+                <span className="text-sm text-muted">
+                  Exact years, months, and days from a date of birth
                 </span>
               </Link>
             </div>
