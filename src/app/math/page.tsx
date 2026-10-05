@@ -16,7 +16,7 @@ const theme = getCategoryTheme("math");
 
 const PAGE_TITLE = "Math & Education Calculators — Calculator Hub";
 const PAGE_DESCRIPTION =
-  "Free math and education calculators — percentage calculator, averages, unit conversion, and more. Instant results, no signup.";
+  "Free math and education calculators for percentages, GPA and CGPA, plus planned averages and unit tools. Instant results in your browser — no signup required.";
 
 export const metadata: Metadata = {
   title: {
@@ -40,11 +40,36 @@ export const metadata: Metadata = {
   },
 };
 
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: SITE_URL,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Math & Education",
+      item: `${SITE_URL}/math`,
+    },
+  ],
+};
+
 export default function MathCategoryPage() {
   const Icon = category.icon;
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd),
+        }}
+      />
       <Header />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
         <Breadcrumbs

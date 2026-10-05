@@ -92,6 +92,31 @@ const faqPageJsonLd = {
   })),
 };
 
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: SITE_URL,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Date & Time",
+      item: `${SITE_URL}/date-time`,
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "Days Between Two Dates",
+      item: CANONICAL_URL,
+    },
+  ],
+};
+
 export default function DaysBetweenDatesPage() {
   return (
     <>
@@ -105,6 +130,12 @@ export default function DaysBetweenDatesPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(faqPageJsonLd),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd),
         }}
       />
 
