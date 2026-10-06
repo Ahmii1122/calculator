@@ -425,14 +425,14 @@ export default function PercentageCalculatorPage() {
                 </span>
               </Link>
               <Link
-                href="/date-time/days-between-dates"
+                href="/math/unit-converter"
                 className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
               >
                 <span className="text-[15px] font-semibold text-foreground">
-                  Days Between Two Dates
+                  Unit Converter
                 </span>
                 <span className="text-sm text-muted">
-                  Exact calendar days between any two dates
+                  Length, weight, volume, and temperature conversions
                 </span>
               </Link>
             </div>
