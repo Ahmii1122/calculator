@@ -151,8 +151,8 @@ const CARD_DETAILS: Record<
   },
   "unit-converter": {
     detail:
-      "Convert length, weight, volume, and temperature across common metric and standard units.",
-    meta: "Everyday units",
+      "Convert length, weight, volume, and temperature — cm to inches, kg to lbs, Celsius to Fahrenheit, and more.",
+    meta: "Metric · US customary",
   },
 };
 

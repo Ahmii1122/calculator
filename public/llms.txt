@@ -12,9 +12,10 @@ Calculator Hub (AllCalcs) provides accurate utility calculators for dates, educa
 - [Age Calculator](/date-time/age-calculator): Exact age in years, months, and days from a date of birth.
 - [Business Days Calculator](/date-time/business-days-calculator): Working days between two dates (weekends excluded).
 - [Add or Subtract Days](/date-time/add-subtract-days): Add or subtract days, weeks, months, or years from a date.
-- [Math & Education Calculators](/math): Hub for percentage, average, and GPA tools.
+- [Math & Education Calculators](/math): Hub for percentage, average, unit conversion, and GPA tools.
 - [Percentage Calculator](/math/percentage-calculator): Percent of a number, percent change, and related modes.
 - [Average Calculator](/math/average-calculator): Mean, median, mode, range, geometric mean, and standard deviation.
+- [Unit Converter](/math/unit-converter): Length, weight, volume, and temperature — metric and US customary.
 - [GPA & CGPA Calculator](/math/gpa-calculator): SGPA, CGPA, weighted GPA, and common grading scales.
 
 ## Site pages
