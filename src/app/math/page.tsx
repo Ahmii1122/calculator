@@ -16,7 +16,7 @@ const theme = getCategoryTheme("math");
 
 const PAGE_TITLE = "Math & Education Calculators — Calculator Hub";
 const PAGE_DESCRIPTION =
-  "Free math and education calculators for percentages, GPA and CGPA, plus planned averages and unit tools. Instant results in your browser — no signup required.";
+  "Free math and education calculators for percentages, averages (mean, median, mode), GPA and CGPA, plus a planned unit converter. Instant results, no signup.";
 
 export const metadata: Metadata = {
   title: {

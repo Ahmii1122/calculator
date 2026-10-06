@@ -146,8 +146,8 @@ const CARD_DETAILS: Record<
   },
   average: {
     detail:
-      "Compute the mean across any list of numbers — median and related stats planned next.",
-    meta: "Statistical mean",
+      "Compute mean, median, mode, range, geometric mean, and standard deviation from any list of numbers.",
+    meta: "Mean · Median · Mode",
   },
   "unit-converter": {
     detail:
