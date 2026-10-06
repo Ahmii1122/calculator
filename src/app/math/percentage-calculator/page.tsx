@@ -414,6 +414,17 @@ export default function PercentageCalculatorPage() {
                 </span>
               </Link>
               <Link
+                href="/math/average-calculator"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Average Calculator
+                </span>
+                <span className="text-sm text-muted">
+                  Mean, median, mode, range, and standard deviation
+                </span>
+              </Link>
+              <Link
                 href="/date-time/days-between-dates"
                 className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
               >
@@ -422,17 +433,6 @@ export default function PercentageCalculatorPage() {
                 </span>
                 <span className="text-sm text-muted">
                   Exact calendar days between any two dates
-                </span>
-              </Link>
-              <Link
-                href="/date-time/age-calculator"
-                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
-              >
-                <span className="text-[15px] font-semibold text-foreground">
-                  Age Calculator
-                </span>
-                <span className="text-sm text-muted">
-                  Exact years, months, and days from a date of birth
                 </span>
               </Link>
             </div>
