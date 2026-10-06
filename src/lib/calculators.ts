@@ -274,9 +274,10 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
       {
         id: "average",
         name: "Average Calculator",
-        description: "Mean of any number list.",
+        description: "Mean, median, mode, range, and more.",
+        href: "/math/average-calculator",
         icon: Sigma,
-        badge: "coming-soon",
+        badge: "popular",
       },
       {
         id: "unit-converter",
