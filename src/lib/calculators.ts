@@ -282,9 +282,10 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
       {
         id: "unit-converter",
         name: "Unit Converter",
-        description: "Length, weight, and volume.",
+        description: "Length, weight, volume, and temperature.",
+        href: "/math/unit-converter",
         icon: Ruler,
-        badge: "coming-soon",
+        badge: "popular",
       },
       {
         id: "gpa",
