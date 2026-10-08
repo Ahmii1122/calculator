@@ -131,8 +131,8 @@ const CARD_DETAILS: Record<
   },
   bmi: {
     detail:
-      "Evaluate Body Mass Index using metric and imperial inputs against WHO-style weight bands.",
-    meta: "Metric & Imperial",
+      "Body mass index from height and weight — metric or imperial, with WHO adult categories and optional Asian cut-offs.",
+    meta: "Adult screening",
   },
   calorie: {
     detail:
