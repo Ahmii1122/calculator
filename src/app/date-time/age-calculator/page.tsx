@@ -347,7 +347,7 @@ export default function AgeCalculatorPage() {
                 More date tools for spans, working days, and shifting dates.
               </p>
             </div>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
               <Link
                 href="/date-time/days-between-dates"
                 className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-date/45 hover:bg-cat-date-soft"
@@ -371,14 +371,14 @@ export default function AgeCalculatorPage() {
                 </span>
               </Link>
               <Link
-                href="/date-time/add-subtract-days"
+                href="/health/bmi-calculator"
                 className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-date/45 hover:bg-cat-date-soft"
               >
                 <span className="text-[15px] font-semibold text-foreground">
-                  Add or Subtract Days
+                  BMI Calculator
                 </span>
                 <span className="text-sm text-muted">
-                  Shift any date by days, weeks, months, or years
+                  Body mass index from height and weight
                 </span>
               </Link>
             </div>
