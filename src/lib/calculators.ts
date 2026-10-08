@@ -228,17 +228,18 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
   },
   {
     id: "health",
-    title: "Health",
-    description: "Quick checks for fitness and wellness.",
+    title: "Health & Fitness",
+    description: "BMI and other wellness screening tools.",
     icon: HeartPulse,
     theme: "health",
     calculators: [
       {
         id: "bmi",
         name: "BMI Calculator",
-        description: "Body mass index from height.",
+        description: "Body mass index from height and weight.",
+        href: "/health/bmi-calculator",
         icon: Activity,
-        badge: "coming-soon",
+        badge: "popular",
       },
       {
         id: "calorie",
