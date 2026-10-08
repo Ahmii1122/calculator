@@ -9,7 +9,7 @@ const NAV_ITEMS = [
   { label: "Financial", href: "/#finance", match: "finance" as const },
   {
     label: "Health & Fitness",
-    href: "/#health",
+    href: "/health",
     match: "health" as const,
   },
   { label: "Math & Numbers", href: "/math", match: "math" as const },
@@ -31,6 +31,7 @@ function isActive(match: (typeof NAV_ITEMS)[number]["match"], pathname: string) 
   if (match === "all") return pathname === "/";
   if (match === "date-time") return pathname.startsWith("/date-time");
   if (match === "math") return pathname.startsWith("/math");
+  if (match === "health") return pathname.startsWith("/health");
   // Hash-only sections: highlight All Tools when already on home
   return false;
 }
