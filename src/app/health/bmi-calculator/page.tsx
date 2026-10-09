@@ -471,7 +471,7 @@ export default function BmiCalculatorPage() {
                 Convert units, check age, or run everyday percent math.
               </p>
             </div>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
               <Link
                 href="/math/unit-converter"
                 className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-zinc-400 hover:bg-stone-50"
@@ -481,6 +481,17 @@ export default function BmiCalculatorPage() {
                 </span>
                 <span className="text-sm text-muted">
                   Convert kg/lb, cm/ft, and other everyday units
+                </span>
+              </Link>
+              <Link
+                href="/health/calorie-calculator"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-zinc-400 hover:bg-stone-50"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Calorie Calculator
+                </span>
+                <span className="text-sm text-muted">
+                  TDEE, BMR, and maintenance calorie estimates
                 </span>
               </Link>
               <Link
