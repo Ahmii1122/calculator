@@ -136,8 +136,8 @@ const CARD_DETAILS: Record<
   },
   calorie: {
     detail:
-      "Estimate total daily energy expenditure with activity multipliers for maintenance or deficit goals.",
-    meta: "TDEE estimate",
+      "Estimate BMR and TDEE (maintenance calories) with Mifflin–St Jeor and activity levels — metric or imperial.",
+    meta: "TDEE · BMR",
   },
   "due-date": {
     detail:
