@@ -229,7 +229,7 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
   {
     id: "health",
     title: "Health & Fitness",
-    description: "BMI and other wellness screening tools.",
+    description: "BMI, calorie needs, and wellness screening tools.",
     icon: HeartPulse,
     theme: "health",
     calculators: [
@@ -243,10 +243,11 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
       },
       {
         id: "calorie",
-        name: "Calorie Needs Calculator",
-        description: "Daily calorie estimate.",
+        name: "Calorie Calculator",
+        description: "TDEE, BMR, and maintenance calories.",
+        href: "/health/calorie-calculator",
         icon: HeartPulse,
-        badge: "coming-soon",
+        badge: "popular",
       },
       {
         id: "due-date",
