@@ -12,8 +12,9 @@ Calculator Hub (AllCalcs) provides accurate utility calculators for dates, educa
 - [Age Calculator](/date-time/age-calculator): Exact age in years, months, and days from a date of birth.
 - [Business Days Calculator](/date-time/business-days-calculator): Working days between two dates (weekends excluded).
 - [Add or Subtract Days](/date-time/add-subtract-days): Add or subtract days, weeks, months, or years from a date.
-- [Health & Fitness Calculators](/health): Hub for BMI and planned wellness tools.
+- [Health & Fitness Calculators](/health): Hub for BMI, calorie needs, and planned wellness tools.
 - [BMI Calculator](/health/bmi-calculator): Adult body mass index with metric/imperial units and WHO categories.
+- [Calorie Calculator](/health/calorie-calculator): TDEE, BMR, and maintenance calorie estimates (Mifflin–St Jeor).
 - [Math & Education Calculators](/math): Hub for percentage, average, unit conversion, and GPA tools.
 - [Percentage Calculator](/math/percentage-calculator): Percent of a number, percent change, and related modes.
 - [Average Calculator](/math/average-calculator): Mean, median, mode, range, geometric mean, and standard deviation.
@@ -28,7 +29,7 @@ Calculator Hub (AllCalcs) provides accurate utility calculators for dates, educa
 
 ## Planned (not live)
 
-Finance (loan payment, compound interest, savings goal) and remaining Health tools (calorie needs, pregnancy due date) are listed as coming soon and do not have public routes yet.
+Finance (loan payment, compound interest, savings goal) and remaining Health tools (pregnancy due date) are listed as coming soon and do not have public routes yet.
 
 ## Contact
 
