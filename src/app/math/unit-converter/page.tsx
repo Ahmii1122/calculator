@@ -364,17 +364,6 @@ export default function UnitConverterPage() {
                 </span>
               </Link>
               <Link
-                href="/math/average-calculator"
-                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
-              >
-                <span className="text-[15px] font-semibold text-foreground">
-                  Average Calculator
-                </span>
-                <span className="text-sm text-muted">
-                  Mean, median, mode, range, and standard deviation
-                </span>
-              </Link>
-              <Link
                 href="/health/bmi-calculator"
                 className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
               >
@@ -383,6 +372,17 @@ export default function UnitConverterPage() {
                 </span>
                 <span className="text-sm text-muted">
                   Body mass index from height and weight
+                </span>
+              </Link>
+              <Link
+                href="/health/calorie-calculator"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Calorie Calculator
+                </span>
+                <span className="text-sm text-muted">
+                  TDEE, BMR, and maintenance calorie estimates
                 </span>
               </Link>
             </div>
