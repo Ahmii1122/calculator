@@ -269,7 +269,7 @@ export default function DaysBetweenDatesPage() {
                 Focused on working days or exact age instead?
               </p>
             </div>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
               <Link
                 href="/date-time/business-days-calculator"
                 className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-date/45 hover:bg-cat-date-soft"
@@ -302,6 +302,17 @@ export default function DaysBetweenDatesPage() {
                 </span>
                 <span className="text-sm text-muted">
                   Date plus or minus days, weeks, months, or years
+                </span>
+              </Link>
+              <Link
+                href="/health/pregnancy-due-date-calculator"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-date/45 hover:bg-cat-date-soft"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Pregnancy Due Date Calculator
+                </span>
+                <span className="text-sm text-muted">
+                  Due date from LMP, conception, IVF, or ultrasound
                 </span>
               </Link>
             </div>
