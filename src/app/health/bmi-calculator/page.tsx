@@ -170,7 +170,7 @@ export default function BmiCalculatorPage() {
         />
 
         <header className="mb-8 max-w-3xl">
-          <p className="ui-label mb-2 inline-flex items-center gap-1.5 text-[13px] text-cat-health">
+          <p className="ui-label mb-2 inline-flex items-center gap-1.5 text-[13px] text-[#B45309]">
             <Activity className="size-4.5" aria-hidden="true" />
             Body mass index for adults
           </p>
