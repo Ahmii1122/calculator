@@ -229,7 +229,8 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
   {
     id: "health",
     title: "Health & Fitness",
-    description: "BMI, calorie needs, and wellness screening tools.",
+    description:
+      "BMI, calorie needs, pregnancy due dates, and wellness screening tools.",
     icon: HeartPulse,
     theme: "health",
     calculators: [
@@ -251,10 +252,12 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
       },
       {
         id: "due-date",
-        name: "Pregnancy Due Date",
-        description: "Estimate your due date.",
+        name: "Pregnancy Due Date Calculator",
+        description:
+          "Due date from LMP, conception, IVF transfer, or ultrasound.",
+        href: "/health/pregnancy-due-date-calculator",
         icon: Baby,
-        badge: "coming-soon",
+        badge: "popular",
       },
     ],
   },
