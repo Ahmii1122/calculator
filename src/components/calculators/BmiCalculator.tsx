@@ -14,9 +14,8 @@ import {
   type PopulationGuideline,
   type UnitSystem,
 } from "@/lib/utils/bmi";
-import { CATEGORY_THEME, getCategoryTheme } from "@/lib/calculators";
-
-const healthTheme = CATEGORY_THEME[getCategoryTheme("health")];
+/** Site amber accent — matches Calorie and Pregnancy due-date tools. */
+const ACCENT = "#B45309";
 
 /**
  * Interactive BMI calculator — metric/imperial, WHO or Asian cut-offs,
@@ -111,7 +110,7 @@ export function BmiCalculator() {
               className="flex items-center gap-2 text-[15px] font-semibold text-foreground"
             >
               <Activity
-                className={`size-5 ${healthTheme.text}`}
+                className="size-5 text-[#B45309]"
                 aria-hidden="true"
               />
               Your measurements
@@ -147,7 +146,7 @@ export function BmiCalculator() {
                     key={option.id}
                     className={`cursor-pointer rounded-lg px-3 py-2.5 text-center text-[12px] font-semibold transition sm:text-[13px] ${
                       selected
-                        ? "bg-zinc-900 text-white shadow-sm"
+                        ? "bg-[#B45309] text-white shadow-sm"
                         : "bg-background text-foreground hover:bg-stone-100"
                     }`}
                   >
@@ -187,7 +186,7 @@ export function BmiCalculator() {
                     key={option.id}
                     className={`cursor-pointer rounded-lg px-3 py-2.5 text-center text-[12px] font-semibold transition sm:text-[13px] ${
                       selected
-                        ? "bg-zinc-900 text-white shadow-sm"
+                        ? "bg-[#B45309] text-white shadow-sm"
                         : "bg-background text-foreground hover:bg-stone-100"
                     }`}
                   >
@@ -328,7 +327,7 @@ export function BmiCalculator() {
           <div className="flex flex-wrap items-center justify-between gap-2">
             <span
               id="bmi-outcome-heading"
-              className="ui-label rounded-md bg-accent-strong px-2.5 py-1 text-[11px] text-white"
+              className="ui-label rounded-md bg-[#B45309] px-2.5 py-1 text-[11px] text-white"
             >
               Your BMI
             </span>
@@ -340,7 +339,10 @@ export function BmiCalculator() {
           {result.ok ? (
             <div className="animate-fade-in flex flex-col gap-5">
               <div>
-                <p className="text-4xl font-extrabold tracking-tight text-zinc-950 tabular-nums sm:text-5xl">
+                <p
+                  className="text-4xl font-extrabold tracking-tight tabular-nums sm:text-5xl"
+                  style={{ color: ACCENT }}
+                >
                   {result.display}{" "}
                   <span className="text-xl font-semibold text-zinc-700 sm:text-2xl">
                     {result.category.label}
