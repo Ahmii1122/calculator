@@ -141,8 +141,8 @@ const CARD_DETAILS: Record<
   },
   "due-date": {
     detail:
-      "Estimate a due date from the first day of the last menstrual period using Naegele’s rule.",
-    meta: "Trimester helper",
+      "Estimate a due date from last period (LMP), conception date, IVF embryo transfer, or ultrasound — with weeks pregnant and trimester dates.",
+    meta: "LMP · IVF · Ultrasound",
   },
   average: {
     detail:
