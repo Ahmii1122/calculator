@@ -12,7 +12,7 @@ const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
 
 const PAGE_TITLE = "Add or Subtract Days From a Date - Free Date Calculator";
 const PAGE_DESCRIPTION =
-  "Add or subtract days, weeks, months, or years from any date. Optional business-day mode skips weekends. Free date calculator — instant results, no signup.";
+  "Add or subtract days, weeks, months, or years from any date. Optional business-day mode skips weekends and can exclude public holidays by country.";
 
 export const FAQ_ITEMS = [
   {
@@ -38,7 +38,7 @@ export const FAQ_ITEMS = [
   {
     question: "Does this calculator exclude weekends or holidays?",
     answer:
-      "Only when Unit is Days and Business days only is on: Saturdays and Sundays are skipped using the same weekend rules as the Business Days Calculator. Public holidays are not excluded. Weeks, months, and years always use calendar arithmetic.",
+      "Only when Unit is Days and Business days only is on: non-working weekdays (Saturday and Sunday by default) are skipped, and under More options you can choose a country holiday list, change the weekend pattern, or add custom days off — the same shared logic as the Business Days Calculator. Weeks, months, and years always use calendar arithmetic.",
   },
   {
     question: "Does this account for leap years?",
@@ -168,7 +168,7 @@ export default function AddSubtractDaysPage() {
           <p className="mt-2 text-base leading-relaxed text-muted sm:text-lg">
             Find what date is 90 days from now, subtract days from a deadline,
             or add weeks and months — with an optional business-day mode that
-            skips weekends.
+            skips weekends and, under More options, optional public holidays.
           </p>
         </header>
 
@@ -240,9 +240,15 @@ export default function AddSubtractDaysPage() {
                 Calendar days, weeks, months, and years use date-fns helpers so
                 leap years and end-of-month edges stay correct. Business-day
                 mode (Days only) walks forward or backward one day at a time and
-                skips Saturdays and Sundays with the same shared weekend check
-                used by the Business Days Calculator — holidays are not removed.
-                Adding months follows date-fns clamping: January 31 plus one
+                skips non-working weekdays and optional selected holidays with
+                the same shared logic as the{" "}
+                <a
+                  href="/date-time/business-days-calculator"
+                  className="font-medium text-foreground underline underline-offset-2"
+                >
+                  Business Days Calculator
+                </a>
+                . Adding months follows date-fns clamping: January 31 plus one
                 month becomes the last day of February.
               </p>
             </div>

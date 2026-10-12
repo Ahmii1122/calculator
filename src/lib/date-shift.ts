@@ -11,11 +11,12 @@ import {
   subWeeks,
   subYears,
 } from "date-fns";
+import { parseDateInput, toDateInputValue } from "@/lib/date-span";
 import {
-  isNonWorkingDay,
-  parseDateInput,
-  toDateInputValue,
-} from "@/lib/date-span";
+  addBusinessDays,
+  DEFAULT_NON_WORKING,
+  type HolidaySet,
+} from "@/lib/utils/business-days";
 
 export type ShiftUnit = "days" | "weeks" | "months" | "years";
 export type ShiftOperation = "add" | "subtract";
@@ -26,8 +27,10 @@ export type DateShiftInput = {
   amountRaw: number | null;
   unit: ShiftUnit;
   operation: ShiftOperation;
-  /** Only applied when unit is "days". Skips weekends via shared isNonWorkingDay. */
+  /** Only applied when unit is "days". Skips non-working weekdays and holidays. */
   businessDaysOnly?: boolean;
+  nonWorkingWeekdays?: ReadonlySet<number>;
+  holidaySet?: HolidaySet | null;
 };
 
 export type DateShiftSuccess = {
@@ -104,7 +107,19 @@ export function shiftDate(input: DateShiftInput): DateShiftResult {
   let result: Date;
 
   if (businessDaysOnly) {
-    result = shiftByBusinessDays(startDay, amount, operation);
+    const signed = operation === "add" ? amount : -amount;
+    const shifted = addBusinessDays(startDay, signed, {
+      nonWorkingWeekdays: input.nonWorkingWeekdays ?? DEFAULT_NON_WORKING,
+      holidaySet: input.holidaySet ?? null,
+    });
+    if (!shifted.ok) {
+      return {
+        ok: false,
+        error: "amount_too_large",
+        message: shifted.message,
+      };
+    }
+    result = shifted.date;
   } else if (operation === "add") {
     result = addByUnit(startDay, amount, input.unit);
   } else {
@@ -156,28 +171,24 @@ function subByUnit(start: Date, amount: number, unit: ShiftUnit): Date {
 }
 
 /**
- * Move forward or backward by N business days using the shared weekend helper
- * from date-span (Sat+Sun skipped; holidays not considered).
+ * Move forward or backward by N business days via shared addBusinessDays.
  */
 export function shiftByBusinessDays(
   start: Date,
   amount: number,
   operation: ShiftOperation,
+  options?: {
+    nonWorkingWeekdays?: ReadonlySet<number>;
+    holidaySet?: HolidaySet | null;
+  },
 ): Date {
-  if (amount === 0) return startOfDay(start);
-
-  const step = operation === "add" ? 1 : -1;
-  let current = startOfDay(start);
-  let remaining = amount;
-
-  while (remaining > 0) {
-    current = addDays(current, step);
-    if (!isNonWorkingDay(current, false)) {
-      remaining -= 1;
-    }
-  }
-
-  return current;
+  const signed = operation === "add" ? amount : -amount;
+  const shifted = addBusinessDays(start, signed, {
+    nonWorkingWeekdays: options?.nonWorkingWeekdays ?? DEFAULT_NON_WORKING,
+    holidaySet: options?.holidaySet ?? null,
+  });
+  if (!shifted.ok) return startOfDay(start);
+  return shifted.date;
 }
 
 export function parseAmountInput(raw: string): number | null {

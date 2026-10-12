@@ -12,8 +12,15 @@ import {
   type ShiftUnit,
 } from "@/lib/date-shift";
 import { dayOfWeekLabel } from "@/lib/date-span";
+import { buildHolidaySet } from "@/lib/utils/business-days";
 import { CATEGORY_THEME, getCategoryTheme } from "@/lib/calculators";
 import { DatePickerField } from "@/components/ui/DatePickerField";
+import {
+  HolidayOptions,
+  createDefaultHolidayOptions,
+  holidayTypesFromOptions,
+  type HolidayOptionsValue,
+} from "@/components/calculators/HolidayOptions";
 
 const dateTheme = CATEGORY_THEME[getCategoryTheme("date-time")];
 
@@ -44,6 +51,9 @@ export function AddSubtractDaysCalculator() {
   const [unit, setUnit] = useState<ShiftUnit>("days");
   const [operation, setOperation] = useState<ShiftOperation>("add");
   const [businessDaysOnly, setBusinessDaysOnly] = useState(false);
+  const [holidayOptions, setHolidayOptions] = useState<HolidayOptionsValue>(
+    createDefaultHolidayOptions,
+  );
   const opGroupId = useId();
   const unitId = useId();
   const amountId = useId();
@@ -56,6 +66,17 @@ export function AddSubtractDaysCalculator() {
     setReady(true);
   }, []);
 
+  const holidaySet = useMemo(() => {
+    const list =
+      holidayOptions.error || holidayOptions.loading
+        ? []
+        : holidayOptions.holidays;
+    return buildHolidaySet(list, {
+      types: holidayTypesFromOptions(holidayOptions),
+      customDates: holidayOptions.customDates,
+    });
+  }, [holidayOptions]);
+
   const amount = parseAmountInput(amountRaw);
   const calculation = useMemo(() => {
     if (!ready || !startDate) return null;
@@ -65,8 +86,19 @@ export function AddSubtractDaysCalculator() {
       unit,
       operation,
       businessDaysOnly: unit === "days" ? businessDaysOnly : false,
+      nonWorkingWeekdays: holidayOptions.nonWorkingWeekdays,
+      holidaySet,
     });
-  }, [ready, startDate, amount, unit, operation, businessDaysOnly]);
+  }, [
+    ready,
+    startDate,
+    amount,
+    unit,
+    operation,
+    businessDaysOnly,
+    holidayOptions.nonWorkingWeekdays,
+    holidaySet,
+  ]);
 
   const startBadge = startDate ? dayOfWeekLabel(startDate) : null;
 
@@ -78,6 +110,7 @@ export function AddSubtractDaysCalculator() {
     setUnit("days");
     setOperation("add");
     setBusinessDaysOnly(false);
+    setHolidayOptions(createDefaultHolidayOptions());
   }
 
   function applyPreset(days: number) {
@@ -256,47 +289,66 @@ export function AddSubtractDaysCalculator() {
             </div>
 
             {unit === "days" && (
-              <div className="rounded-xl border border-border/60 bg-background/70 p-4">
-                <label
-                  htmlFor={businessId}
-                  className="flex cursor-pointer items-start justify-between gap-3"
-                >
-                  <span>
-                    <span className="block text-[13px] font-semibold text-foreground">
-                      Business days only
+              <div className="space-y-3">
+                <div className="rounded-xl border border-border/60 bg-background/70 p-4">
+                  <label
+                    htmlFor={businessId}
+                    className="flex cursor-pointer items-start justify-between gap-3"
+                  >
+                    <span>
+                      <span className="block text-[13px] font-semibold text-foreground">
+                        Business days only
+                      </span>
+                      <span className="mt-0.5 block text-xs text-zinc-700">
+                        Skip non-working weekdays and optional holidays from
+                        More options.
+                      </span>
                     </span>
-                    <span className="mt-0.5 block text-xs text-muted">
-                      Skip Saturdays and Sundays. Public holidays are not
-                      excluded.
+                    <span className="relative inline-block h-6 w-11 shrink-0">
+                      <input
+                        id={businessId}
+                        type="checkbox"
+                        checked={businessDaysOnly}
+                        onChange={(event) =>
+                          setBusinessDaysOnly(event.target.checked)
+                        }
+                        className="peer sr-only"
+                      />
+                      <span
+                        aria-hidden="true"
+                        className={`pointer-events-none absolute inset-0 rounded-full bg-border transition peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 ${dateTheme.toggle}`}
+                      />
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute top-0.5 left-0.5 size-5 rounded-full bg-white shadow-sm transition-transform duration-200 ease-out peer-checked:translate-x-5"
+                      />
                     </span>
-                  </span>
-                  <span className="relative inline-block h-6 w-11 shrink-0">
-                    <input
-                      id={businessId}
-                      type="checkbox"
-                      checked={businessDaysOnly}
-                      onChange={(event) =>
-                        setBusinessDaysOnly(event.target.checked)
-                      }
-                      className="peer sr-only"
-                    />
-                    <span
-                      aria-hidden="true"
-                      className={`pointer-events-none absolute inset-0 rounded-full bg-border transition peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 ${dateTheme.toggle}`}
-                    />
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute top-0.5 left-0.5 size-5 rounded-full bg-white shadow-sm transition-transform duration-200 ease-out peer-checked:translate-x-5"
-                    />
-                  </span>
-                </label>
+                  </label>
+                </div>
+
+                {businessDaysOnly && (
+                  <details className="rounded-lg border border-border/70 bg-background/60">
+                    <summary className="cursor-pointer list-none px-3 py-2.5 text-[13px] font-semibold text-foreground [&::-webkit-details-marker]:hidden">
+                      More options
+                    </summary>
+                    <div className="px-3 pb-3">
+                      <HolidayOptions
+                        startDate={startDate}
+                        endDate={startDate}
+                        value={holidayOptions}
+                        onChange={setHolidayOptions}
+                      />
+                    </div>
+                  </details>
+                )}
               </div>
             )}
 
-            <p className="text-[12px] text-muted">
-              Amounts up to {MAX_SHIFT_AMOUNT.toLocaleString()}. A negative
-              amount flips Add and Subtract; the count is always the absolute
-              value.
+            <p className="text-[12px] leading-relaxed text-zinc-700">
+              Your dates stay in your browser. Choosing a country loads a static
+              list of that country&apos;s holidays. Amounts up to{" "}
+              {MAX_SHIFT_AMOUNT.toLocaleString()}. A negative amount flips Add
+              and Subtract; the count is always the absolute value.
             </p>
           </div>
         </section>
@@ -383,8 +435,12 @@ export function AddSubtractDaysCalculator() {
                     {result.amount.toLocaleString()}{" "}
                     {unitLabel(result.unit, result.amount)}
                   </span>
-                  {result.businessDaysOnly ? " (business days)" : ""} from{" "}
-                  {format(result.start, "MMM d, yyyy")}.
+                  {result.businessDaysOnly
+                    ? holidayOptions.countryCode && !holidayOptions.error
+                      ? " (business days, excluding weekends and selected holidays)"
+                      : " (business days, excluding weekends)"
+                    : ""}{" "}
+                  from {format(result.start, "MMM d, yyyy")}.
                 </p>
               </div>
             )}

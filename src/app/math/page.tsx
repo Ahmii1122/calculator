@@ -96,7 +96,7 @@ export default function MathCategoryPage() {
           <h2 id="math-tools-heading" className="sr-only">
             Available math and education calculators
           </h2>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid auto-rows-fr grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {category.calculators.map((calculator) => (
               <CalculatorCard
                 key={calculator.id}

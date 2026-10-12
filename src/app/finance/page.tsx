@@ -16,7 +16,7 @@ const theme = getCategoryTheme("finance");
 
 const PAGE_TITLE = "Finance Calculators — Calculator Hub";
 const PAGE_DESCRIPTION =
-  "Free finance calculators starting with a loan payment and amortization tool. More savings and interest tools are planned. Instant, private results in your browser.";
+  "Free finance calculators for loan payments, compound interest, and savings goals. Instant, private results in your browser.";
 
 export const metadata: Metadata = {
   title: {
@@ -96,7 +96,7 @@ export default function FinanceCategoryPage() {
           <h2 id="finance-tools-heading" className="sr-only">
             Available finance calculators
           </h2>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid auto-rows-fr grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {category.calculators.map((calculator) => (
               <CalculatorCard
                 key={calculator.id}

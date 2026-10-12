@@ -23,7 +23,7 @@ export const FAQ_ITEMS = [
   {
     question: "How are business days calculated?",
     answer:
-      "Business days (working days) count all Mondays, Tuesdays, Wednesdays, Thursdays, and Fridays within your chosen date span, while completely omitting Saturdays and Sundays. When you enable the Count Business Days Only toggle, the main focal metric reflects strictly business working days.",
+      "Business days count working days in your range: non-working weekdays (Saturday and Sunday by default) are omitted, and you can optionally exclude public or bank holidays for a country under More options, plus custom days off. When Count Business Days Only is on, the main result shows that working-day total. For the full holiday tool, see the Business Days Calculator.",
   },
   {
     question: "Does this calculator account for leap years?",
@@ -160,7 +160,15 @@ export default function DaysBetweenDatesPage() {
           </h1>
           <p className="mt-2 text-base leading-relaxed text-muted sm:text-lg">
             Compute the exact number of days, weeks, months, business working
-            days, and weekend days between any two calendar dates.
+            days, and weekend days between any two calendar dates. For country
+            holidays, custom weekends, and custom days off, use the{" "}
+            <a
+              href="/date-time/business-days-calculator"
+              className="font-medium text-foreground underline underline-offset-2"
+            >
+              Business Days Calculator
+            </a>
+            .
           </p>
         </header>
 
@@ -278,8 +286,8 @@ export default function DaysBetweenDatesPage() {
                   Business Days Calculator
                 </span>
                 <span className="text-sm text-muted">
-                  Count weekdays between two dates for deadlines, deliveries, and
-                  SLAs
+                  Full holiday tool: country public holidays, custom weekends,
+                  and days off for deadlines and SLAs
                 </span>
               </Link>
               <Link

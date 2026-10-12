@@ -1,16 +1,20 @@
 import type { MetadataRoute } from "next";
-import { CALCULATOR_CATEGORIES, LIVE_CALCULATORS } from "@/lib/calculators";
+import {
+  CALCULATOR_CATEGORIES,
+  LIVE_CALCULATORS,
+  isCalculatorLive,
+} from "@/lib/calculators";
 import { SITE_URL } from "@/lib/site";
 
 /**
  * Sitemap for Calculator Hub — home, live category hubs, live calculators,
- * and static trust pages. Coming-soon tools (no href) are excluded.
+ * and static trust pages. Coming-soon tools are excluded.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
   const categoryRoutes = CALCULATOR_CATEGORIES.filter((category) =>
-    category.calculators.some((calculator) => Boolean(calculator.href)),
+    category.calculators.some(isCalculatorLive),
   ).map((category) => ({
     url: `${SITE_URL}/${category.id}`,
     lastModified,

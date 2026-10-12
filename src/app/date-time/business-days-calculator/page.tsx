@@ -13,28 +13,43 @@ const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
 const PAGE_TITLE =
   "Business Days Calculator — Working Days Between Two Dates";
 const PAGE_DESCRIPTION =
-  "Free business days calculator to count working days between two dates. Excludes weekends (Mon–Fri by default). For deadlines, contracts, and SLA timelines.";
+  "Count working days between two dates with optional public holidays by country, custom weekends, and custom days off. Free business days calculator for deadlines and SLAs.";
 
 export const FAQ_ITEMS = [
   {
     question: "What counts as a business day?",
     answer:
-      "A business day (also called a working day) is typically Monday through Friday. Saturdays and Sundays are excluded. You can optionally treat Saturday as a working day if your team uses a six-day work week; in that case only Sunday is excluded.",
+      "A business day (working day) is any day that is not a non-working weekday and not a selected holiday. By default Saturday and Sunday are non-working. Under More options you can change the weekend pattern, choose a country holiday list, and add custom days off.",
   },
   {
     question: "Does this calculator exclude public holidays?",
     answer:
-      "Not yet. This calculator currently excludes weekends only (Saturday and Sunday, or Sunday alone if Saturday is counted as a working day). Public and bank holidays are not subtracted. Holiday calendars by country may be added in a future update.",
+      "Yes, optionally. Open More options, choose a country (and region when available), and turn on Public holidays and/or Bank holidays. Holidays that fall on a non-working weekday are listed but do not reduce the count twice. Holiday data is community-maintained and may miss local, regional, or one-off days — confirm important deadlines.",
   },
   {
     question: "How is this different from calendar days?",
     answer:
-      "Calendar days count every day in the range, including weekends. Business days count only weekdays that count as workdays. For example, a span that includes a Saturday and Sunday will show fewer business days than total calendar days.",
+      "Calendar days count every day in the range, including weekends. Business days count only working days. For example, a span that includes a Saturday and Sunday will show fewer business days than total calendar days.",
   },
   {
-    question: "Can I calculate business days for a specific country's holidays?",
+    question: "Which countries are supported?",
     answer:
-      "Not at this time. Country-specific public holiday calendars are not built in, so results do not vary by region. Use the weekend exclusion (and optional Saturday working day) for now, and adjust manually for local holidays until regional holiday support is available.",
+      "The Country holidays menu lists the countries available in the open-source date-holidays dataset (community-maintained public holiday calendars for many countries). Some countries also offer a region or state list. Selecting a country loads a static holiday file in your browser.",
+  },
+  {
+    question: "How accurate is the holiday data?",
+    answer:
+      "Holiday dates come from a community-maintained open-source dataset. They cover common public holidays for many countries but are not an official government calendar and may miss local, regional, or newly announced one-off days. Lunar-based holidays such as Eid may differ by a day from the official announcement. Confirm important deadlines yourself.",
+  },
+  {
+    question: "Can I use a different weekend, such as Friday and Saturday?",
+    answer:
+      "Yes. Under More options, use the non-working weekday checkboxes or the Fri–Sat preset. You can also choose Sat–Sun (default) or Sunday only. At least one weekday must remain a working day.",
+  },
+  {
+    question: "Can I add my own days off?",
+    answer:
+      "Yes. Under More options, add custom days off for company closures or personal leave. Those dates stay only in your browser session and are not stored or sent anywhere.",
   },
 ] as const;
 
@@ -157,9 +172,10 @@ export default function BusinessDaysCalculatorPage() {
             Business Days Calculator
           </h1>
           <p className="mt-2 text-base leading-relaxed text-muted sm:text-lg">
-            Count working days between two dates — Monday through Friday by
-            default, with weekends excluded. Built for deadlines, delivery
-            windows, contracts, and SLA planning.
+            Count working days between two dates — weekends excluded by default,
+            with optional public holidays by country, custom weekends, and
+            custom days off. Built for deadlines, delivery windows, contracts,
+            and SLA planning.
           </p>
         </header>
 
@@ -175,11 +191,11 @@ export default function BusinessDaysCalculatorPage() {
                 What Counts as a Business Day?
               </h2>
               <p className="mt-2 text-[15px] leading-relaxed text-muted">
-                Business days are the weekdays your team typically works. This
-                tool treats Monday–Friday as working days and excludes Saturday
-                and Sunday, unless you opt to count Saturday as a working day.
-                Public holidays are not removed yet — adjust manually when a
-                holiday falls inside your range.
+                Business days are the days your team typically works. By default
+                this tool treats Monday–Friday as working days and excludes
+                Saturday and Sunday. Under More options you can change which
+                weekdays are non-working and optionally subtract public or bank
+                holidays for a selected country.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
@@ -194,14 +210,54 @@ export default function BusinessDaysCalculatorPage() {
               </div>
               <div className="flex flex-col gap-2 rounded-xl border border-border/80 bg-panel/60 p-4">
                 <h3 className="text-[16px] font-semibold text-foreground">
-                  Six-day option
+                  Custom weekends
                 </h3>
                 <p className="text-sm leading-relaxed text-muted">
-                  Need Saturday on the schedule? Turn on{" "}
-                  <em>Count Saturday as a Working Day</em> so only Sunday is
-                  excluded from the business-day count.
+                  Under More options, pick Fri–Sat, Sunday only, or any mix of
+                  non-working weekdays that matches your region or team.
                 </p>
               </div>
+            </div>
+          </section>
+
+          <section aria-labelledby="holidays-heading">
+            <div className="mb-6 max-w-3xl">
+              <h2
+                id="holidays-heading"
+                className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl"
+              >
+                Business Days and Public Holidays
+              </h2>
+              <p className="mt-2 text-[15px] leading-relaxed text-muted">
+                Optional country holiday lists come from a community-maintained
+                open-source dataset. They cover common public holidays for many
+                countries but are not an official calendar. Observed or
+                substitute days are flagged when the dataset marks them.
+                Holidays that fall on a non-working weekday have no extra effect
+                on the count. Lunar-based holidays (such as Eid) may differ by a
+                day from the actual announcement. Confirm important deadlines.
+              </p>
+              <p className="mt-3 text-[13px] leading-relaxed text-zinc-700">
+                Data sources: holiday calendars from{" "}
+                <a
+                  href="https://github.com/commenthol/date-holidays"
+                  className="font-medium text-foreground underline underline-offset-2"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  date-holidays
+                </a>{" "}
+                (data © contributors,{" "}
+                <a
+                  href="https://creativecommons.org/licenses/by-sa/3.0/"
+                  className="font-medium text-foreground underline underline-offset-2"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  CC BY-SA 3.0
+                </a>
+                ; library code ISC).
+              </p>
             </div>
           </section>
 

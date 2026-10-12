@@ -1,13 +1,18 @@
 import Link from "next/link";
-import { CALCULATOR_CATEGORIES, LIVE_CALCULATORS } from "@/lib/calculators";
+import {
+  CALCULATOR_CATEGORIES,
+  LIVE_CALCULATOR_COUNT,
+  freeCalculatorsLabel,
+  isCalculatorLive,
+} from "@/lib/calculators";
 import { SITE_NAME } from "@/lib/site";
 
-/** Shared editorial footer — monochrome, live tools only. */
+/** Shared editorial footer — monochrome; links come from the catalog. */
 export function Footer() {
   const year = new Date().getFullYear();
   const byCategory = CALCULATOR_CATEGORIES.map((category) => ({
     title: category.title,
-    tools: category.calculators.filter((c) => Boolean(c.href)),
+    tools: category.calculators.filter(isCalculatorLive),
   })).filter((group) => group.tools.length > 0);
 
   return (
@@ -30,9 +35,22 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-2 text-xs font-medium text-emerald-800">
               <span className="size-2 rounded-full bg-emerald-600 ring-2 ring-emerald-100" />
-              {LIVE_CALCULATORS.length} live tools · calculations stay in your
-              browser
+              {freeCalculatorsLabel(LIVE_CALCULATOR_COUNT)} · calculations stay
+              in your browser
             </div>
+            <p className="max-w-sm text-xs leading-relaxed text-zinc-600">
+              Holiday data:{" "}
+              <a
+                href="https://github.com/commenthol/date-holidays"
+                className="font-medium text-zinc-900 underline underline-offset-2"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                date-holidays
+              </a>{" "}
+              (CC BY-SA 3.0 / ISC). Community-maintained; confirm important
+              deadlines.
+            </p>
           </div>
 
           {byCategory.slice(0, 2).map((group) => (

@@ -79,17 +79,26 @@ export function getCategoryTheme(slug: CategorySlug): CategoryTheme {
   return CATEGORY_COLORS[slug].theme;
 }
 
+export type CalculatorStatus = "live" | "coming-soon";
+
 export type CalculatorListing = {
   id: string;
+  /** URL slug segment (usually matches the route leaf). */
+  slug: string;
   name: string;
   description: string;
+  /** Present when status is "live". */
   href?: string;
   icon: LucideIcon;
-  badge?: "popular" | "coming-soon";
+  status: CalculatorStatus;
+  /** ISO date (YYYY-MM-DD) when the tool was added. Used for the optional New badge. */
+  addedAt: string;
+  /** Shown in the homepage popular strip when true. */
+  popular?: boolean;
 };
 
 export type CalculatorCategory = {
-  id: string;
+  id: CategorySlug;
   title: string;
   description: string;
   icon: LucideIcon;
@@ -149,9 +158,32 @@ export const CATEGORY_THEME = {
   },
 } as const;
 
+const NEW_BADGE_DAYS = 30;
+const MS_PER_DAY = 86_400_000;
+
+/** True when the calculator is published and has a route. */
+export function isCalculatorLive(
+  calculator: CalculatorListing,
+): calculator is CalculatorListing & { href: string } {
+  return calculator.status === "live" && Boolean(calculator.href);
+}
+
 /**
- * Homepage catalog. Only `href` entries are live; others show as coming soon.
+ * Show a "New" badge when live and addedAt is within the last 30 days
+ * (evaluated at call time / build time — never hardcoded per tool).
  */
+export function isCalculatorNew(
+  calculator: CalculatorListing,
+  now: Date = new Date(),
+): boolean {
+  if (!isCalculatorLive(calculator)) return false;
+  const added = Date.parse(calculator.addedAt);
+  if (!Number.isFinite(added)) return false;
+  const ageMs = now.getTime() - added;
+  return ageMs >= 0 && ageMs <= NEW_BADGE_DAYS * MS_PER_DAY;
+}
+
+/** Homepage and category catalog — single source of truth for all tool lists. */
 export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
   {
     id: "date-time",
@@ -162,37 +194,50 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
     calculators: [
       {
         id: "days-between-dates",
+        slug: "days-between-dates",
         name: "Days Between Two Dates",
         description:
-          "Calculate elapsed days, weeks, and months between two calendar dates.",
+          "Calculate total elapsed days, weeks, months, and hours between any two start and end calendar dates.",
         href: "/date-time/days-between-dates",
         icon: CalendarRange,
-        badge: "popular",
+        status: "live",
+        addedAt: "2026-06-01",
+        popular: true,
       },
       {
         id: "age-calculator",
+        slug: "age-calculator",
         name: "Age Calculator",
-        description: "Exact years, months, and days — plus days old.",
+        description:
+          "Determine chronological age down to precise years, months, and days, with a clear days-old total.",
         href: "/date-time/age-calculator",
         icon: CalendarDays,
-        badge: "popular",
+        status: "live",
+        addedAt: "2026-06-01",
+        popular: true,
       },
       {
         id: "business-days",
+        slug: "business-days-calculator",
         name: "Business Days Calculator",
         description:
-          "Count working days between two dates, automatically excluding Saturdays and Sundays.",
+          "Count working days between two dates with optional public holidays by country, custom weekends, and custom days off.",
         href: "/date-time/business-days-calculator",
         icon: Briefcase,
-        badge: "popular",
+        status: "live",
+        addedAt: "2026-06-15",
+        popular: true,
       },
       {
         id: "add-subtract-days",
+        slug: "add-subtract-days",
         name: "Add or Subtract Days",
-        description: "Add or subtract days, weeks, months, or years from a date.",
+        description:
+          "Add or subtract exact quantities of days, weeks, months, or years from any starting date.",
         href: "/date-time/add-subtract-days",
         icon: CalendarPlus,
-        badge: "popular",
+        status: "live",
+        addedAt: "2026-07-01",
       },
     ],
   },
@@ -205,28 +250,36 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
     calculators: [
       {
         id: "loan-payment",
+        slug: "loan-calculator",
         name: "Loan Calculator",
         description:
-          "Monthly payment (EMI), total interest, and amortization schedule.",
+          "Monthly payment (EMI), total interest, payoff date, amortization schedule, and optional extra payments — reducing or flat rate.",
         href: "/finance/loan-calculator",
         icon: DollarSign,
-        badge: "popular",
+        status: "live",
+        addedAt: "2026-09-20",
       },
       {
         id: "compound-interest",
+        slug: "compound-interest-calculator",
         name: "Compound Interest Calculator",
         description:
-          "Future value with monthly contributions, compounding frequency, and yearly breakdown.",
+          "Future value with monthly contributions, compounding frequency, effective annual yield (APY), optional inflation, and a yearly breakdown.",
         href: "/finance/compound-interest-calculator",
         icon: Percent,
-        badge: "popular",
+        status: "live",
+        addedAt: "2026-09-25",
       },
       {
         id: "savings-goal",
+        slug: "savings-goal-calculator",
         name: "Savings Goal Calculator",
-        description: "How long to reach a goal.",
+        description:
+          "How much to save each month, or how long a goal will take — with optional interest and inflation.",
+        href: "/finance/savings-goal-calculator",
         icon: PiggyBank,
-        badge: "coming-soon",
+        status: "live",
+        addedAt: "2026-10-05",
       },
     ],
   },
@@ -240,28 +293,36 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
     calculators: [
       {
         id: "bmi",
+        slug: "bmi-calculator",
         name: "BMI Calculator",
-        description: "Body mass index from height and weight.",
+        description:
+          "Body mass index from height and weight — metric or imperial, with WHO adult categories and optional Asian cut-offs.",
         href: "/health/bmi-calculator",
         icon: Activity,
-        badge: "popular",
+        status: "live",
+        addedAt: "2026-09-15",
       },
       {
         id: "calorie",
+        slug: "calorie-calculator",
         name: "Calorie Calculator",
-        description: "TDEE, BMR, and maintenance calories.",
+        description:
+          "Estimate BMR and TDEE (maintenance calories) with Mifflin–St Jeor and activity levels — metric or imperial.",
         href: "/health/calorie-calculator",
         icon: HeartPulse,
-        badge: "popular",
+        status: "live",
+        addedAt: "2026-09-18",
       },
       {
         id: "due-date",
+        slug: "pregnancy-due-date-calculator",
         name: "Pregnancy Due Date Calculator",
         description:
-          "Due date from LMP, conception, IVF transfer, or ultrasound.",
+          "Estimate a due date from last period (LMP), conception date, IVF embryo transfer, or ultrasound — with weeks pregnant and trimester dates.",
         href: "/health/pregnancy-due-date-calculator",
         icon: Baby,
-        badge: "popular",
+        status: "live",
+        addedAt: "2026-09-22",
       },
     ],
   },
@@ -274,41 +335,109 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
     calculators: [
       {
         id: "percentage",
+        slug: "percentage-calculator",
         name: "Percentage Calculator",
-        description: "Find percents in seconds.",
+        description:
+          "Find percentage of a number, percent change, and increase or decrease — with a clear worked step.",
         href: "/math/percentage-calculator",
         icon: Percent,
-        badge: "popular",
+        status: "live",
+        addedAt: "2026-06-01",
+        popular: true,
       },
       {
         id: "average",
+        slug: "average-calculator",
         name: "Average Calculator",
-        description: "Mean, median, mode, range, and more.",
+        description:
+          "Compute mean, median, mode, range, geometric mean, and standard deviation from any list of numbers.",
         href: "/math/average-calculator",
         icon: Sigma,
-        badge: "popular",
+        status: "live",
+        addedAt: "2026-07-15",
       },
       {
         id: "unit-converter",
+        slug: "unit-converter",
         name: "Unit Converter",
-        description: "Length, weight, volume, and temperature.",
+        description:
+          "Convert length, weight, volume, and temperature — cm to inches, kg to lbs, Celsius to Fahrenheit, and more.",
         href: "/math/unit-converter",
         icon: Ruler,
-        badge: "popular",
+        status: "live",
+        addedAt: "2026-07-20",
       },
       {
         id: "gpa",
+        slug: "gpa-calculator",
         name: "GPA & CGPA Calculator",
         description:
-          "SGPA, CGPA, weighted GPA, and 4.0 / 5.0 / 10-point scales.",
+          "Semester SGPA and overall CGPA with common 4.0, 5.0, and 10-point scales, plus a target planner.",
         href: "/math/gpa-calculator",
         icon: Scale,
-        badge: "popular",
+        status: "live",
+        addedAt: "2026-06-01",
       },
     ],
   },
 ];
 
-export const LIVE_CALCULATORS = CALCULATOR_CATEGORIES.flatMap((category) =>
-  category.calculators.filter((item) => Boolean(item.href)),
+export const ALL_CALCULATORS = CALCULATOR_CATEGORIES.flatMap(
+  (category) => category.calculators,
 );
+
+export const LIVE_CALCULATORS = ALL_CALCULATORS.filter(isCalculatorLive);
+
+export const POPULAR_CALCULATORS = LIVE_CALCULATORS.filter(
+  (calculator) => calculator.popular,
+);
+
+export const TOTAL_CALCULATOR_COUNT = ALL_CALCULATORS.length;
+export const LIVE_CALCULATOR_COUNT = LIVE_CALCULATORS.length;
+
+/** Human-readable total for badges and claims, e.g. "14 free calculators". */
+export function freeCalculatorsLabel(
+  count: number = LIVE_CALCULATOR_COUNT,
+): string {
+  return `${count} free calculator${count === 1 ? "" : "s"}`;
+}
+
+export function categoryToolCountLabel(count: number): string {
+  return `${count} tool${count === 1 ? "" : "s"}`;
+}
+
+export type BuildLlmsTxtOptions = {
+  siteName: string;
+  /** Origin with no trailing slash, e.g. https://www.example.com */
+  siteUrl: string;
+};
+
+/**
+ * Markdown body for /llms.txt — derived only from the calculator catalog.
+ * Lists live tools (skips coming-soon) with absolute URLs.
+ */
+export function buildLlmsTxt(options: BuildLlmsTxtOptions): string {
+  const { siteName, siteUrl } = options;
+  const origin = siteUrl.replace(/\/$/, "");
+  const count = LIVE_CALCULATORS.length;
+
+  const lines: string[] = [
+    `# ${siteName}`,
+    "",
+    `${siteName} publishes ${count} browser-based calculator${count === 1 ? "" : "s"} for dates, finance, health, and math. Calculations run in the browser; selecting a country on business-day tools loads a static holiday file for that country.`,
+    "",
+  ];
+
+  for (const category of CALCULATOR_CATEGORIES) {
+    const live = category.calculators.filter(isCalculatorLive);
+    if (live.length === 0) continue;
+
+    lines.push(`## ${category.title}`, "");
+    for (const tool of live) {
+      lines.push(`- [${tool.name}](${origin}${tool.href}): ${tool.description}`);
+    }
+    lines.push("");
+  }
+
+  return lines.join("\n").trimEnd() + "\n";
+}

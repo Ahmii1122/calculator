@@ -2,14 +2,9 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import {
-  Briefcase,
   CalendarDays,
-  CalendarRange,
-  CheckCircle2,
   CircleDollarSign,
   Info,
-  Percent,
-  Scale,
   ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
@@ -21,12 +16,15 @@ import { Header } from "@/components/layout/Header";
 import {
   CALCULATOR_CATEGORIES,
   LIVE_CALCULATORS,
+  LIVE_CALCULATOR_COUNT,
+  POPULAR_CALCULATORS,
+  categoryToolCountLabel,
+  freeCalculatorsLabel,
 } from "@/lib/calculators";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 const PAGE_TITLE = "Free Online Calculators for Dates, GPA & Math";
-const PAGE_DESCRIPTION =
-  "Free, instant online calculators for date differences, age, business days, GPA/CGPA, and percentages. Client-side and private — no signup, no data stored.";
+const PAGE_DESCRIPTION = `Free, instant online calculators for date differences, age, business days, GPA/CGPA, finance, and health — ${freeCalculatorsLabel()}. Client-side and private — no signup, no data stored.`;
 
 export const metadata: Metadata = {
   title: {
@@ -69,7 +67,7 @@ const webSiteJsonLd = {
 const itemListJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: `${SITE_NAME} live calculators`,
+  name: `${SITE_NAME} calculators`,
   numberOfItems: LIVE_CALCULATORS.length,
   itemListElement: LIVE_CALCULATORS.map((item, index) => ({
     "@type": "ListItem",
@@ -80,104 +78,6 @@ const itemListJsonLd = {
   })),
 };
 
-const CARD_DETAILS: Record<
-  string,
-  { detail: string; meta: string }
-> = {
-  "days-between-dates": {
-    detail:
-      "Calculate total elapsed days, weeks, months, and hours between any two start and end calendar dates.",
-    meta: "Instant · Realtime",
-  },
-  "age-calculator": {
-    detail:
-      "Determine chronological age down to precise years, months, and days, with a clear days-old total.",
-    meta: "Detailed breakdown",
-  },
-  "business-days": {
-    detail:
-      "Count official working days between two dates, automatically excluding Saturdays and Sundays.",
-    meta: "Weekends excluded",
-  },
-  "add-subtract-days": {
-    detail:
-      "Add or subtract exact quantities of days, weeks, months, or years from any starting date.",
-    meta: "Forward & backward",
-  },
-  percentage: {
-    detail:
-      "Find percentage of a number, percent change, and increase or decrease — with a clear worked step.",
-    meta: "Multi-mode math",
-  },
-  gpa: {
-    detail:
-      "Semester SGPA and overall CGPA with common 4.0, 5.0, and 10-point scales, plus a target planner.",
-    meta: "College & school",
-  },
-  "loan-payment": {
-    detail:
-      "Monthly payment (EMI), total interest, payoff date, amortization schedule, and optional extra payments — reducing or flat rate.",
-    meta: "EMI · Amortization",
-  },
-  "compound-interest": {
-    detail:
-      "Future value with monthly contributions, compounding frequency, effective annual yield (APY), optional inflation, and a yearly breakdown.",
-    meta: "APY · Contributions",
-  },
-  "savings-goal": {
-    detail:
-      "Discover the monthly deposit needed to reach a savings target by a deadline.",
-    meta: "Target timeline",
-  },
-  bmi: {
-    detail:
-      "Body mass index from height and weight — metric or imperial, with WHO adult categories and optional Asian cut-offs.",
-    meta: "Adult screening",
-  },
-  calorie: {
-    detail:
-      "Estimate BMR and TDEE (maintenance calories) with Mifflin–St Jeor and activity levels — metric or imperial.",
-    meta: "TDEE · BMR",
-  },
-  "due-date": {
-    detail:
-      "Estimate a due date from last period (LMP), conception date, IVF embryo transfer, or ultrasound — with weeks pregnant and trimester dates.",
-    meta: "LMP · IVF · Ultrasound",
-  },
-  average: {
-    detail:
-      "Compute mean, median, mode, range, geometric mean, and standard deviation from any list of numbers.",
-    meta: "Mean · Median · Mode",
-  },
-  "unit-converter": {
-    detail:
-      "Convert length, weight, volume, and temperature — cm to inches, kg to lbs, Celsius to Fahrenheit, and more.",
-    meta: "Metric · US customary",
-  },
-};
-
-const POPULAR_IDS = [
-  "days-between-dates",
-  "age-calculator",
-  "percentage",
-  "business-days",
-] as const;
-
-const POPULAR_ICONS = {
-  "days-between-dates": CalendarRange,
-  "age-calculator": CalendarDays,
-  percentage: Percent,
-  "business-days": Briefcase,
-} as const;
-
-const FREQUENT_LINKS = [
-  { href: "/date-time/days-between-dates", label: "Days Between Dates" },
-  { href: "/date-time/age-calculator", label: "Age Calculator" },
-  { href: "/math/percentage-calculator", label: "Percentage" },
-  { href: "/date-time/business-days-calculator", label: "Business Days" },
-  { href: "/math/gpa-calculator", label: "GPA & CGPA" },
-] as const;
-
 const FAQ_ITEMS: {
   icon: LucideIcon;
   question: string;
@@ -187,7 +87,7 @@ const FAQ_ITEMS: {
     icon: ShieldCheck,
     question: "Are my inputs kept completely private?",
     answer:
-      "Yes, 100%. All arithmetic operations and date calculations run exclusively inside your web browser’s JavaScript engine. No figures, financial parameters, or personal dates are ever transmitted to external servers.",
+      "Yes. All arithmetic and date calculations run in your browser. Your figures and dates are not transmitted to our servers. On business-day tools, choosing a country loads a static holiday list for that country; inputs are not stored or put into the URL.",
   },
   {
     icon: CalendarDays,
@@ -200,7 +100,7 @@ const FAQ_ITEMS: {
     question: "What formulas will the financial and loan calculators use?",
     answer: (
       <>
-        The live{" "}
+        The{" "}
         <Link
           href="/finance/loan-calculator"
           className="font-medium text-zinc-900 underline underline-offset-2"
@@ -218,36 +118,25 @@ const FAQ_ITEMS: {
         >
           Compound Interest Calculator
         </Link>{" "}
-        estimates future value with compounding and optional contributions.
-        Savings Goal remains planned and is not live yet.
+        estimates future value with compounding and optional contributions. The{" "}
+        <Link
+          href="/finance/savings-goal-calculator"
+          className="font-medium text-zinc-900 underline underline-offset-2"
+        >
+          Savings Goal Calculator
+        </Link>{" "}
+        finds a monthly amount or timeline for a target.
       </>
     ),
   },
   {
     icon: Info,
     question: "Is Calculator Hub free for commercial and educational use?",
-    answer:
-      "Yes. Every live tool on Calculator Hub is permanently unrestricted and free for students, engineers, financial planners, and researchers without any subscription barriers or account signups.",
+    answer: `Yes. Every tool on Calculator Hub (${freeCalculatorsLabel()}) is permanently unrestricted and free for students, engineers, financial planners, and researchers without any subscription barriers or account signups.`,
   },
 ];
 
-function categoryStatusLabel(live: number, total: number): string {
-  if (live === 0) return `${total} Tools · In production`;
-  if (live === total) return `${total} Tools · ${live} live`;
-  return `${total} Tools · ${live} live`;
-}
-
 export default function HomePage() {
-  const liveCount = LIVE_CALCULATORS.length;
-  const plannedCount = CALCULATOR_CATEGORIES.reduce(
-    (sum, category) => sum + category.calculators.length,
-    0,
-  );
-
-  const popularTools = POPULAR_IDS.map((id) =>
-    LIVE_CALCULATORS.find((tool) => tool.id === id),
-  ).filter((tool): tool is NonNullable<typeof tool> => Boolean(tool));
-
   return (
     <>
       <script
@@ -284,7 +173,7 @@ export default function HomePage() {
           <header className="mx-auto max-w-3xl space-y-5 pt-2 text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-stone-300/80 bg-stone-200/80 px-3 py-1 text-xs font-medium text-zinc-800">
               <span className="size-2 rounded-full bg-emerald-600 ring-2 ring-emerald-100" />
-              <span>100% Private, Client-Side Calculations</span>
+              <span>{freeCalculatorsLabel(LIVE_CALCULATOR_COUNT)}</span>
             </div>
             <h1 className="text-3xl leading-tight font-extrabold tracking-tight text-[#09090B] sm:text-4xl lg:text-5xl">
               Free Online Calculators{" "}
@@ -303,16 +192,16 @@ export default function HomePage() {
             <HomeSearch variant="hero" />
 
             <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
-              <span className="mr-1 text-xs font-semibold text-zinc-500">
+              <span className="mr-1 text-xs font-semibold text-zinc-600">
                 Frequent:
               </span>
-              {FREQUENT_LINKS.map((link) => (
+              {POPULAR_CALCULATORS.map((tool) => (
                 <Link
-                  key={link.href}
-                  href={link.href}
-                  className="rounded-md border border-stone-200 bg-white px-2.5 py-1 text-xs font-medium text-zinc-700 shadow-xs transition-colors hover:border-zinc-400 hover:text-zinc-950"
+                  key={tool.id}
+                  href={tool.href}
+                  className="rounded-md border border-stone-200 bg-white px-2.5 py-1 text-xs font-medium text-zinc-700 shadow-xs transition-colors hover:border-zinc-400 hover:text-zinc-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900"
                 >
-                  {link.label}
+                  {tool.name}
                 </Link>
               ))}
             </div>
@@ -326,33 +215,28 @@ export default function HomePage() {
               <div className="flex items-center gap-2">
                 <div className="size-2.5 rounded-full bg-zinc-900" />
                 <h2
-                  className="text-xs font-bold tracking-wider text-zinc-900 uppercase"
+                  className="text-sm font-bold tracking-tight text-zinc-900"
                   id="popular-strip-heading"
                 >
-                  Popular Right Now
+                  Popular right now
                 </h2>
                 <span className="text-xs font-normal text-stone-500">
-                  | High-demand daily utilities
+                  High-demand daily utilities
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 text-xs text-zinc-500">
-                <CheckCircle2
-                  className="size-3.5 text-emerald-600"
-                  aria-hidden="true"
-                />
-                {liveCount} tools live · calculations stay on-device
-              </div>
+              <p className="text-xs text-zinc-600">
+                {freeCalculatorsLabel(LIVE_CALCULATOR_COUNT)} · calculations
+                stay on-device
+              </p>
             </div>
             <div className="grid grid-cols-2 gap-3 pt-3 md:grid-cols-4">
-              {popularTools.map((tool) => {
-                const Icon =
-                  POPULAR_ICONS[tool.id as keyof typeof POPULAR_ICONS] ??
-                  Scale;
+              {POPULAR_CALCULATORS.map((tool) => {
+                const Icon = tool.icon;
                 return (
                   <Link
                     key={tool.id}
-                    href={tool.href!}
-                    className="group flex items-start gap-3 rounded-xl border border-stone-200/90 bg-stone-50 p-3 transition-all hover:border-stone-300 hover:bg-stone-100/90"
+                    href={tool.href}
+                    className="group flex items-start gap-3 rounded-xl border border-stone-200/90 bg-stone-50 p-3 transition-all hover:border-stone-300 hover:bg-stone-100/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900"
                   >
                     <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-stone-200 bg-white text-zinc-800 transition-transform group-hover:scale-105">
                       <Icon className="size-4" aria-hidden="true" />
@@ -361,7 +245,7 @@ export default function HomePage() {
                       <div className="truncate text-xs font-bold text-zinc-900 group-hover:text-zinc-950">
                         {tool.name}
                       </div>
-                      <div className="truncate text-[11px] text-zinc-500">
+                      <div className="truncate text-[11px] text-zinc-600">
                         {tool.description}
                       </div>
                     </div>
@@ -371,15 +255,9 @@ export default function HomePage() {
             </div>
           </section>
 
-          <HomeCategoryNav
-            liveCount={liveCount}
-            plannedCount={plannedCount}
-          />
+          <HomeCategoryNav />
 
           {CALCULATOR_CATEGORIES.map((category) => {
-            const liveInCategory = category.calculators.filter((c) =>
-              Boolean(c.href),
-            ).length;
             const Icon = category.icon;
             return (
               <section
@@ -408,25 +286,17 @@ export default function HomePage() {
                       </p>
                     </div>
                   </div>
-                  <span className="text-xs font-semibold text-zinc-500">
-                    {categoryStatusLabel(
-                      liveInCategory,
-                      category.calculators.length,
-                    )}
+                  <span className="text-xs font-semibold text-zinc-600">
+                    {categoryToolCountLabel(category.calculators.length)}
                   </span>
                 </div>
-                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-                  {category.calculators.map((calculator) => {
-                    const extras = CARD_DETAILS[calculator.id];
-                    return (
-                      <HomeToolCard
-                        key={calculator.id}
-                        calculator={calculator}
-                        detail={extras?.detail}
-                        meta={extras?.meta}
-                      />
-                    );
-                  })}
+                <div className="grid auto-rows-fr grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                  {category.calculators.map((calculator) => (
+                    <HomeToolCard
+                      key={calculator.id}
+                      calculator={calculator}
+                    />
+                  ))}
                 </div>
               </section>
             );
@@ -438,8 +308,8 @@ export default function HomePage() {
             id="faq"
           >
             <div className="max-w-3xl">
-              <span className="text-[11px] font-bold tracking-wider text-stone-500 uppercase">
-                Knowledge Base &amp; Methodology
+              <span className="text-[11px] font-semibold tracking-wide text-stone-600">
+                Knowledge base and methodology
               </span>
               <h2
                 className="mt-2 text-2xl font-bold tracking-tight text-zinc-950 sm:text-[1.75rem]"

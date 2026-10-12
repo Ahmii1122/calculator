@@ -82,7 +82,10 @@ export default function PrivacyPage() {
             <p className="mt-2">
               All live arithmetic and date calculations run in your browser. We
               do not receive, store, or process the figures, dates, or grades you
-              enter into calculators.
+              enter into calculators. Your dates stay in your browser. Choosing a
+              country on business-day tools loads a static list of that
+              country&apos;s holidays; inputs are not sent to our servers or put
+              into the URL.
             </p>
           </section>
           <section>

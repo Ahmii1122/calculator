@@ -181,9 +181,15 @@ export default function CompoundInterestCalculatorPage() {
           <p className="mt-2 text-base leading-relaxed text-muted sm:text-lg">
             Estimate future value with daily, monthly, or yearly compounding,
             optional monthly contributions, effective annual yield (APY), and
-            an inflation view — privately in your browser. A separate savings
-            goal question (how much to save each month to hit a target) is a
-            different tool and is not covered here.
+            an inflation view — privately in your browser. For how much to save
+            each month to hit a target, use the{" "}
+            <Link
+              href="/finance/savings-goal-calculator"
+              className="font-medium text-zinc-900 underline underline-offset-2"
+            >
+              Savings Goal Calculator
+            </Link>
+            .
           </p>
         </header>
 
@@ -385,9 +391,9 @@ export default function CompoundInterestCalculatorPage() {
                 Taxes, account fees, fund charges, and changing rates are not
                 modeled. Real investment returns are not constant and can be
                 negative. Inflation is only an optional estimate of
-                today&apos;s-money purchasing power. Asking how much to save
-                each month to reach a fixed goal is a different savings-goal
-                question and is not what this page answers.
+                today&apos;s-money purchasing power.                 Asking how much to save
+                each month to reach a fixed goal belongs on the Savings Goal
+                Calculator rather than this page.
               </p>
             </div>
           </section>
@@ -471,10 +477,21 @@ export default function CompoundInterestCalculatorPage() {
                 Related Calculators
               </h2>
               <p className="mt-2 text-[15px] leading-relaxed text-muted">
-                Loan payments, percent math, and calendar shifts.
+                Savings plans, loan payments, percent math, and calendar shifts.
               </p>
             </div>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <Link
+                href="/finance/savings-goal-calculator"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-zinc-400 hover:bg-stone-50"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Savings Goal Calculator
+                </span>
+                <span className="text-sm text-muted">
+                  How much to save each month, or how long a goal takes
+                </span>
+              </Link>
               <Link
                 href="/finance/loan-calculator"
                 className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-zinc-400 hover:bg-stone-50"

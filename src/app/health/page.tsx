@@ -16,7 +16,7 @@ const theme = getCategoryTheme("health");
 
 const PAGE_TITLE = "Health & Fitness Calculators — Calculator Hub";
 const PAGE_DESCRIPTION =
-  "Free health calculators starting with BMI (metric and imperial). More fitness tools are planned. Instant, private results in your browser — no signup.";
+  "Free health calculators for BMI, calorie needs (TDEE/BMR), and pregnancy due dates. Instant, private results in your browser — no signup.";
 
 export const metadata: Metadata = {
   title: {
@@ -96,7 +96,7 @@ export default function HealthCategoryPage() {
           <h2 id="health-tools-heading" className="sr-only">
             Available health and fitness calculators
           </h2>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid auto-rows-fr grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {category.calculators.map((calculator) => (
               <CalculatorCard
                 key={calculator.id}

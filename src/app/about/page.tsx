@@ -71,8 +71,8 @@ export default function AboutPage() {
           </h1>
           <p className="mt-3 text-base leading-relaxed text-zinc-600">
             Calculator Hub is a free collection of utility calculators for
-            calendar dates, GPA and CGPA, percentages, and everyday planning.
-            Every live tool runs entirely in your browser.
+            calendar dates, finance, health, GPA and CGPA, percentages, and
+            everyday planning. Every tool runs entirely in your browser.
           </p>
         </header>
         <div className="space-y-6 text-[15px] leading-relaxed text-zinc-700">
@@ -82,16 +82,23 @@ export default function AboutPage() {
             Calculator Hub.
           </p>
           <p>
-            Finance and health calculators shown on the homepage are planned and
-            not live yet. Browse{" "}
+            Browse{" "}
             <Link href="/date-time" className="font-medium text-zinc-950 underline">
               Date &amp; Time
-            </Link>{" "}
-            and{" "}
+            </Link>
+            ,{" "}
+            <Link href="/finance" className="font-medium text-zinc-950 underline">
+              Finance
+            </Link>
+            ,{" "}
+            <Link href="/health" className="font-medium text-zinc-950 underline">
+              Health &amp; Fitness
+            </Link>
+            , and{" "}
             <Link href="/math" className="font-medium text-zinc-950 underline">
               Math &amp; Education
-            </Link>{" "}
-            for tools available today, or{" "}
+            </Link>
+            , or{" "}
             <Link href="/contact" className="font-medium text-zinc-950 underline">
               request a calculator
             </Link>

@@ -427,10 +427,11 @@ export default function LoanCalculatorPage() {
                 Related Calculators
               </h2>
               <p className="mt-2 text-[15px] leading-relaxed text-muted">
-                Growth estimates, percent math, and calendar shifts.
+                Growth estimates, savings plans, percent math, and calendar
+                shifts.
               </p>
             </div>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
               <Link
                 href="/finance/compound-interest-calculator"
                 className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-zinc-400 hover:bg-stone-50"
@@ -440,6 +441,17 @@ export default function LoanCalculatorPage() {
                 </span>
                 <span className="text-sm text-muted">
                   Future value, contributions, and APY
+                </span>
+              </Link>
+              <Link
+                href="/finance/savings-goal-calculator"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-zinc-400 hover:bg-stone-50"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Savings Goal Calculator
+                </span>
+                <span className="text-sm text-muted">
+                  How much to save each month, or how long a goal takes
                 </span>
               </Link>
               <Link

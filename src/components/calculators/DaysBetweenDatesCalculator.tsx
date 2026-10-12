@@ -27,9 +27,20 @@ import {
   formatRangeLabel,
   toDateInputValue,
 } from "@/lib/date-span";
+import {
+  analyzeBusinessDays,
+  buildHolidaySet,
+} from "@/lib/utils/business-days";
 import { CATEGORY_THEME, getCategoryTheme } from "@/lib/calculators";
 import { SITE_NAME } from "@/lib/site";
 import { DatePickerField } from "@/components/ui/DatePickerField";
+import {
+  HolidayOptions,
+  createDefaultHolidayOptions,
+  holidayTypesFromOptions,
+  type HolidayOptionsValue,
+} from "@/components/calculators/HolidayOptions";
+import { ExcludedHolidaysPanel } from "@/components/calculators/ExcludedHolidaysPanel";
 
 const dateTheme = CATEGORY_THEME[getCategoryTheme("date-time")];
 
@@ -177,7 +188,9 @@ export function DaysBetweenDatesCalculator({
   const [endDate, setEndDate] = useState<string | null>(null);
   const [includeEndDate, setIncludeEndDate] = useState(true);
   const [businessDaysOnly, setBusinessDaysOnly] = useState(false);
-  const [saturdayAsBusinessDay, setSaturdayAsBusinessDay] = useState(false);
+  const [holidayOptions, setHolidayOptions] = useState<HolidayOptionsValue>(
+    createDefaultHolidayOptions,
+  );
   const [copyState, setCopyState] = useState<"idle" | "copied">("idle");
   const [shareState, setShareState] = useState<"idle" | "copied">("idle");
   const [showAltUnits, setShowAltUnits] = useState(false);
@@ -191,17 +204,58 @@ export function DaysBetweenDatesCalculator({
     [clientNow],
   );
 
-  const result = useMemo(
+  const holidaySet = useMemo(() => {
+    const list =
+      holidayOptions.error || holidayOptions.loading
+        ? []
+        : holidayOptions.holidays;
+    return buildHolidaySet(list, {
+      types: holidayTypesFromOptions(holidayOptions),
+      customDates: holidayOptions.customDates,
+    });
+  }, [holidayOptions]);
+
+  const businessBreakdown = useMemo(
     () =>
-      calculateDateSpan(effectiveStart, effectiveEnd, {
-        includeEndDate,
-        saturdayAsBusinessDay,
+      analyzeBusinessDays(effectiveStart, effectiveEnd, {
+        includeEnd: includeEndDate,
+        nonWorkingWeekdays: holidayOptions.nonWorkingWeekdays,
+        holidaySet,
       }),
-    [effectiveStart, effectiveEnd, includeEndDate, saturdayAsBusinessDay],
+    [
+      effectiveStart,
+      effectiveEnd,
+      includeEndDate,
+      holidayOptions.nonWorkingWeekdays,
+      holidaySet,
+    ],
   );
+
+  const result = useMemo(() => {
+    const span = calculateDateSpan(effectiveStart, effectiveEnd, {
+      includeEndDate,
+      saturdayAsBusinessDay: false,
+    });
+    if (!span || !businessBreakdown) return span;
+    return {
+      ...span,
+      businessDays: businessBreakdown.businessDays,
+      weekendDays: businessBreakdown.weekendDays,
+    };
+  }, [
+    effectiveStart,
+    effectiveEnd,
+    includeEndDate,
+    businessBreakdown,
+  ]);
 
   const startBadge = dayOfWeekLabel(effectiveStart);
   const endBadge = dayOfWeekLabel(effectiveEnd);
+
+  const usesHolidays =
+    Boolean(holidayOptions.countryCode) &&
+    !holidayOptions.error &&
+    !holidayOptions.loading;
 
   const primaryCount = result
     ? isBusinessPrimary || businessDaysOnly
@@ -243,7 +297,7 @@ export function DaysBetweenDatesCalculator({
     setEndDate(defaultEnd(fresh));
     setIncludeEndDate(true);
     setBusinessDaysOnly(false);
-    setSaturdayAsBusinessDay(false);
+    setHolidayOptions(createDefaultHolidayOptions());
   }
 
   function handlePreset(preset: Preset) {
@@ -452,23 +506,30 @@ export function DaysBetweenDatesCalculator({
                     checked={businessDaysOnly}
                     onChange={setBusinessDaysOnly}
                     title="Count Business Days Only"
-                    description={
-                      saturdayAsBusinessDay
-                        ? "Count Mon–Sat; exclude Sundays only"
-                        : "Count Mon–Fri; exclude Saturdays and Sundays"
-                    }
+                    description="Count working days only; configure weekends and holidays under More options"
                   />
                 </>
               )}
-              <div className="h-px bg-border/70" />
-              <ToggleSwitch
-                id="toggle-saturday-working"
-                checked={saturdayAsBusinessDay}
-                onChange={setSaturdayAsBusinessDay}
-                title="Count Saturday as a Working Day"
-                description="Treat Saturday as a business day (6-day work week)"
-              />
             </div>
+
+            <details className="rounded-lg border border-border/70 bg-background/60">
+              <summary className="cursor-pointer list-none px-3 py-2.5 text-[13px] font-semibold text-foreground [&::-webkit-details-marker]:hidden">
+                More options
+              </summary>
+              <div className="px-3 pb-3">
+                <HolidayOptions
+                  startDate={effectiveStart}
+                  endDate={effectiveEnd}
+                  value={holidayOptions}
+                  onChange={setHolidayOptions}
+                />
+              </div>
+            </details>
+
+            <p className="text-[12px] leading-relaxed text-zinc-700">
+              Your dates stay in your browser. Choosing a country loads a static
+              list of that country&apos;s holidays.
+            </p>
 
             <button
               type="button"
@@ -529,6 +590,13 @@ export function DaysBetweenDatesCalculator({
                       {primaryLabel}
                     </span>
                   </div>
+                  {(isBusinessPrimary || businessDaysOnly) && (
+                    <p className="mt-1 text-[13px] text-zinc-700">
+                      {usesHolidays
+                        ? "excluding weekends and selected holidays"
+                        : "excluding weekends"}
+                    </p>
+                  )}
                   <div className="mt-2 flex flex-wrap items-center gap-2 text-[15px] text-muted">
                     {isBusinessPrimary ? (
                       <>
@@ -550,13 +618,23 @@ export function DaysBetweenDatesCalculator({
                         </span>
                       </>
                     )}
-                    <span className="text-[12px] tabular-nums text-muted">
+                    <span className="text-[12px] tabular-nums text-zinc-600">
                       {includeEndDate
                         ? "(Terminal day included)"
                         : "(Terminal day excluded)"}
                     </span>
                   </div>
                 </div>
+
+                {businessBreakdown &&
+                  (isBusinessPrimary || businessDaysOnly) && (
+                    <ExcludedHolidaysPanel
+                      excluded={businessBreakdown.excludedHolidays}
+                      noEffect={businessBreakdown.noEffectHolidays}
+                      arithmeticLine={businessBreakdown.arithmeticLine}
+                      countrySelected={usesHolidays}
+                    />
+                  )}
 
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
                   {isBusinessPrimary ? (
@@ -585,17 +663,13 @@ export function DaysBetweenDatesCalculator({
                       </div>
                       <div
                         className="flex w-full flex-col items-center justify-center rounded-full border border-border/70 bg-background px-4 py-2.5 text-center"
-                        title={
-                          saturdayAsBusinessDay
-                            ? "Sundays only"
-                            : "Saturdays and Sundays"
-                        }
+                        title="Non-working weekdays in range"
                       >
                         <span className="text-sm font-semibold tabular-nums text-foreground">
                           {result.weekendDays.toLocaleString()} weekend days
                         </span>
                         <span className="ui-label mt-0.5 text-[11px] text-muted">
-                          {saturdayAsBusinessDay ? "Sundays" : "Weekend days"}
+                          Non-working weekdays
                         </span>
                       </div>
                     </>
@@ -615,9 +689,9 @@ export function DaysBetweenDatesCalculator({
                       <div
                         className={`flex w-full flex-col items-center justify-center rounded-full border px-4 py-2.5 text-center ${dateTheme.borderSoft} ${dateTheme.soft}`}
                         title={
-                          saturdayAsBusinessDay
-                            ? "Monday through Saturday"
-                            : "Monday through Friday"
+                          usesHolidays
+                            ? "Working days excluding weekends and selected holidays"
+                            : "Working days excluding weekends"
                         }
                       >
                         <span
@@ -633,17 +707,13 @@ export function DaysBetweenDatesCalculator({
                       </div>
                       <div
                         className="flex w-full flex-col items-center justify-center rounded-full border border-border/70 bg-background px-4 py-2.5 text-center"
-                        title={
-                          saturdayAsBusinessDay
-                            ? "Sundays only"
-                            : "Saturdays and Sundays"
-                        }
+                        title="Non-working weekdays in range"
                       >
                         <span className="text-sm font-semibold tabular-nums text-foreground">
                           {result.weekendDays.toLocaleString()} weekend days
                         </span>
                         <span className="ui-label mt-0.5 text-[11px] text-muted">
-                          {saturdayAsBusinessDay ? "Sundays" : "Weekend days"}
+                          Non-working weekdays
                         </span>
                       </div>
                     </>

@@ -70,7 +70,7 @@ export default function ContactPage() {
             Contact &amp; requests
           </h1>
           <p className="mt-3 text-base leading-relaxed text-zinc-600">
-            Need a custom formula or a calculator that is not live yet? Tell us
+            Need a custom formula or a calculator that is not on the site yet? Tell us
             what to build next.
           </p>
         </header>

@@ -32,8 +32,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               Privacy First
             </span>
             <span>
-              All calculations run in your browser — zero tracking, zero data
-              storage.
+              Calculations run in your browser. Optional holiday lists are
+              static files — your dates are never uploaded.
             </span>
           </div>
         </aside>

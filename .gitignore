@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated holiday data (build-time from date-holidays)
+/public/data/holidays/

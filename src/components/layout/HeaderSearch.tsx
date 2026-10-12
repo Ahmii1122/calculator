@@ -15,6 +15,7 @@ import { CornerDownLeft, Search } from "lucide-react";
 import {
   CALCULATOR_CATEGORIES,
   LIVE_CALCULATORS,
+  isCalculatorLive,
   type CalculatorListing,
 } from "@/lib/calculators";
 
@@ -70,15 +71,13 @@ function isOpenShortcut(event: KeyboardEvent, isMac: boolean): boolean {
 
 function buildSearchIndex(): SearchItem[] {
   return CALCULATOR_CATEGORIES.flatMap((category) =>
-    category.calculators
-      .filter((tool) => Boolean(tool.href))
-      .map((tool) => ({
-        tool,
-        categoryId: category.id,
-        categoryLabel: category.title,
-        tag: CATEGORY_TAG[category.id] ?? category.title,
-        section: SECTION_TITLE[category.id] ?? category.title,
-      })),
+    category.calculators.filter(isCalculatorLive).map((tool) => ({
+      tool,
+      categoryId: category.id,
+      categoryLabel: category.title,
+      tag: CATEGORY_TAG[category.id] ?? category.title,
+      section: SECTION_TITLE[category.id] ?? category.title,
+    })),
   );
 }
 
