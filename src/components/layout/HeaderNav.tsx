@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 const NAV_ITEMS = [
   { label: "All Tools", href: "/#all-calculators", match: "all" as const },
   { label: "Date & Time", href: "/date-time", match: "date-time" as const },
-  { label: "Financial", href: "/#finance", match: "finance" as const },
+  { label: "Financial", href: "/finance", match: "finance" as const },
   {
     label: "Health & Fitness",
     href: "/health",
@@ -32,6 +32,7 @@ function isActive(match: (typeof NAV_ITEMS)[number]["match"], pathname: string) 
   if (match === "date-time") return pathname.startsWith("/date-time");
   if (match === "math") return pathname.startsWith("/math");
   if (match === "health") return pathname.startsWith("/health");
+  if (match === "finance") return pathname.startsWith("/finance");
   // Hash-only sections: highlight All Tools when already on home
   return false;
 }

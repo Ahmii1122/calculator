@@ -205,17 +205,21 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
     calculators: [
       {
         id: "loan-payment",
-        name: "Loan Payment Calculator",
-        description: "Estimate monthly loan payments.",
+        name: "Loan Calculator",
+        description:
+          "Monthly payment (EMI), total interest, and amortization schedule.",
+        href: "/finance/loan-calculator",
         icon: DollarSign,
-        badge: "coming-soon",
+        badge: "popular",
       },
       {
         id: "compound-interest",
-        name: "Compound Interest",
-        description: "See growth with compounding.",
+        name: "Compound Interest Calculator",
+        description:
+          "Future value with monthly contributions, compounding frequency, and yearly breakdown.",
+        href: "/finance/compound-interest-calculator",
         icon: Percent,
-        badge: "coming-soon",
+        badge: "popular",
       },
       {
         id: "savings-goal",
