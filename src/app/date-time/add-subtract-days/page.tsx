@@ -346,7 +346,7 @@ export default function AddSubtractDaysPage() {
                 Count spans, working days, or exact age on Calculator Hub.
               </p>
             </div>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
               <Link
                 href="/date-time/days-between-dates"
                 className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-date/45 hover:bg-cat-date-soft"
@@ -389,6 +389,17 @@ export default function AddSubtractDaysPage() {
                 </span>
                 <span className="text-sm text-muted">
                   Due date from LMP, conception, IVF, or ultrasound
+                </span>
+              </Link>
+              <Link
+                href="/finance/loan-calculator"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-date/45 hover:bg-cat-date-soft"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Loan Calculator
+                </span>
+                <span className="text-sm text-muted">
+                  Monthly payment (EMI) and amortization schedule
                 </span>
               </Link>
             </div>

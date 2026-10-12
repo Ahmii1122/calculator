@@ -116,13 +116,13 @@ const CARD_DETAILS: Record<
   },
   "loan-payment": {
     detail:
-      "Estimate monthly payments, principal vs. interest breakdown, and complete amortization schedules.",
-    meta: "Amortization tables",
+      "Monthly payment (EMI), total interest, payoff date, amortization schedule, and optional extra payments — reducing or flat rate.",
+    meta: "EMI · Amortization",
   },
   "compound-interest": {
     detail:
-      "Simulate growth with recurring contributions and custom compounding frequency.",
-    meta: "Yield modeling",
+      "Future value with monthly contributions, compounding frequency, effective annual yield (APY), optional inflation, and a yearly breakdown.",
+    meta: "APY · Contributions",
   },
   "savings-goal": {
     detail:
@@ -200,15 +200,26 @@ const FAQ_ITEMS: {
     question: "What formulas will the financial and loan calculators use?",
     answer: (
       <>
-        Loan Payment, Compound Interest, and Savings Goal are planned tools and
-        are not live yet. When they ship, loan payments will use the standard
-        amortization formula{" "}
+        The live{" "}
+        <Link
+          href="/finance/loan-calculator"
+          className="font-medium text-zinc-900 underline underline-offset-2"
+        >
+          Loan Calculator
+        </Link>{" "}
+        uses the standard reducing-balance amortization formula{" "}
         <code className="rounded border border-stone-200 bg-stone-100 px-1.5 py-0.5 font-mono text-[12px] text-zinc-800">
           M = P[r(1+r)^n] / [(1+r)^n − 1]
         </code>
-        . Compound interest will support common compounding intervals (daily,
-        monthly, annually). Until then, treat this as a preview of the planned
-        feature — not an active calculator.
+        . The{" "}
+        <Link
+          href="/finance/compound-interest-calculator"
+          className="font-medium text-zinc-900 underline underline-offset-2"
+        >
+          Compound Interest Calculator
+        </Link>{" "}
+        estimates future value with compounding and optional contributions.
+        Savings Goal remains planned and is not live yet.
       </>
     ),
   },
