@@ -408,7 +408,7 @@ export function categoryToolCountLabel(count: number): string {
 
 export type BuildLlmsTxtOptions = {
   siteName: string;
-  /** Origin with no trailing slash, e.g. https://www.example.com */
+  /** Origin with no trailing slash, e.g. https://calcdaily.app */
   siteUrl: string;
 };
 

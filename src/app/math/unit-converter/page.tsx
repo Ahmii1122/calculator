@@ -34,7 +34,7 @@ export const FAQ_ITEMS = [
   {
     question: "Why are there different gallon sizes?",
     answer:
-      "The US liquid gallon is about 3.785 liters. The Imperial (UK) gallon is larger — about 4.546 liters. Recipes, fuel, and product labels can use either system depending on the country. Calculator Hub defaults to the US gallon so US cooking and packaging conversions stay consistent; Imperial gallons are not mixed into the same dropdown.",
+      "The US liquid gallon is about 3.785 liters. The Imperial (UK) gallon is larger — about 4.546 liters. Recipes, fuel, and product labels can use either system depending on the country. CalcDaily defaults to the US gallon so US cooking and packaging conversions stay consistent; Imperial gallons are not mixed into the same dropdown.",
   },
   {
     question: "Is this converter accurate for scientific or engineering use?",
@@ -348,7 +348,7 @@ export default function UnitConverterPage() {
                 Related Calculators
               </h2>
               <p className="mt-2 text-[15px] leading-relaxed text-muted">
-                More math tools on Calculator Hub.
+                More math tools on CalcDaily.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">

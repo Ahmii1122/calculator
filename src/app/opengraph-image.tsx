@@ -23,7 +23,14 @@ export default function OpenGraphImage() {
           fontFamily: "system-ui, sans-serif",
         }}
       >
-        <div style={{ display: "flex", fontSize: 72, fontWeight: 800, letterSpacing: -1 }}>
+        <div
+          style={{
+            display: "flex",
+            fontSize: 72,
+            fontWeight: 800,
+            letterSpacing: -1,
+          }}
+        >
           <span>Calc</span>
           <span style={{ color: BRAND_ACCENT }}>Daily</span>
         </div>

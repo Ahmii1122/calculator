@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Calculator } from "lucide-react";
 import { HeaderMobileMenu } from "@/components/layout/HeaderMobileMenu";
 import { HeaderNav } from "@/components/layout/HeaderNav";
 import { HeaderSearch } from "@/components/layout/HeaderSearch";
+import { SiteLogo } from "@/components/layout/SiteLogo";
 import { SITE_NAME } from "@/lib/site";
 
 /**
@@ -15,19 +15,12 @@ export function Header() {
         <Link
           href="/"
           aria-label={`${SITE_NAME} Home`}
-          className="group flex shrink-0 cursor-pointer items-center gap-2.5 rounded-lg p-1 outline-none focus-visible:ring-2 focus-visible:ring-zinc-900"
+          className="group flex shrink-0 cursor-pointer items-center rounded-lg p-1 outline-none focus-visible:ring-2 focus-visible:ring-zinc-900"
         >
-          <div className="flex size-9 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-950 text-white shadow-xs transition-colors group-hover:bg-zinc-800">
-            <Calculator className="size-5 text-zinc-100" aria-hidden="true" />
-          </div>
-          <div className="flex items-baseline">
-            <span className="text-lg font-bold tracking-tight text-zinc-950">
-              Calculator
-            </span>
-            <span className="ml-1 text-lg font-medium tracking-tight text-stone-500">
-              Hub
-            </span>
-          </div>
+          <SiteLogo
+            height={32}
+            className="transition-opacity group-hover:opacity-90"
+          />
         </Link>
 
         <HeaderNav className="hidden md:flex" />

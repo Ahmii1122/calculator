@@ -14,7 +14,7 @@ import { SITE_NAME, SITE_URL } from "@/lib/site";
 const category = CALCULATOR_CATEGORIES.find((item) => item.id === "finance")!;
 const theme = getCategoryTheme("finance");
 
-const PAGE_TITLE = "Finance Calculators — Calculator Hub";
+const PAGE_TITLE = "Finance Calculators — CalcDaily";
 const PAGE_DESCRIPTION =
   "Free finance calculators for loan payments, compound interest, and savings goals. Instant, private results in your browser.";
 

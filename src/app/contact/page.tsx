@@ -7,9 +7,9 @@ import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 const PAGE_PATH = "/contact";
 const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
-const PAGE_TITLE = "Contact & Calculator Requests — Calculator Hub";
+const PAGE_TITLE = "Contact & Calculator Requests — CalcDaily";
 const PAGE_DESCRIPTION =
-  "Contact Calculator Hub or request a new calculator. Tell us which formula or tool you need next — we prioritize high-demand utilities for students and pros.";
+  "Contact CalcDaily or request a new calculator. Tell us which formula or tool you need next — we prioritize high-demand utilities for students and pros.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

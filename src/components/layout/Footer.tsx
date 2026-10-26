@@ -5,6 +5,7 @@ import {
   freeCalculatorsLabel,
   isCalculatorLive,
 } from "@/lib/calculators";
+import { SiteLogo } from "@/components/layout/SiteLogo";
 import { SITE_NAME } from "@/lib/site";
 
 /** Shared editorial footer — monochrome; links come from the catalog. */
@@ -20,13 +21,8 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="mb-10 grid grid-cols-1 gap-8 md:grid-cols-5">
           <div className="space-y-4 md:col-span-2">
-            <div className="flex items-center gap-2.5">
-              <div className="flex size-8 items-center justify-center rounded-lg bg-zinc-950 text-xs font-bold text-white">
-                CH
-              </div>
-              <span className="text-lg font-bold tracking-tight text-zinc-950">
-                {SITE_NAME}
-              </span>
+            <div className="flex items-center">
+              <SiteLogo height={28} />
             </div>
             <p className="max-w-sm text-xs leading-relaxed text-zinc-600">
               High-precision, privacy-oriented mathematical utilities. Designed
@@ -121,7 +117,7 @@ export function Footer() {
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-stone-100 pt-8 text-xs text-zinc-500 sm:flex-row">
           <p>
-            © {year} {SITE_NAME}. Free client-side utilities. Zero trackers.
+            © {year} {SITE_NAME}
           </p>
           <div className="flex items-center gap-4">
             <Link

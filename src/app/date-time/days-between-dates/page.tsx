@@ -28,7 +28,7 @@ export const FAQ_ITEMS = [
   {
     question: "Does this calculator account for leap years?",
     answer:
-      "Yes. Calculator Hub uses date-fns with the Gregorian calendar. Any date span crossing February 29 during leap years automatically accounts for the extra day.",
+      "Yes. CalcDaily uses date-fns with the Gregorian calendar. Any date span crossing February 29 during leap years automatically accounts for the extra day.",
   },
   {
     question: "How can I copy or share my calculation results?",

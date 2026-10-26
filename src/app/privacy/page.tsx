@@ -7,9 +7,9 @@ import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 const PAGE_PATH = "/privacy";
 const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
-const PAGE_TITLE = "Privacy Policy — Calculator Hub";
+const PAGE_TITLE = "Privacy Policy — CalcDaily";
 const PAGE_DESCRIPTION =
-  "Calculator Hub privacy policy: all live calculators run in your browser. Inputs are not sent to our servers. Learn what we collect and how analytics work.";
+  "CalcDaily privacy policy: all live calculators run in your browser. Inputs are not sent to our servers. Learn what we collect and how analytics work.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },
@@ -70,7 +70,7 @@ export default function PrivacyPage() {
             Privacy Policy
           </h1>
           <p className="mt-3 text-base leading-relaxed text-zinc-600">
-            Last updated: October 2026. Calculator Hub is designed so your
+            Last updated: October 2026. CalcDaily is designed so your
             calculation inputs stay on your device.
           </p>
         </header>

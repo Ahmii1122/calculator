@@ -14,7 +14,7 @@ import { SITE_NAME, SITE_URL } from "@/lib/site";
 const category = CALCULATOR_CATEGORIES.find((item) => item.id === "math")!;
 const theme = getCategoryTheme("math");
 
-const PAGE_TITLE = "Math & Education Calculators — Calculator Hub";
+const PAGE_TITLE = "Math & Education Calculators — CalcDaily";
 const PAGE_DESCRIPTION =
   "Free math and education calculators for percentages, averages, unit conversion (metric and US), and GPA/CGPA. Instant results in your browser — no signup.";
 

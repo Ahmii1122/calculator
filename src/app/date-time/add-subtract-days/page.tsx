@@ -349,7 +349,7 @@ export default function AddSubtractDaysPage() {
                 Related Calculators
               </h2>
               <p className="mt-2 text-[15px] leading-relaxed text-muted">
-                Count spans, working days, or exact age on Calculator Hub.
+                Count spans, working days, or exact age on CalcDaily.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">

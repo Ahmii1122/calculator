@@ -137,7 +137,7 @@ function ModernCaptionDropdown({
 }
 
 /**
- * Popover date picker for Calculator Hub.
+ * Popover date picker for CalcDaily.
  * Value stays as yyyy-MM-dd for compatibility with existing calculator logic.
  */
 export function DatePickerField({

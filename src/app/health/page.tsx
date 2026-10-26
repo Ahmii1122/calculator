@@ -14,7 +14,7 @@ import { SITE_NAME, SITE_URL } from "@/lib/site";
 const category = CALCULATOR_CATEGORIES.find((item) => item.id === "health")!;
 const theme = getCategoryTheme("health");
 
-const PAGE_TITLE = "Health & Fitness Calculators — Calculator Hub";
+const PAGE_TITLE = "Health & Fitness Calculators — CalcDaily";
 const PAGE_DESCRIPTION =
   "Free health calculators for BMI, calorie needs (TDEE/BMR), and pregnancy due dates. Instant, private results in your browser — no signup.";
 

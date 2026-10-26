@@ -14,7 +14,7 @@ import { SITE_NAME, SITE_URL } from "@/lib/site";
 const category = CALCULATOR_CATEGORIES.find((item) => item.id === "date-time")!;
 const theme = getCategoryTheme("date-time");
 
-const PAGE_TITLE = "Date & Time Calculators — Calculator Hub";
+const PAGE_TITLE = "Date & Time Calculators — CalcDaily";
 const PAGE_DESCRIPTION =
   "Free date and time calculators for days between dates, exact age, business days, and date math. Instant results in your browser — no signup or data stored.";
 

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="120 10 280 290" role="img" aria-label="CalcDaily">
+  <rect width="1400" height="320" fill="#18181B"/>
+  <g fill="#FFFFFF">
+    <path d="M250 43
+             C187 43 145 83 145 145
+             V177
+             C145 235 183 269 239 269
+             C283 269 318 250 343 219
+             L312 201
+             C293 222 270 234 244 234
+             C209 234 187 212 187 177
+             V143
+             C187 104 210 79 250 79
+             H339
+             L365 45
+             C341 27 310 19 274 19
+             Z"/>
+    <rect x="207" y="92" width="103" height="128" rx="17" fill="#18181B"/>
+    <rect x="219" y="104" width="79" height="27" rx="7"/>
+    <rect x="219" y="140" width="35" height="32" rx="7"/>
+    <path d="M236.5 147 V165 M227.5 156 H245.5" stroke="#18181B" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+    <rect x="263" y="140" width="35" height="32" rx="7"/>
+    <path d="M272 156 H289" stroke="#18181B" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+    <rect x="219" y="181" width="35" height="29" rx="7"/>
+    <path d="M229 188 L244 203 M244 188 L229 203" stroke="#18181B" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+    <rect x="263" y="181" width="35" height="29" rx="7"/>
+    <path d="M272 195.5 H289 M280.5 187.5 V188 M280.5 203 V203.5" stroke="#18181B" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+    <path d="M135 167
+             C116 189 115 216 134 237
+             C171 278 263 286 332 251
+             C350 242 365 229 377 215
+             C350 244 308 260 263 262
+             C194 266 144 245 132 216
+             C125 198 130 181 145 165 Z"/>
+  </g>
+</svg>
