@@ -99,6 +99,14 @@ export default function PrivacyPage() {
             </p>
           </section>
           <section>
+            <h2 className="text-lg font-semibold text-zinc-950">Advertising</h2>
+            <p className="mt-2">
+              We may show ads through Google AdSense. Ad partners can use cookies
+              or similar technologies to personalize or measure ads. Calculator
+              inputs are not sent to ad networks.
+            </p>
+          </section>
+          <section>
             <h2 className="text-lg font-semibold text-zinc-950">Contact</h2>
             <p className="mt-2">
               Questions about this policy? Reach us via the{" "}

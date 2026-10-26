@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { GoogleAdSense } from "@/components/analytics/GoogleAdSense";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
@@ -31,6 +32,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${inter.variable} h-full scroll-smooth antialiased`}>
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground selection:bg-zinc-900 selection:text-white">
+        {/* beforeInteractive Script is hoisted into <head> on every page */}
+        <GoogleAdSense />
         <aside
           aria-label="Announcement"
           className="border-b border-zinc-800 bg-[#121316] px-4 py-2 text-center text-xs text-zinc-300"
@@ -52,3 +55,4 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     </html>
   );
 }
+
