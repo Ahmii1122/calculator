@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: SITE_NAME,
   },
+  verification: {
+    google: "jWFdGpjD6MmNLIWGQHGi-YRvgl7qcJoVIpjDAvvGouQ",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
