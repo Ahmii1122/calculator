@@ -14,9 +14,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: SITE_NAME,
-    template: `%s | ${SITE_NAME}`,
+    // Calculator pages use absolute titles; do not append the brand.
+    template: "%s",
   },
   description: "Free online calculators for dates, math, and everyday planning.",
+  openGraph: {
+    siteName: SITE_NAME,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
