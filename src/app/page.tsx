@@ -23,7 +23,9 @@ import {
 } from "@/lib/calculators";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 
-const PAGE_TITLE = "Free Online Calculators for Dates, GPA & Math";
+// 60 characters — full requested wording was 67; "Online" dropped to fit.
+const PAGE_TITLE =
+  "CalcDaily - Free Calculators for Dates, Money, Health & Math";
 const PAGE_DESCRIPTION = `Free, instant online calculators for date differences, age, business days, GPA/CGPA, finance, and health — ${freeCalculatorsLabel()}. Client-side and private — no signup, no data stored.`;
 
 export const metadata: Metadata = {
@@ -54,14 +56,6 @@ const webSiteJsonLd = {
   name: SITE_NAME,
   url: SITE_URL,
   description: PAGE_DESCRIPTION,
-  potentialAction: {
-    "@type": "SearchAction",
-    target: {
-      "@type": "EntryPoint",
-      urlTemplate: `${SITE_URL}/?q={search_term_string}`,
-    },
-    "query-input": "required name=search_term_string",
-  },
 };
 
 const itemListJsonLd = {
@@ -131,8 +125,8 @@ const FAQ_ITEMS: {
   },
   {
     icon: Info,
-    question: "Is Calculator Hub free for commercial and educational use?",
-    answer: `Yes. Every tool on Calculator Hub (${freeCalculatorsLabel()}) is permanently unrestricted and free for students, engineers, financial planners, and researchers without any subscription barriers or account signups.`,
+    question: "Is CalcDaily free for commercial and educational use?",
+    answer: `Yes. Every tool on CalcDaily (${freeCalculatorsLabel()}) is permanently unrestricted and free for students, engineers, financial planners, and researchers without any subscription barriers or account signups.`,
   },
 ];
 
@@ -318,7 +312,7 @@ export default function HomePage() {
                 Frequently Asked Questions
               </h2>
               <p className="mt-2 text-sm leading-relaxed text-zinc-600 sm:text-[15px]">
-                Learn how Calculator Hub guarantees numerical precision,
+                Learn how CalcDaily guarantees numerical precision,
                 protects client data privacy, and determines formula standards.
               </p>
             </div>

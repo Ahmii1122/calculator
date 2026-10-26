@@ -7,7 +7,7 @@ import {
 import { SITE_URL } from "@/lib/site";
 
 /**
- * Sitemap for Calculator Hub — home, live category hubs, live calculators,
+ * Sitemap for CalcDaily — home, live category hubs, live calculators,
  * and static trust pages. Coming-soon tools are excluded.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
