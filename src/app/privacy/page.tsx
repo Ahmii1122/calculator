@@ -93,9 +93,9 @@ export default function PrivacyPage() {
               Site analytics
             </h2>
             <p className="mt-2">
-              We may use privacy-oriented analytics (such as Vercel Analytics) to
-              understand aggregate traffic and performance. These tools do not
-              need your calculator inputs.
+              We may use privacy-oriented analytics such as Vercel Analytics and
+              Google Analytics to understand aggregate traffic and performance.
+              These tools do not need your calculator inputs.
             </p>
           </section>
           <section>
