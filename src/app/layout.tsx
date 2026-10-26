@@ -12,6 +12,8 @@ const inter = Inter({
   display: "swap",
 });
 
+const adsenseClientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -26,6 +28,9 @@ export const metadata: Metadata = {
   verification: {
     google: "jWFdGpjD6MmNLIWGQHGi-YRvgl7qcJoVIpjDAvvGouQ",
   },
+  ...(adsenseClientId
+    ? { other: { "google-adsense-account": adsenseClientId } }
+    : {}),
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
