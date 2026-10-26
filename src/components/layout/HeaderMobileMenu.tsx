@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { HeaderNav } from "@/components/layout/HeaderNav";
@@ -53,13 +52,13 @@ export function HeaderMobileMenu() {
             className="w-full"
             onNavigate={() => setOpen(false)}
           />
-          <Link
-            href="/#request-tool"
+          <a
+            href="mailto:asam4055144@gmail.com?subject=CalcDaily%20tool%20suggestion"
             className="mt-3 block cursor-pointer rounded-lg bg-zinc-900 px-3 py-2 text-center text-xs font-semibold text-white transition-colors hover:bg-zinc-800"
             onClick={() => setOpen(false)}
           >
             Suggest Tool
-          </Link>
+          </a>
         </div>
       )}
     </div>

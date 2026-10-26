@@ -27,12 +27,12 @@ export function Header() {
 
         <div className="flex shrink-0 items-center gap-3">
           <HeaderSearch />
-          <Link
-            href="/#request-tool"
+          <a
+            href="mailto:asam4055144@gmail.com?subject=CalcDaily%20tool%20suggestion"
             className="hidden cursor-pointer rounded-lg bg-zinc-900 px-3 py-1.5 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-zinc-800 sm:inline-flex"
           >
             Suggest Tool
-          </Link>
+          </a>
           <HeaderMobileMenu />
         </div>
       </div>

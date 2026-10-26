@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="120 10 280 290" role="img" aria-label="CalcDaily">
-  <rect width="1400" height="320" fill="#18181B"/>
-  <g fill="#FFFFFF">
+  <rect x="120" y="10" width="280" height="290" fill="#FAF9F6"/>
+  <g fill="#000000">
     <path d="M250 43
              C187 43 145 83 145 145
              V177
@@ -15,16 +15,16 @@
              L365 45
              C341 27 310 19 274 19
              Z"/>
-    <rect x="207" y="92" width="103" height="128" rx="17" fill="#18181B"/>
+    <rect x="207" y="92" width="103" height="128" rx="17" fill="#FFFFFF"/>
     <rect x="219" y="104" width="79" height="27" rx="7"/>
     <rect x="219" y="140" width="35" height="32" rx="7"/>
-    <path d="M236.5 147 V165 M227.5 156 H245.5" stroke="#18181B" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+    <path d="M236.5 147 V165 M227.5 156 H245.5" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" fill="none"/>
     <rect x="263" y="140" width="35" height="32" rx="7"/>
-    <path d="M272 156 H289" stroke="#18181B" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+    <path d="M272 156 H289" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" fill="none"/>
     <rect x="219" y="181" width="35" height="29" rx="7"/>
-    <path d="M229 188 L244 203 M244 188 L229 203" stroke="#18181B" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+    <path d="M229 188 L244 203 M244 188 L229 203" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" fill="none"/>
     <rect x="263" y="181" width="35" height="29" rx="7"/>
-    <path d="M272 195.5 H289 M280.5 187.5 V188 M280.5 203 V203.5" stroke="#18181B" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+    <path d="M272 195.5 H289 M280.5 187.5 V188 M280.5 203 V203.5" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" fill="none"/>
     <path d="M135 167
              C116 189 115 216 134 237
              C171 278 263 286 332 251
