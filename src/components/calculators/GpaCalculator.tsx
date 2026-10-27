@@ -393,8 +393,8 @@ export function GpaCalculator() {
   return (
     <div className="space-y-4">
       <p className="text-[13px] leading-relaxed text-muted">
-        Grades stay on this device — GPA and CGPA are calculated in your browser
-        and never stored or sent anywhere.
+        Your inputs stay in your browser. They are never sent to our servers or
+        stored.
       </p>
 
       <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-12">

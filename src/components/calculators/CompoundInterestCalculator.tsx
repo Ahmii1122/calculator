@@ -364,7 +364,8 @@ export function CompoundInterestCalculator() {
           )}
 
           <p className="border-t border-border/70 pt-3 text-[12px] leading-relaxed text-zinc-600">
-            Your numbers stay in your browser. Nothing is stored or sent.
+            Your inputs stay in your browser. They are never sent to our servers
+            or stored.
           </p>
         </div>
       </section>

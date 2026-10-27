@@ -71,8 +71,8 @@ export function AgeCalculator() {
   return (
     <div className="space-y-6">
       <p className="text-[13px] leading-relaxed text-muted">
-        Your dates stay on this device — age is calculated in your browser and
-        never stored or sent anywhere.
+        Your inputs stay in your browser. They are never sent to our servers or
+        stored.
       </p>
 
       <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-12">

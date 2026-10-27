@@ -12,7 +12,7 @@ const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
 
 const PAGE_TITLE = "Compound Interest Calculator - Daily, Monthly & Yearly";
 const PAGE_DESCRIPTION =
-  "Free compound interest calculator with monthly contributions, compounding frequency, APY and optional inflation. Private future-value estimates in your browser.";
+  "Free compound interest calculator with monthly contributions, compounding frequency, APY and optional inflation. Future-value estimates in your browser.";
 
 export const FAQ_ITEMS = [
   {
@@ -181,7 +181,7 @@ export default function CompoundInterestCalculatorPage() {
           <p className="mt-2 text-base leading-relaxed text-muted sm:text-lg">
             Estimate future value with daily, monthly, or yearly compounding,
             optional monthly contributions, effective annual yield (APY), and
-            an inflation view — privately in your browser. For how much to save
+            an inflation view — in your browser. For how much to save
             each month to hit a target, use the{" "}
             <Link
               href="/finance/savings-goal-calculator"

@@ -12,7 +12,7 @@ const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
 
 const PAGE_TITLE = "Loan Calculator - Monthly Payment & Amortization Schedule";
 const PAGE_DESCRIPTION =
-  "Free loan calculator for monthly payment (EMI), total interest, payoff date, amortization schedule and extra payments. Private estimates in your browser.";
+  "Free loan calculator for monthly payment (EMI), total interest, payoff date, amortization schedule and extra payments. Estimates run in your browser.";
 
 export const FAQ_ITEMS = [
   {
@@ -181,7 +181,7 @@ export default function LoanCalculatorPage() {
             Estimate a fixed-rate monthly payment (EMI), total interest, payoff
             date, and an amortization schedule. The same math applies to a
             personal loan, car loan, or other installment loan. Optionally model
-            extra payments — privately in your browser.
+            extra payments — in your browser.
           </p>
         </header>
 

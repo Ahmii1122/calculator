@@ -224,8 +224,8 @@ export function UnitConverter() {
           </div>
 
           <p className="border-t border-border/70 pt-3 text-[12px] leading-relaxed text-zinc-600">
-            Calculations run in your browser — nothing is stored or sent to a
-            server.
+            Your inputs stay in your browser. They are never sent to our servers
+            or stored.
             {category.usesUsCustomary
               ? " Cups, spoons, fl oz, and gallons use US customary sizes."
               : ""}

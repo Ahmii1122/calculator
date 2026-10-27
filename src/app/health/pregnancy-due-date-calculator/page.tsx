@@ -20,7 +20,7 @@ const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
 
 const PAGE_TITLE = "Pregnancy Due Date Calculator - LMP, Conception & IVF";
 const PAGE_DESCRIPTION =
-  "Estimate your due date from last period, conception, IVF transfer or ultrasound. See weeks pregnant, trimester dates and key milestones — private in-browser.";
+  "Estimate your due date from last period, conception, IVF transfer or ultrasound. See weeks pregnant, trimester dates and key milestones — in your browser.";
 
 export const FAQ_ITEMS = [
   {
@@ -194,8 +194,8 @@ export default function PregnancyDueDateCalculatorPage() {
           <p className="mt-2 text-base leading-relaxed text-muted sm:text-lg">
             Estimate an EDD from your last period (LMP), conception date, IVF
             embryo transfer, or ultrasound. See how many weeks pregnant the
-            dating implies, trimester boundaries, and key dates — privately in
-            your browser.
+            dating implies, trimester boundaries, and key dates — in your
+            browser.
           </p>
         </header>
 

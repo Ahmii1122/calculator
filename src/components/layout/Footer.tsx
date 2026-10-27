@@ -5,8 +5,10 @@ import {
   freeCalculatorsLabel,
   isCalculatorLive,
 } from "@/lib/calculators";
+import { CookieSettingsButton } from "@/components/consent/CookieSettingsButton";
 import { SiteLogo } from "@/components/layout/SiteLogo";
 import { SITE_NAME } from "@/lib/site";
+
 
 /** Shared editorial footer — monochrome; links come from the catalog. */
 export function Footer() {
@@ -25,13 +27,12 @@ export function Footer() {
               <SiteLogo height={28} />
             </div>
             <p className="max-w-sm text-xs leading-relaxed text-zinc-600">
-              High-precision, privacy-oriented mathematical utilities. Designed
-              for instant accessibility, transparent models, and zero marketing
-              clutter.
+              High-precision mathematical utilities. Designed for instant
+              accessibility, transparent models, and clear formulas.
             </p>
             <div className="flex items-center gap-2 text-xs font-medium text-emerald-800">
               <span className="size-2 rounded-full bg-emerald-600 ring-2 ring-emerald-100" />
-              {freeCalculatorsLabel(LIVE_CALCULATOR_COUNT)} · calculations stay
+              {freeCalculatorsLabel(LIVE_CALCULATOR_COUNT)} · calculations run
               in your browser
             </div>
             <p className="max-w-sm text-xs leading-relaxed text-zinc-600">
@@ -119,13 +120,15 @@ export function Footer() {
           <p>
             © {year} {SITE_NAME}
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
             <Link
               href="/privacy"
               className="transition-colors hover:text-zinc-900"
             >
               Privacy Policy
             </Link>
+            <span aria-hidden="true">•</span>
+            <CookieSettingsButton />
             <span aria-hidden="true">•</span>
             <Link
               href="/sitemap.xml"

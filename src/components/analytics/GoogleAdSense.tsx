@@ -1,13 +1,20 @@
+"use client";
+
 import Script from "next/script";
+import { usePathname } from "next/navigation";
+import { isNoAnalyticsPath } from "@/lib/analytics-config";
 
 const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 
 /**
- * Google AdSense Auto ads loader. Renders nothing when the client ID is unset.
- * Uses beforeInteractive so the tag is present in <head> on every page.
+ * Existing AdSense loader (unchanged client ID). Skips NO_ANALYTICS_PATHS.
+ * No new ad units or consent wiring in this pass.
  */
 export function GoogleAdSense() {
+  const pathname = usePathname();
+
   if (!ADSENSE_CLIENT) return null;
+  if (isNoAnalyticsPath(pathname)) return null;
 
   return (
     <Script
@@ -15,7 +22,7 @@ export function GoogleAdSense() {
       async
       src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
       crossOrigin="anonymous"
-      strategy="beforeInteractive"
+      strategy="afterInteractive"
     />
   );
 }

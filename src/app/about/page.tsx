@@ -7,9 +7,9 @@ import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 const PAGE_PATH = "/about";
 const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
-const PAGE_TITLE = "About CalcDaily — Privacy-First Free Tools";
+const PAGE_TITLE = "About CalcDaily — Free Browser Calculators";
 const PAGE_DESCRIPTION =
-  "Learn what CalcDaily is: free browser-based calculators for dates, GPA, and percentages. Transparent formulas, no accounts, inputs stay on your device.";
+  "Learn what CalcDaily is: free browser-based calculators for dates, GPA, and percentages. Transparent formulas, no accounts. Your inputs stay in your browser.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },
@@ -77,9 +77,8 @@ export default function AboutPage() {
         </header>
         <div className="space-y-6 text-[15px] leading-relaxed text-zinc-700">
           <p>
-            We focus on transparent formulas, fast results, and privacy: figures
-            and dates you enter are not sent to our servers or stored by
-            CalcDaily.
+            We focus on transparent formulas and fast results. Your inputs stay
+            in your browser. They are never sent to our servers or stored.
           </p>
           <p>
             Browse{" "}

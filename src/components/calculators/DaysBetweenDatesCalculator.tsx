@@ -527,8 +527,9 @@ export function DaysBetweenDatesCalculator({
             </details>
 
             <p className="text-[12px] leading-relaxed text-zinc-700">
-              Your dates stay in your browser. Choosing a country loads a static
-              list of that country&apos;s holidays.
+              Your inputs stay in your browser. They are never sent to our
+              servers or stored. Choosing a country loads a static list of that
+              country&apos;s holidays.
             </p>
 
             <button

@@ -16,7 +16,7 @@ const theme = getCategoryTheme("finance");
 
 const PAGE_TITLE = "Finance Calculators — CalcDaily";
 const PAGE_DESCRIPTION =
-  "Free finance calculators for loan payments, compound interest, and savings goals. Instant, private results in your browser.";
+  "Free finance calculators for loan payments, compound interest, and savings goals. Instant results that run in your browser.";
 
 export const metadata: Metadata = {
   title: {

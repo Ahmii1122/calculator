@@ -3,13 +3,26 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { CookieSettingsButton } from "@/components/consent/CookieSettingsButton";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 const PAGE_PATH = "/privacy";
 const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
+const CONTACT_EMAIL = "asam4055144@gmail.com";
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? "";
+const GA_CONTAINER = GA_ID.startsWith("G-") ? GA_ID.slice(2) : GA_ID;
+
+/** Baked at build time — never hardcoded. */
+const LAST_UPDATED = new Date().toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "UTC",
+});
+
 const PAGE_TITLE = "Privacy Policy — CalcDaily";
 const PAGE_DESCRIPTION =
-  "CalcDaily privacy policy: all live calculators run in your browser. Inputs are not sent to our servers. Learn what we collect and how analytics work.";
+  "How CalcDaily handles calculator inputs, optional Google Analytics with consent, and advertising. Your calculator inputs stay in your browser.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },
@@ -48,6 +61,10 @@ const breadcrumbJsonLd = {
   ],
 };
 
+const PARTNER_SITES_URL =
+  "https://policies.google.com/technologies/partner-sites";
+const AD_SETTINGS_URL = "https://adssettings.google.com";
+
 export default function PrivacyPage() {
   return (
     <>
@@ -70,50 +87,169 @@ export default function PrivacyPage() {
             Privacy Policy
           </h1>
           <p className="mt-3 text-base leading-relaxed text-zinc-600">
-            Last updated: October 2026. CalcDaily is designed so your
-            calculation inputs stay on your device.
+            Last updated: {LAST_UPDATED}.
           </p>
         </header>
-        <div className="space-y-6 text-[15px] leading-relaxed text-zinc-700">
+        <div className="space-y-8 text-[15px] leading-relaxed text-zinc-700">
           <section>
             <h2 className="text-lg font-semibold text-zinc-950">
-              Calculator inputs
+              1. What this site is
             </h2>
             <p className="mt-2">
-              All live arithmetic and date calculations run in your browser. We
-              do not receive, store, or process the figures, dates, or grades you
-              enter into calculators. Your dates stay in your browser. Choosing a
-              country on business-day tools loads a static list of that
-              country&apos;s holidays; inputs are not sent to our servers or put
-              into the URL.
+              CalcDaily is a free website of browser-based calculators for dates,
+              finance, health, and math. Tools run in your browser so you can get
+              results without creating an account.
             </p>
           </section>
+
           <section>
             <h2 className="text-lg font-semibold text-zinc-950">
-              Site analytics
+              2. What stays in your browser
             </h2>
             <p className="mt-2">
-              We may use privacy-oriented analytics such as Vercel Analytics and
-              Google Analytics to understand aggregate traffic and performance.
-              These tools do not need your calculator inputs.
+              Your inputs stay in your browser. They are never sent to our
+              servers or stored. Calculator results are also computed on your
+              device. On business-day tools, choosing a country loads a static
+              holiday list for that country in the browser; your dates are not
+              put into the URL or uploaded to us.
             </p>
           </section>
+
           <section>
-            <h2 className="text-lg font-semibold text-zinc-950">Advertising</h2>
+            <h2 className="text-lg font-semibold text-zinc-950">3. Analytics</h2>
             <p className="mt-2">
-              We may show ads through Google AdSense. Ad partners can use cookies
-              or similar technologies to personalize or measure ads. Calculator
-              inputs are not sent to ad networks.
-            </p>
-          </section>
-          <section>
-            <h2 className="text-lg font-semibold text-zinc-950">Contact</h2>
-            <p className="mt-2">
-              Questions about this policy? Reach us via the{" "}
-              <Link href="/contact" className="font-medium text-zinc-950 underline">
-                contact page
+              We use Google Analytics only if you accept analytics cookies. It
+              helps us understand which pages are viewed, approximate location,
+              device and browser type, and how people arrive at the site.
+              Calculator inputs are not included. Analytics is not loaded on the{" "}
+              <Link
+                href="/health/pregnancy-due-date-calculator"
+                className="font-medium text-zinc-950 underline"
+              >
+                pregnancy due-date calculator
               </Link>
               .
+            </p>
+            <p className="mt-3">
+              When you accept, Google Analytics may set cookies such as:
+            </p>
+            <div className="mt-3 overflow-x-auto">
+              <table className="w-full min-w-[20rem] border-collapse text-left text-sm">
+                <thead>
+                  <tr className="border-b border-zinc-200">
+                    <th className="py-2 pr-3 font-semibold text-zinc-950">
+                      Cookie
+                    </th>
+                    <th className="py-2 pr-3 font-semibold text-zinc-950">
+                      Purpose
+                    </th>
+                    <th className="py-2 font-semibold text-zinc-950">
+                      Typical duration
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-zinc-100">
+                    <td className="py-2 pr-3 font-mono text-[13px]">_ga</td>
+                    <td className="py-2 pr-3">
+                      Distinguishes visitors for aggregate statistics
+                    </td>
+                    <td className="py-2">About 2 years</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-3 font-mono text-[13px]">
+                      {GA_CONTAINER ? `_ga_${GA_CONTAINER}` : "_ga_<container ID>"}
+                    </td>
+                    <td className="py-2 pr-3">
+                      Persists the Analytics session / measurement state
+                    </td>
+                    <td className="py-2">About 2 years</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-zinc-950">
+              4. Advertising
+            </h2>
+            <p className="mt-2">
+              We may show ads served by Google AdSense. Those ads can use cookies
+              to show ads and measure them. Where required, we will ask for
+              consent first. Calculator inputs are not sent to ad networks. Learn
+              how Google uses data from sites that use its services at{" "}
+              <a
+                href={PARTNER_SITES_URL}
+                className="font-medium text-zinc-950 underline break-all"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                {PARTNER_SITES_URL}
+              </a>
+              . You can manage Google ad settings at{" "}
+              <a
+                href={AD_SETTINGS_URL}
+                className="font-medium text-zinc-950 underline break-all"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                {AD_SETTINGS_URL}
+              </a>
+              .
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-zinc-950">
+              5. Your choices
+            </h2>
+            <p className="mt-2">
+              Use{" "}
+              <span className="inline-flex align-baseline">
+                <CookieSettingsButton />
+              </span>{" "}
+              in the footer (or the consent bar) to accept or reject analytics at
+              any time. You can also block or delete cookies in your browser. If
+              your browser sends a Global Privacy Control (GPC) signal, we treat
+              analytics as rejected and do not show the consent bar.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-zinc-950">6. Your rights</h2>
+            <p className="mt-2">
+              To request access to or deletion of personal data we may hold about
+              you in connection with this site, email{" "}
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="font-medium text-zinc-950 underline"
+              >
+                {CONTACT_EMAIL}
+              </a>
+              . We will respond as required by applicable law. Note that
+              calculator inputs are not sent to our servers, so we typically have
+              no calculation data to retrieve.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-zinc-950">7. Children</h2>
+            <p className="mt-2">
+              This site is not directed at children. We do not knowingly collect
+              personal information from children.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-zinc-950">
+              8. Changes to this policy
+            </h2>
+            <p className="mt-2">
+              We may update this policy from time to time. The “Last updated”
+              date at the top of this page reflects when the published version
+              was built. Continued use of the site after changes means you should
+              review this page for the current terms.
             </p>
           </section>
         </div>

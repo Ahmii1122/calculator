@@ -16,7 +16,7 @@ const theme = getCategoryTheme("health");
 
 const PAGE_TITLE = "Health & Fitness Calculators — CalcDaily";
 const PAGE_DESCRIPTION =
-  "Free health calculators for BMI, calorie needs (TDEE/BMR), and pregnancy due dates. Instant, private results in your browser — no signup.";
+  "Free health calculators for BMI, calorie needs (TDEE/BMR), and pregnancy due dates. Instant results in your browser — no signup.";
 
 export const metadata: Metadata = {
   title: {

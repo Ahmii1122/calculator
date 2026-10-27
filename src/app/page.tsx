@@ -26,7 +26,7 @@ import { SITE_NAME, SITE_URL } from "@/lib/site";
 // 60 characters — full requested wording was 67; "Online" dropped to fit.
 const PAGE_TITLE =
   "CalcDaily - Free Calculators for Dates, Money, Health & Math";
-const PAGE_DESCRIPTION = `Free, instant online calculators for date differences, age, business days, GPA/CGPA, finance, and health — ${freeCalculatorsLabel()}. Client-side and private — no signup, no data stored.`;
+const PAGE_DESCRIPTION = `Free, instant online calculators for date differences, age, business days, GPA/CGPA, finance, and health — ${freeCalculatorsLabel()}. Calculations run in your browser — no signup.`;
 
 export const metadata: Metadata = {
   title: {
@@ -79,9 +79,23 @@ const FAQ_ITEMS: {
 }[] = [
   {
     icon: ShieldCheck,
-    question: "Are my inputs kept completely private?",
-    answer:
-      "Yes. All arithmetic and date calculations run in your browser. Your figures and dates are not transmitted to our servers. On business-day tools, choosing a country loads a static holiday list for that country; inputs are not stored or put into the URL.",
+    question: "Are my inputs kept private?",
+    answer: (
+      <>
+        Calculations run in your browser. Your inputs stay in your browser —
+        they are never sent to our servers or stored. On business-day tools,
+        choosing a country loads a static holiday list for that country; inputs
+        are not put into the URL. The site uses analytics only with your
+        consent and may show ads. See the{" "}
+        <Link
+          href="/privacy"
+          className="font-medium text-zinc-900 underline underline-offset-2"
+        >
+          Privacy Policy
+        </Link>{" "}
+        for details.
+      </>
+    ),
   },
   {
     icon: CalendarDays,
@@ -312,8 +326,8 @@ export default function HomePage() {
                 Frequently Asked Questions
               </h2>
               <p className="mt-2 text-sm leading-relaxed text-zinc-600 sm:text-[15px]">
-                Learn how CalcDaily guarantees numerical precision,
-                protects client data privacy, and determines formula standards.
+                Learn how CalcDaily handles numerical precision, how inputs stay
+                in your browser, and how formula standards are chosen.
               </p>
             </div>
 

@@ -12,7 +12,7 @@ const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
 
 const PAGE_TITLE = "BMI Calculator - Body Mass Index (kg, cm, lb, ft)";
 const PAGE_DESCRIPTION =
-  "Free BMI calculator with metric and imperial units, WHO adult categories, and the healthy BMI range of 18.5–24.9. Private results in your browser — no signup.";
+  "Free BMI calculator with metric and imperial units, WHO adult categories, and the healthy BMI range of 18.5–24.9. Results in your browser — no signup.";
 
 export const FAQ_ITEMS = [
   {

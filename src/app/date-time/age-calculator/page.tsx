@@ -12,7 +12,7 @@ const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
 
 const PAGE_TITLE = "Age Calculator - How Old Am I? Free & Instant";
 const PAGE_DESCRIPTION =
-  "Calculate your exact age from date of birth in years, months, and days. See how many days old you are and days until your next birthday. Free and private.";
+  "Calculate your exact age from date of birth in years, months, and days. See how many days old you are and days until your next birthday. Free — runs in your browser.";
 
 export const FAQ_ITEMS = [
   {
@@ -43,7 +43,7 @@ export const FAQ_ITEMS = [
   {
     question: "Is my date of birth stored or shared?",
     answer:
-      "No. Dates are processed only in your browser for this page. Nothing is uploaded, saved on a server, or shared with third parties as part of the calculation.",
+      "Your inputs stay in your browser. They are never sent to our servers or stored. Age is calculated on this page in your browser only.",
   },
 ] as const;
 
@@ -314,7 +314,8 @@ export default function AgeCalculatorPage() {
                 Frequently Asked Questions
               </h2>
               <p className="mt-2 text-[15px] leading-relaxed text-muted">
-                Exact age, leap-day birthdays, days old, and privacy.
+                Exact age, leap-day birthdays, days old, and how inputs are
+                handled.
               </p>
             </div>
             <div className="divide-y divide-border">

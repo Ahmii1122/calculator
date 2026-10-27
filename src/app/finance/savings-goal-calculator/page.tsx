@@ -12,7 +12,7 @@ const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
 
 const PAGE_TITLE = "Savings Goal Calculator - How Much to Save Per Month";
 const PAGE_DESCRIPTION =
-  "Free savings goal calculator: how much to save each month or how long a goal takes, with optional interest and inflation. Private estimates in your browser.";
+  "Free savings goal calculator: how much to save each month or how long a goal takes, with optional interest and inflation. Estimates run in your browser.";
 
 export const FAQ_ITEMS = [
   {

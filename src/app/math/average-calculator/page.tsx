@@ -12,7 +12,7 @@ const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
 
 const PAGE_TITLE = "Average Calculator - Mean, Median, Mode & Range";
 const PAGE_DESCRIPTION =
-  "Free average calculator for mean, median, mode, range, geometric mean, and standard deviation. Paste numbers for instant, private results in your browser.";
+  "Free average calculator for mean, median, mode, range, geometric mean, and standard deviation. Paste numbers for instant results in your browser.";
 
 export const FAQ_ITEMS = [
   {

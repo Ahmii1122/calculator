@@ -345,8 +345,9 @@ export function AddSubtractDaysCalculator() {
             )}
 
             <p className="text-[12px] leading-relaxed text-zinc-700">
-              Your dates stay in your browser. Choosing a country loads a static
-              list of that country&apos;s holidays. Amounts up to{" "}
+              Your inputs stay in your browser. They are never sent to our
+              servers or stored. Choosing a country loads a static list of that
+              country&apos;s holidays. Amounts up to{" "}
               {MAX_SHIFT_AMOUNT.toLocaleString()}. A negative amount flips Add
               and Subtract; the count is always the absolute value.
             </p>

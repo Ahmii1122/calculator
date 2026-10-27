@@ -49,7 +49,7 @@ export const FAQ_ITEMS = [
   {
     question: "Can I add my own days off?",
     answer:
-      "Yes. Under More options, add custom days off for company closures or personal leave. Those dates stay only in your browser session and are not stored or sent anywhere.",
+      "Yes. Under More options, add custom days off for company closures or personal leave. Your inputs stay in your browser. They are never sent to our servers or stored.",
   },
 ] as const;
 

@@ -311,8 +311,8 @@ export function BmiCalculator() {
           </p>
 
           <p className="border-t border-border/70 pt-3 text-[12px] leading-relaxed text-zinc-600">
-            Calculations run in your browser — nothing is stored or sent to a
-            server.
+            Your inputs stay in your browser. They are never sent to our servers
+            or stored.
           </p>
         </div>
       </section>

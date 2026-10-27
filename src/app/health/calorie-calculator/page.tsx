@@ -13,7 +13,7 @@ const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
 
 const PAGE_TITLE = "Calorie Calculator - TDEE & BMR (Maintenance Calories)";
 const PAGE_DESCRIPTION =
-  "Free calorie calculator for TDEE, BMR, and maintenance calories. Metric or imperial units with activity levels — private estimates that run in your browser.";
+  "Free calorie calculator for TDEE, BMR, and maintenance calories. Metric or imperial units with activity levels — estimates that run in your browser.";
 
 export const FAQ_ITEMS = [
   {
