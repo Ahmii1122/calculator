@@ -21,7 +21,13 @@ export const FAQ_ITEMS = [
       "Add every value in the list, then divide by how many numbers you entered. That quotient is the arithmetic mean — what most people mean by “average.” This calculator does that for you as soon as you paste or type the list, separated by commas, spaces, or new lines.",
   },
   {
+    question: "How do I calculate an average per day?",
+    answer:
+      "Divide the total by the number of days: average per day = total ÷ number of days.",
+  },
+  {
     question: "What is the difference between mean, median, and mode?",
+
     answer:
       "The mean is the sum divided by the count. The median is the middle value after sorting (or the average of the two middle values when the count is even). The mode is the value that appears most often. Use the mean for a typical total-driven average, the median when outliers might skew the mean, and the mode when you care about the most common value.",
   },
