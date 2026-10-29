@@ -29,18 +29,24 @@ export const FAQ_ITEMS = [
       "This due date calculator estimates an EDD from one of four inputs: last menstrual period (LMP) with cycle length, conception date, IVF embryo transfer (with embryo age), or an ultrasound with gestational age on the scan date. All modes compute an estimated due date, then derive weeks pregnant and key dates from that EDD.",
   },
   {
+    question: "What does LMP mean?",
+    answer:
+      "LMP means last menstrual period — specifically the first day of that period. Clinicians often use the LMP date, with average cycle length, to estimate how far along a pregnancy is and to calculate an estimated due date. Choose the Last menstrual period (LMP) mode above to enter that date.",
+  },
+  {
     question: "How accurate is an estimated due date?",
     answer:
       "An estimated due date is a planning estimate, not a birth prediction. Only a small percentage of births happen on the exact date. Most births occur between 37 and 42 weeks. An early ultrasound can be more accurate than period dating alone, especially with irregular cycles, and a healthcare provider may adjust the date.",
   },
   {
     question: "What if my cycle is not 28 days long?",
-    answer: `In last-period mode, enter your average cycle length. The calculator adjusts from a ${CYCLE_LENGTH_DEFAULT}-day baseline: EDD = LMP + ${GESTATION_DAYS} days + (cycle length − ${CYCLE_LENGTH_DEFAULT}). Cycles outside the supported range are better discussed with a healthcare professional, and ultrasound dating may help.`,
+    answer: `In Last menstrual period (LMP) mode, enter your average cycle length. The calculator adjusts from a ${CYCLE_LENGTH_DEFAULT}-day baseline: EDD = LMP + ${GESTATION_DAYS} days + (cycle length − ${CYCLE_LENGTH_DEFAULT}). Cycles outside the supported range are better discussed with a healthcare professional, and ultrasound dating may help.`,
   },
   {
     question: "How do I calculate my due date from my conception date?",
-    answer: `Choose the Conception date mode and enter the date. The estimated due date is the conception date plus ${CONCEPTION_TO_EDD_DAYS} days. Pregnancy weeks are still counted from a theoretical last period about two weeks earlier, which is why gestational age can look ahead of the conception date.`,
+    answer: `Choose the Conception date mode and enter the date of conception. The due date from conception is the conception date plus ${CONCEPTION_TO_EDD_DAYS} days. Pregnancy weeks are still counted from a theoretical last period about two weeks earlier, which is why gestational age can look ahead of the conception date.`,
   },
+
   {
     question: "How is the due date calculated with IVF?",
     answer: `In IVF transfer mode, enter the transfer date and whether the embryo was Day 3, Day 5, or Day 6. The estimated due date is the transfer date plus ${CONCEPTION_TO_EDD_DAYS} days, minus the embryo age in days. Your clinic’s dating may still differ slightly — follow their guidance.`,
@@ -192,11 +198,12 @@ export default function PregnancyDueDateCalculatorPage() {
             Pregnancy Due Date Calculator
           </h1>
           <p className="mt-2 text-base leading-relaxed text-muted sm:text-lg">
-            Estimate an EDD from your last period (LMP), conception date, IVF
-            embryo transfer, or ultrasound. See how many weeks pregnant the
-            dating implies, trimester boundaries, and key dates — in your
-            browser.
+            Estimate an EDD from your last menstrual period (LMP), conception
+            date, IVF embryo transfer, or ultrasound. See how many weeks
+            pregnant the dating implies, trimester boundaries, and key dates —
+            in your browser.
           </p>
+
         </header>
 
         <PregnancyDueDateCalculator />
@@ -217,14 +224,15 @@ export default function PregnancyDueDateCalculatorPage() {
             </div>
             <ol className="max-w-3xl list-decimal space-y-3 pl-5 text-[15px] leading-relaxed text-muted">
               <li>
-                Choose a mode: Last period (LMP), Conception date, IVF transfer,
-                or Ultrasound.
+                Choose a mode: Last menstrual period (LMP), Conception date, IVF
+                transfer, or Ultrasound.
               </li>
               <li>
                 Enter the date for that mode. For LMP, set average cycle length.
                 For IVF, choose Day 3, Day 5, or Day 6. For ultrasound, enter
                 gestational weeks and days on the scan date.
               </li>
+
               <li>
                 Results update live — no submit button. Review the estimated due
                 date, weeks pregnant (when the pregnancy is ongoing), trimester,
@@ -253,7 +261,7 @@ export default function PregnancyDueDateCalculatorPage() {
             <div className="max-w-3xl space-y-4 text-[15px] leading-relaxed text-muted">
               <p>
                 <strong className="font-semibold text-foreground">
-                  Last period (LMP):
+                  Last menstrual period (LMP):
                 </strong>{" "}
                 EDD = first day of the last menstrual period + {GESTATION_DAYS}{" "}
                 days + (cycle length − {CYCLE_LENGTH_DEFAULT}). Pregnancy weeks
@@ -264,8 +272,10 @@ export default function PregnancyDueDateCalculatorPage() {
                 <strong className="font-semibold text-foreground">
                   Conception date:
                 </strong>{" "}
-                EDD = conception date + {CONCEPTION_TO_EDD_DAYS} days.
+                Due date from conception = conception date +{" "}
+                {CONCEPTION_TO_EDD_DAYS} days.
               </p>
+
               <p>
                 <strong className="font-semibold text-foreground">
                   IVF transfer:
