@@ -12,7 +12,7 @@ const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
 
 const PAGE_TITLE = "BMI Calculator - Body Mass Index (kg, cm, lb, ft)";
 const PAGE_DESCRIPTION =
-  "Free BMI calculator with metric and imperial units, WHO adult categories, and the healthy BMI range of 18.5–24.9. Results in your browser — no signup.";
+  "Free BMI calculator in kg and cm (or pounds and feet). WHO adult categories and the healthy BMI range of 18.5–24.9. Results in your browser — no signup.";
 
 export const FAQ_ITEMS = [
   {
@@ -21,7 +21,13 @@ export const FAQ_ITEMS = [
       "BMI is weight in kilograms divided by height in meters squared: BMI = kg ÷ m². In imperial units, an equivalent formula is BMI = 703 × lb ÷ in². Enter height and weight above — metric (cm, kg) or imperial (feet and inches, pounds) — and the calculator shows the result with a worked step.",
   },
   {
+    question: "How do I calculate BMI in kg and cm?",
+    answer:
+      "Use BMI = weight in kg ÷ (height in cm ÷ 100)². Convert height from centimetres to metres by dividing by 100, square that value, then divide weight by it. Example: 70 kg and 175 cm → 175 ÷ 100 = 1.75 m, 1.75² = 3.0625, 70 ÷ 3.0625 ≈ 22.9.",
+  },
+  {
     question: "What is a healthy BMI range?",
+
     answer:
       "For adults, the WHO normal-weight category is a BMI of 18.5 to 24.9. This tool also shows the weight range that corresponds to 18.5–24.9 for your height. BMI is only a screening measure; a healthcare professional can interpret it alongside other factors.",
   },
@@ -178,11 +184,12 @@ export default function BmiCalculatorPage() {
             BMI Calculator
           </h1>
           <p className="mt-2 text-base leading-relaxed text-muted sm:text-lg">
-            Calculate body mass index from height and weight in metric (kg, cm)
-            or imperial (pounds, feet and inches). See WHO adult categories, an
-            optional Asian cut-offs guideline, and the weight range for a BMI of
-            18.5 to 24.9.
+            Calculate body mass index from height and weight in kg and cm, or in
+            pounds and feet (with inches). See WHO adult categories, an optional
+            Asian cut-offs guideline, and the weight range for a BMI of 18.5 to
+            24.9. Metric (kg, cm) is selected by default.
           </p>
+
         </header>
 
         <BmiCalculator />
