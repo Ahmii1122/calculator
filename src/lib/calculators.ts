@@ -11,10 +11,12 @@ import {
   HeartPulse,
   Percent,
   PiggyBank,
+  ChartColumn,
   Ruler,
   Scale,
   Sigma,
 } from "lucide-react";
+
 
 /** Theme keys map to `--cat-*` tokens in globals.css */
 export type CategoryTheme = "date" | "finance" | "health" | "math";
@@ -357,7 +359,19 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
         addedAt: "2026-07-15",
       },
       {
+        id: "average-per-day",
+        slug: "average-per-day-calculator",
+        name: "Average Per Day Calculator",
+        description:
+          "Daily average or total from an amount and days — or a date range — with optional working days and week, month, and year pace.",
+        href: "/math/average-per-day-calculator",
+        icon: ChartColumn,
+        status: "live",
+        addedAt: new Date().toISOString().slice(0, 10),
+      },
+      {
         id: "unit-converter",
+
         slug: "unit-converter",
         name: "Unit Converter",
         description:
