@@ -191,10 +191,11 @@ export function PregnancyDueDateCalculator() {
               <>
                 <DatePickerField
                   id="pregnancy-lmp-date"
-                  label="First day of last period"
+                  label="First day of last menstrual period (LMP)"
                   value={lmpDate}
                   onChange={setLmpDate}
                 />
+
                 <div className="flex flex-col gap-1.5">
                   <label
                     htmlFor={cycleId}
