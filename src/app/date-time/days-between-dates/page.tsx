@@ -279,6 +279,17 @@ export default function DaysBetweenDatesPage() {
             </div>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
               <Link
+                href="/math/average-per-day-calculator"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-date/45 hover:bg-cat-date-soft"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Average Per Day Calculator
+                </span>
+                <span className="text-sm text-muted">
+                  Spread a total across the days between two dates
+                </span>
+              </Link>
+              <Link
                 href="/date-time/business-days-calculator"
                 className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-date/45 hover:bg-cat-date-soft"
               >
@@ -290,6 +301,7 @@ export default function DaysBetweenDatesPage() {
                   and days off for deadlines and SLAs
                 </span>
               </Link>
+
               <Link
                 href="/date-time/age-calculator"
                 className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-date/45 hover:bg-cat-date-soft"
