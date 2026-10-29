@@ -26,7 +26,7 @@ export type PregnancyModeOption = {
 export const PREGNANCY_MODES: PregnancyModeOption[] = [
   {
     id: "lmp",
-    label: "Last period (LMP)",
+    label: "Last menstrual period (LMP)",
     shortLabel: "Due date by LMP",
   },
   {
@@ -34,6 +34,7 @@ export const PREGNANCY_MODES: PregnancyModeOption[] = [
     label: "Conception date",
     shortLabel: "From conception",
   },
+
   {
     id: "ivf",
     label: "IVF transfer",
