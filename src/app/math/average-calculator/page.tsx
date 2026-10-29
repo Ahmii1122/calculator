@@ -23,8 +23,9 @@ export const FAQ_ITEMS = [
   {
     question: "How do I calculate an average per day?",
     answer:
-      "Divide the total by the number of days: average per day = total ÷ number of days.",
+      "Divide the total by the number of days: average per day = total ÷ number of days. For a dedicated daily-average tool with date ranges, working days, and week/month/year pace, use the Average Per Day Calculator.",
   },
+
   {
     question: "What is the difference between mean, median, and mode?",
 
@@ -372,7 +373,23 @@ export default function AverageCalculatorPage() {
                     />
                   </summary>
                   <p className="mt-2 pr-6 text-[15px] leading-relaxed text-muted">
-                    {item.answer}
+                    {item.question === "How do I calculate an average per day?" ? (
+                      <>
+                        Divide the total by the number of days: average per day
+                        = total ÷ number of days. For a dedicated daily-average
+                        tool with date ranges, working days, and week/month/year
+                        pace, use the{" "}
+                        <Link
+                          href="/math/average-per-day-calculator"
+                          className="font-medium text-foreground underline underline-offset-2"
+                        >
+                          Average Per Day Calculator
+                        </Link>
+                        .
+                      </>
+                    ) : (
+                      item.answer
+                    )}
                   </p>
                 </details>
               ))}
@@ -380,6 +397,7 @@ export default function AverageCalculatorPage() {
           </section>
 
           <section aria-labelledby="related-heading">
+
             <div className="mb-4 max-w-3xl">
               <h2
                 id="related-heading"
@@ -392,6 +410,17 @@ export default function AverageCalculatorPage() {
               </p>
             </div>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <Link
+                href="/math/average-per-day-calculator"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Average Per Day Calculator
+                </span>
+                <span className="text-sm text-muted">
+                  Daily average or total from an amount and days or a date range
+                </span>
+              </Link>
               <Link
                 href="/math/percentage-calculator"
                 className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
@@ -423,6 +452,28 @@ export default function AverageCalculatorPage() {
                 </span>
                 <span className="text-sm text-muted">
                   Length, weight, volume, and temperature conversions
+                </span>
+              </Link>
+              <Link
+                href="/date-time/days-between-dates"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Days Between Two Dates
+                </span>
+                <span className="text-sm text-muted">
+                  Calendar days between two dates
+                </span>
+              </Link>
+              <Link
+                href="/date-time/business-days-calculator"
+                className="inline-flex flex-col gap-1 rounded-xl border border-border/80 bg-panel px-5 py-4 shadow-card transition hover:border-cat-math/45 hover:bg-cat-math-soft"
+              >
+                <span className="text-[15px] font-semibold text-foreground">
+                  Business Days Calculator
+                </span>
+                <span className="text-sm text-muted">
+                  Working days with weekends and holidays
                 </span>
               </Link>
             </div>
