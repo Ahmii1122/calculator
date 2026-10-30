@@ -15,7 +15,9 @@ import {
   Ruler,
   Scale,
   Sigma,
+  Wallet,
 } from "lucide-react";
+
 
 
 /** Theme keys map to `--cat-*` tokens in globals.css */
@@ -283,10 +285,22 @@ export const CALCULATOR_CATEGORIES: CalculatorCategory[] = [
         status: "live",
         addedAt: "2026-10-05",
       },
+      {
+        id: "salary-to-hourly",
+        slug: "salary-to-hourly-calculator",
+        name: "Salary to Hourly Calculator",
+        description:
+          "Convert salary to hourly wage — or hourly, weekly, monthly, and other periods to yearly gross pay equivalents.",
+        href: "/finance/salary-to-hourly-calculator",
+        icon: Wallet,
+        status: "live",
+        addedAt: new Date().toISOString().slice(0, 10),
+      },
     ],
   },
   {
     id: "health",
+
     title: "Health & Fitness",
     description:
       "BMI, calorie needs, pregnancy due dates, and wellness screening tools.",
